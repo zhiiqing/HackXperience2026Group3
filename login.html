@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>HackXperience | Login</title>
+    <title>TrueSelf | Login</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -52,8 +52,15 @@
 </head>
 
 <body
-    class="min-h-screen flex items-center justify-center px-4"
+    class="min-h-screen flex items-center justify-center px-4 relative"
 >
+
+    <!-- Top Left Fixed Back to Home Button with Icon -->
+    <div class="fixed top-6 left-6 z-50">
+        <a href="index.html" class="bg-white/80 hover:bg-white transition px-4 py-2 rounded-full text-blue-600 border border-blue-200 font-medium shadow-sm flex items-center gap-2">
+            🏠 Back to Home
+        </a>
+    </div>
 
     <!-- Background decorations -->
     <div
@@ -75,7 +82,7 @@
             <div
                 class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-4xl shadow-lg"
             >
-                ♡
+                🤖
             </div>
 
         </div>
@@ -87,10 +94,20 @@
         </h1>
 
         <p
-            class="text-center text-gray-500 mt-2 mb-8"
+            class="text-center text-gray-500 mt-2 mb-6"
         >
-            Sign in to continue to HackXperience
+            Sign in to continue to TrueSelf
         </p>
+
+        <!-- Toggle Bar (Login / Sign Up) -->
+        <div class="flex bg-gray-200 p-1 rounded-full mb-6">
+            <a href="login.html" class="w-1/2 py-2 text-center text-sm font-semibold text-blue-600 bg-white rounded-full shadow transition">
+                Login
+            </a>
+            <a href="signup.html" class="w-1/2 py-2 text-center text-sm font-semibold text-gray-600 rounded-full transition">
+                Sign Up
+            </a>
+        </div>
 
         <form id="login-form">
 
@@ -107,9 +124,9 @@
                 <input
                     id="email"
                     type="email"
-                    placeholder="Enter your email"
+                    placeholder="example@email.com"
                     required
-                    class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                 >
 
             </div>
@@ -130,7 +147,7 @@
                     placeholder="Enter your password"
                     required
                     minlength="6"
-                    class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white"
                 >
 
             </div>
@@ -197,7 +214,7 @@
         <button
             id="google-login"
             type="button"
-            class="w-full border py-3 rounded-xl flex justify-center items-center gap-3 hover:bg-gray-100 transition"
+            class="w-full border py-3 rounded-xl flex justify-center items-center gap-3 hover:bg-gray-100 transition bg-white"
         >
 
             <img
@@ -224,18 +241,6 @@
 
         </p>
 
-        <!-- Home -->
-        <div class="text-center mt-5">
-
-            <a
-                href="index.html"
-                class="text-gray-500 hover:text-blue-600"
-            >
-                ← Back to Home
-            </a>
-
-        </div>
-
     </div>
 
     <script>
@@ -254,17 +259,13 @@
                     document
                         .getElementById("email")
                         .value
-                        .trim();
+                        .trim()
+                        .toLowerCase();
 
                 const password =
                     document
                         .getElementById("password")
                         .value;
-
-                const rememberMe =
-                    document
-                        .getElementById("remember-me")
-                        .checked;
 
                 if (
                     email === "" ||
@@ -291,6 +292,21 @@
                     return;
                 }
 
+                // Check specific emails
+                if (email === "new@gmail.com") {
+                    loginMessage.textContent =
+                        "No such account. Please sign up.";
+                    loginMessage.classList.remove("hidden");
+                    return;
+                }
+
+                if (email !== "test@gmail.com") {
+                    loginMessage.textContent =
+                        "No such account. Please sign up.";
+                    loginMessage.classList.remove("hidden");
+                    return;
+                }
+
                 loginMessage.classList.add(
                     "hidden"
                 );
@@ -299,15 +315,15 @@
                     Prototype login only.
                     This is not secure real authentication.
                 */
-                localStorage.setItem("loggedIn", "true");
+                localStorage.setItem("isLoggedIn", "true");
                 localStorage.setItem("userEmail", email);
 
-                const nextPage = localStorage.getItem("redirectAfterLogin") || "index.html";
+                const nextPage = localStorage.getItem("redirectAfterLogin") || "chat.html";
                 localStorage.removeItem( 
                     "redirectAfterLogin"
                 );
 
-                window.lcoation.href = nextPage;
+                window.location.href = nextPage;
             }
             
         );
