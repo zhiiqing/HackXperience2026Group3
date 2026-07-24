@@ -3,11 +3,13 @@ module.exports = async function (context, req) {
     
     const endpoint = process.env.Endpoint;
     const apiKey = process.env.API;
-    const agentId = process.env.AIChatbot; // Matches your environment variable
+    const agentId = process.env.AIChatbot;
 
     try {
-        // 1. Create thread and run in a single request, passing the agentId directly
-        const runRes = await fetch(`${endpoint}/openai/threads/runs?api-version=2024-05-01-preview`, {
+        // Using a widely supported preview api-version
+        const apiVersion = "2024-02-15-preview";
+
+        const runRes = await fetch(`${endpoint}/openai/threads/runs?api-version=${apiVersion}`, {
             method: 'POST',
             headers: { 
                 'api-key': apiKey, 
@@ -31,7 +33,7 @@ module.exports = async function (context, req) {
         const threadId = runData.thread_id;
         const runId = runData.id;
 
-        // 2. Poll until the run is completed (up to 15 seconds)
+        // Poll until completion
         let status = runData.status;
         let attempts = 0;
         
@@ -39,7 +41,7 @@ module.exports = async function (context, req) {
             await new Promise(resolve => setTimeout(resolve, 1000));
             attempts++;
 
-            const statusRes = await fetch(`${endpoint}/openai/threads/${threadId}/runs/${runId}?api-version=2024-05-01-preview`, {
+            const statusRes = await fetch(`${endpoint}/openai/threads/${threadId}/runs/${runId}?api-version=${apiVersion}`, {
                 method: 'GET',
                 headers: { 'api-key': apiKey }
             });
@@ -55,14 +57,13 @@ module.exports = async function (context, req) {
             throw new Error("Run timed out.");
         }
 
-        // 3. Retrieve the messages from the thread to get the agent's reply
-        const messagesRes = await fetch(`${endpoint}/openai/threads/${threadId}/messages?api-version=2024-05-01-preview`, {
+        // Retrieve messages
+        const messagesRes = await fetch(`${endpoint}/openai/threads/${threadId}/messages?api-version=${apiVersion}`, {
             method: 'GET',
             headers: { 'api-key': apiKey }
         });
         const messagesData = await messagesRes.json();
         
-        // Extract the latest assistant message
         const assistantMessage = messagesData.data.find(m => m.role === "assistant");
         const replyText = assistantMessage ? assistantMessage.content[0].text.value : "No response generated.";
 
