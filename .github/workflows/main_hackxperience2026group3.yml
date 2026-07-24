@@ -25,6 +25,10 @@ jobs:
 
       - name: npm install, build, and test
         run: |
+          # Find directory with package.json
+          APP_DIR=$(find . -maxdepth 3 -name "package.json" -print -quit | xargs dirname)
+          echo "Building in: $APP_DIR"
+          cd "$APP_DIR"
           npm install
           npm run build --if-present
           npm run test --if-present
