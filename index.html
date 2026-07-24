@@ -4,17 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HackXperience Hub</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-50 h-screen flex flex-col items-center justify-center p-4">
 
-    <div class="text-center space-y-6">
-        <h1 class="text-4xl font-extrabold text-gray-900">Welcome to HackXperience</h1>
-        <p class="text-lg text-gray-600">Your AI-powered assistant is ready to help.</p>
-        
-        <a href="chat.html" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transition shadow-lg transform hover:scale-105">
-            Click here to talk to chatbot
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body{
+            background: linear-gradient(135deg,#eef2ff,#dbeafe,#f5f3ff);
+            overflow:hidden;
+        }
+
+        .floating{
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float{
+            0%,100%{
+                transform:translateY(0px);
+            }
+            50%{
+                transform:translateY(-15px);
+            }
+        }
+
+        .glow:hover{
+            box-shadow:0 0 35px rgba(59,130,246,.45);
+        }
+    </style>
+
+</head>
+
+<body class="min-h-screen flex items-center justify-center px-6">
+
+    <!-- Background Decorations -->
+    <div class="absolute top-20 left-20 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-20 right-20 w-80 h-80 bg-purple-300 opacity-20 rounded-full blur-3xl"></div>
+
+    <!-- Hero Card -->
+    <div class="relative bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl max-w-3xl w-full p-12 text-center">
+
+        <!-- AI Icon -->
+        <div class="floating mb-8">
+            <div class="mx-auto w-28 h-28 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-6xl shadow-xl">
+                🤖
+            </div>
+        </div>
+
+        <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
+            Welcome to
+            <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                HackXperience
+            </span>
+        </h1>
+
+        <p class="text-gray-600 text-lg leading-8 max-w-xl mx-auto">
+            Experience an intelligent AI assistant designed to answer questions,
+            provide guidance, and support your HackXperience journey through
+            interactive conversations.
+        </p>
+
+        <!-- Features -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 mb-10">
+
+            <div class="bg-blue-50 rounded-2xl p-5">
+                <div class="text-4xl mb-3">💬</div>
+                <h3 class="font-bold text-gray-700">AI Chat</h3>
+                <p class="text-gray-500 text-sm mt-2">
+                    Ask questions anytime.
+                </p>
+            </div>
+
+            <div class="bg-purple-50 rounded-2xl p-5">
+                <div class="text-4xl mb-3">⚡</div>
+                <h3 class="font-bold text-gray-700">Fast Responses</h3>
+                <p class="text-gray-500 text-sm mt-2">
+                    Get instant AI-powered answers.
+                </p>
+            </div>
+
+            <div class="bg-indigo-50 rounded-2xl p-5">
+                <div class="text-4xl mb-3">🧠</div>
+                <h3 class="font-bold text-gray-700">Smart Assistant</h3>
+                <p class="text-gray-500 text-sm mt-2">
+                    Helpful, reliable, and always available.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Button -->
+        <a href="chat.html"
+           class="glow inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105">
+
+            Start Chatting
+            →
+
         </a>
+
+        <p class="mt-8 text-sm text-gray-500">
+            Powered by AI • Available 24/7
+        </p>
+
     </div>
 
 </body>
