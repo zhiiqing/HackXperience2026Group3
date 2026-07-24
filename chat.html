@@ -4,359 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Chatbot</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #eef2ff, #dbeafe, #f5f3ff);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            color: #374151;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Background Decorations */
-        .bg-circle {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: .25;
-            z-index: -1;
-        }
-
-        .circle1 {
-            width: 300px;
-            height: 300px;
-            background: #93c5fd;
-            top: 50px;
-            left: 50px;
-        }
-
-        .circle2 {
-            width: 360px;
-            height: 360px;
-            background: #c4b5fd;
-            bottom: 50px;
-            right: 50px;
-        }
-
-        /* Top Header */
-        header {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            color: #1f2937;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 24px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border-bottom: 1px solid rgba(229, 231, 235, 0.5);
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .back-btn {
-            text-decoration: none;
-            background: white;
-            color: #2563eb;
-            border: 1px solid #2563eb;
-            padding: 8px 18px;
-            border-radius: 999px;
-            font-size: 14px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: all 0.3s;
-        }
-
-        .back-btn:hover {
-            background: #2563eb;
-            color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(37,99,235,0.2);
-        }
-
-        h1 {
-            font-size: 1.4rem;
-            font-weight: bold;
-            color: #1f2937;
-            letter-spacing: 0.3px;
-        }
-
-        .header-right {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            box-shadow: 0 4px 10px rgba(37,99,235,0.25);
-        }
-
-        /* Chat Body Area */
-        .chat-container {
-            flex: 1;
-            padding: 24px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-        }
-
-        .message-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .message-row.user {
-            flex-direction: row-reverse;
-        }
-
-        .avatar {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            font-weight: bold;
-            flex-shrink: 0;
-            box-shadow: 0 2px 8px rgba(37,99,235,0.2);
-        }
-
-        .message-row.user .avatar {
-            background: #4b5563;
-            box-shadow: 0 2px 8px rgba(75,85,99,0.2);
-        }
-
-        .message-bubble {
-            background: white;
-            border: 1px solid #e5e7eb;
-            padding: 16px 20px;
-            border-radius: 18px;
-            font-size: 15px;
-            color: #1f2937;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            max-width: 650px;
-            line-height: 1.6;
-        }
-
-        .message-row.user .message-bubble {
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 4px 15px rgba(37,99,235,0.2);
-            white-space: pre-line;
-        }
-
-        .message-bubble p {
-            margin-bottom: 8px;
-        }
-
-        .message-bubble p:last-child {
-            margin-bottom: 0;
-        }
-
-        .message-bubble ul {
-            margin: 8px 0 8px 20px;
-        }
-
-        .message-bubble li {
-            margin-bottom: 6px;
-        }
-
-        /* Bottom Input Area */
-        .footer-input-container {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(10px);
-            padding: 20px 24px;
-            border-top: 1px solid rgba(229, 231, 235, 0.5);
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -4px 20px rgba(0,0,0,0.03);
-        }
-
-        .input-wrapper {
-            flex: 1;
-            position: relative;
-        }
-
-        .message-input {
-            width: 100%;
-            padding: 14px 20px;
-            border: 1px solid #d1d5db;
-            border-radius: 999px;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s;
-            color: #374151;
-            background: white;
-        }
-
-        .message-input::placeholder {
-            color: #9ca3af;
-        }
-
-        .message-input:focus {
-            border-color: #2563eb;
-            box-shadow: 0 0 12px rgba(37, 99, 235, 0.2);
-        }
-
-        .send-btn {
-            border: none;
-            padding: 14px 30px;
-            border-radius: 999px;
-            cursor: pointer;
-            color: white;
-            font-size: 15px;
-            font-weight: bold;
-            background: linear-gradient(to right, #2563eb, #7c3aed);
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(37,99,235,0.3);
-        }
-
-        .send-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37,99,235,0.4);
-        }
-
-        /* Custom Modal Popup Styling */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(5px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-box {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            max-width: 420px;
-            width: 90%;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-            text-align: center;
-            border: 1px solid rgba(255,255,255,0.8);
-        }
-
-        .modal-box h3 {
-            color: #1f2937;
-            margin-bottom: 12px;
-            font-size: 1.3rem;
-        }
-
-        .modal-box p {
-            color: #6b7280;
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-
-        .modal-btn {
-            border: none;
-            padding: 12px 28px;
-            border-radius: 999px;
-            font-size: 15px;
-            font-weight: bold;
-            cursor: pointer;
-            color: white;
-            background: linear-gradient(to right, #2563eb, #7c3aed);
-            transition: all 0.3s;
-            box-shadow: 0 4px 15px rgba(37,99,235,0.3);
-        }
-
-        .modal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+        .support-button.supported {
+            background: #e0e7ff;
+            color: #4338ca;
         }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col bg-[#f4f7fb] text-gray-700 relative overflow-hidden">
 
-    <!-- Background Elements -->
-    <div class="bg-circle circle1"></div>
-    <div class="bg-circle circle2"></div>
+    <!-- Background Decorations -->
+    <div class="fixed rounded-full filter blur-[90px] opacity-25 -z-10 w-[300px] h-[300px] bg-[#93c5fd] top-[50px] left-[50px]"></div>
+    <div class="fixed rounded-full filter blur-[90px] opacity-25 -z-10 w-[360px] h-[360px] bg-[#c4b5fd] bottom-[50px] right-[50px]"></div>
 
     <!-- Header -->
-    <header>
-        <div class="header-left">
-            <a href="index.html" class="back-btn">
-                &larr; Back
-            </a>
-            <h1>AI Chatbot</h1>
-        </div>
-        <div class="header-right">
-            🤖
+    <header class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg backdrop-blur-md">
+        <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="bg-white/20 hover:bg-white/30 transition px-4 py-2 rounded-full text-white font-medium">
+                    &larr; Back
+                </a>
+                <div>
+                    <h1 class="text-2xl font-bold tracking-wide">AI Chatbot</h1>
+                    <p class="text-sm opacity-90">Your mental wellness companion</p>
+                </div>
+            </div>
+            <div class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-inner">
+                🤖
+            </div>
         </div>
     </header>
 
     <!-- Chat Messages Container -->
-    <div class="chat-container" id="chatContainer">
-        <div class="message-row">
-            <div class="avatar">AI</div>
-            <div class="message-bubble">
-                Hello! 👋 I'm your AI Chatbot. Feel free to chat with me about your mental wellness 😊
+    <main class="flex-1 overflow-y-auto p-6">
+        <div class="max-w-3xl mx-auto flex flex-col gap-5" id="chatContainer">
+            <div class="message-row flex items-start gap-3">
+                <div class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-md">
+                    AI
+                </div>
+                <div class="message-bubble bg-white border border-gray-100 rounded-2xl shadow-md p-5 text-gray-800 max-w-xl leading-relaxed">
+                    Hello! 👋 I'm your AI Chatbot. Feel free to chat with me about your mental wellness 😊
+                </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Bottom Input Section -->
-    <div class="footer-input-container">
-        <div class="input-wrapper">
-            <input type="text" id="messageInput" class="message-input" placeholder="Type your message...">
+    <div class="bg-white/90 backdrop-blur-md p-4 border-t border-gray-200/50 shadow-lg">
+        <div class="max-w-3xl mx-auto flex items-center gap-3">
+            <div class="flex-1 relative">
+                <input type="text" id="messageInput" class="w-full px-5 py-3 border border-gray-300 rounded-full text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 bg-white" placeholder="Type your message...">
+            </div>
+            <button id="sendBtn" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition">
+                Send
+            </button>
         </div>
-        <button id="sendBtn" class="send-btn">Send</button>
     </div>
 
     <!-- Modal Popup -->
-    <div class="modal-overlay" id="popupModal">
-        <div class="modal-box">
-            <h3>We're Here For You</h3>
-            <p>You don't have to go through this alone. Please click below to access immediate support resources.</p>
-            <button class="modal-btn" id="modalRedirectBtn">Get Support</button>
+    <div class="modal-overlay fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 invisible transition-all duration-300" id="popupModal">
+        <div class="modal-box bg-white p-8 rounded-2xl max-w-md w-[90%] shadow-2xl text-center border border-white/80">
+            <h3 class="text-xl font-bold text-gray-800 mb-3">We're Here For You</h3>
+            <p class="text-gray-600 text-sm leading-relaxed mb-6">You don't have to go through this alone. Please click below to access immediate support resources.</p>
+            <button class="modal-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition w-full" id="modalRedirectBtn">
+                Get Support
+            </button>
         </div>
     </div>
 
@@ -405,10 +118,14 @@ You don’t have to handle this alone.`;
 
             // Append user message
             const userRow = document.createElement('div');
-            userRow.className = 'message-row user';
+            userRow.className = 'message-row flex items-start gap-3 flex-row-reverse';
             userRow.innerHTML = `
-                <div class="avatar">U</div>
-                <div class="message-bubble">${escapeHtml(text)}</div>
+                <div class="w-11 h-11 rounded-full bg-gray-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-md">
+                    U
+                </div>
+                <div class="message-bubble bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl shadow-md p-5 max-w-xl leading-relaxed whitespace-pre-line">
+                    ${escapeHtml(text)}
+                </div>
             `;
             chatContainer.appendChild(userRow);
 
@@ -419,55 +136,60 @@ You don’t have to handle this alone.`;
             
             // Check for trigger phrase
             if (normalizedInput === 'i want to die') {
-                popupModal.classList.add('active');
+                popupModal.classList.remove('opacity-0', 'invisible');
+                popupModal.classList.add('opacity-100', 'visible');
                 return;
             }
 
             setTimeout(() => {
                 const aiRow = document.createElement('div');
-                aiRow.className = 'message-row';
+                aiRow.className = 'message-row flex items-start gap-3';
                 const aiBubble = document.createElement('div');
-                aiBubble.className = 'message-bubble';
+                aiBubble.className = 'message-bubble bg-white border border-gray-100 rounded-2xl shadow-md p-5 text-gray-800 max-w-xl leading-relaxed';
                 
                 if (normalizedInput === 'i am sad' || normalizedInput === 'i’m sad') {
                     aiBubble.innerHTML = `
-                        <p>I’m really sorry you’re feeling that way — that sounds really tough. I’m here for you.</p>
-                        <p>Try one of these:</p>
-                        <ul>
+                        <p class="mb-2">I’m really sorry you’re feeling that way — that sounds really tough. I’m here for you.</p>
+                        <p class="mb-2">Try one of these:</p>
+                        <ul class="list-disc list-inside mb-2 space-y-1">
                             <li><strong>5-4-3-2-1 grounding:</strong> name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.</li>
                             <li><strong>Slow breathing:</strong> inhale for 4, hold 4, exhale 4 (or try 4–6–8). Repeat 4 times.</li>
                             <li><strong>Move a little:</strong> stand, stretch, or step outside for a minute of fresh air.</li>
                             <li><strong>Write one sentence:</strong> about what’s hardest right now — just getting it out can help.</li>
                             <li><strong>Reach out:</strong> text or call someone you trust and say, “I’m having a rough time — can we talk?”</li>
                         </ul>
-                        <p>If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988.</p>
+                        <p class="mb-2">If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988.</p>
                         <p>You don’t have to handle this alone.</p>
                     `;
                 } else if (normalizedInput === 'i am stress' || normalizedInput === 'i am stressed' || normalizedInput === 'i’m stressed') {
                     aiBubble.innerHTML = `
-                        <p>I’m sorry — stress is really hard. I can help right now.</p>
-                        <p>If you want something fast, try one of these (pick one and I can guide you through it):</p>
-                        <ul>
+                        <p class="mb-2">I’m sorry — stress is really hard. I can help right now.</p>
+                        <p class="mb-2">If you want something fast, try one of these (pick one and I can guide you through it):</p>
+                        <ul class="list-disc list-inside mb-2 space-y-1">
                             <li><strong>Box/4-4-6 breathing (2 minutes):</strong> Sit or stand comfortably. Inhale slowly for 4 seconds. Hold for 4 seconds. Exhale for 6–8 seconds. Repeat for 6–10 breaths.</li>
                             <li><strong>5-4-3-2-1 grounding (1–2 minutes):</strong> Name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.</li>
                             <li><strong>Quick reset (3–5 minutes):</strong> Stand, stretch, and walk for one minute. Splash water on your face or get a glass of water. Do a single progressive muscle tension-release: tense shoulders for 5s, then release.</li>
                         </ul>
-                        <p>If you want a short plan to reduce stress for the rest of today:</p>
-                        <ul>
+                        <p class="mb-2">If you want a short plan to reduce stress for the rest of today:</p>
+                        <ul class="list-disc list-inside mb-2 space-y-1">
                             <li>Pick 1–3 must-do tasks and delay or delegate the rest.</li>
                             <li>Use a 25-minute focused timer (Pomodoro), then take a 5–10 minute break.</li>
                             <li>Do one soothing activity tonight (short walk, warm shower, 20 minutes reading).</li>
                             <li>Sleep: try a wind-down routine (no screens 30–60 minutes before bed).</li>
                         </ul>
-                        <p>Longer-term ideas (if helpful): regular exercise, 10 minutes daily mindfulness or breathing, clearer boundaries (saying “I can’t do that right now”), talking with someone you trust, and professional help if stress is persistent.</p>
-                        <p>If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988.</p>
+                        <p class="mb-2">Longer-term ideas (if helpful): regular exercise, 10 minutes daily mindfulness or breathing, clearer boundaries (saying “I can’t do that right now”), talking with someone you trust, and professional help if stress is persistent.</p>
+                        <p class="mb-2">If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988.</p>
                         <p>You don’t have to handle this alone.</p>
                     `;
                 } else {
                     aiBubble.textContent = `I received your message: "${text}". How else can I help you today?`;
                 }
 
-                aiRow.innerHTML = `<div class="avatar">AI</div>`;
+                aiRow.innerHTML = `
+                    <div class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-md">
+                        AI
+                    </div>
+                `;
                 aiRow.appendChild(aiBubble);
                 chatContainer.appendChild(aiRow);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
