@@ -24,8 +24,13 @@ jobs:
           node-version: '22.x'
 
       - name: npm install, build, and test
-        working-directory: ./HackXperience2026Group
         run: |
+          # Find the directory containing package.json
+          APP_DIR=$(find . -maxdepth 3 -name "package.json" -exec dirname {} \;)
+          echo "Found app in: $APP_DIR"
+          
+          # Run commands in that directory
+          cd "$APP_DIR"
           npm install
           npm run build --if-present
           npm run test --if-present
