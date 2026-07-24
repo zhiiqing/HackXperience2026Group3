@@ -10,7 +10,7 @@
     <style>
         body{
             background: linear-gradient(135deg,#eef2ff,#dbeafe,#f5f3ff);
-            overflow:hidden;
+            overflow: hidden;
         }
 
         .floating{
@@ -19,15 +19,15 @@
 
         @keyframes float{
             0%,100%{
-                transform:translateY(0px);
+                transform: translateY(0px);
             }
             50%{
-                transform:translateY(-15px);
+                transform: translateY(-15px);
             }
         }
 
         .glow:hover{
-            box-shadow:0 0 35px rgba(59,130,246,.45);
+            box-shadow: 0 0 35px rgba(59,130,246,.45);
         }
     </style>
 
@@ -49,6 +49,7 @@
             </div>
         </div>
 
+        <!-- Title -->
         <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
             Welcome to
             <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -56,6 +57,7 @@
             </span>
         </h1>
 
+        <!-- Description -->
         <p class="text-gray-600 text-lg leading-8 max-w-xl mx-auto">
             Experience an intelligent AI assistant designed to answer questions,
             provide guidance, and support your HackXperience journey through
@@ -65,7 +67,7 @@
         <!-- Features -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 mb-10">
 
-            <div class="bg-blue-50 rounded-2xl p-5">
+            <div class="bg-blue-50 rounded-2xl p-5 shadow-md">
                 <div class="text-4xl mb-3">💬</div>
                 <h3 class="font-bold text-gray-700">AI Chat</h3>
                 <p class="text-gray-500 text-sm mt-2">
@@ -73,7 +75,7 @@
                 </p>
             </div>
 
-            <div class="bg-purple-50 rounded-2xl p-5">
+            <div class="bg-purple-50 rounded-2xl p-5 shadow-md">
                 <div class="text-4xl mb-3">⚡</div>
                 <h3 class="font-bold text-gray-700">Fast Responses</h3>
                 <p class="text-gray-500 text-sm mt-2">
@@ -81,7 +83,7 @@
                 </p>
             </div>
 
-            <div class="bg-indigo-50 rounded-2xl p-5">
+            <div class="bg-indigo-50 rounded-2xl p-5 shadow-md">
                 <div class="text-4xl mb-3">🧠</div>
                 <h3 class="font-bold text-gray-700">Smart Assistant</h3>
                 <p class="text-gray-500 text-sm mt-2">
@@ -91,15 +93,28 @@
 
         </div>
 
-        <!-- Button -->
-        <a href="chat.html"
-           class="glow inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105">
+        <!-- Login & Sign Up Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-5 mt-8">
 
-            Start Chatting
-            →
+            <!-- Login -->
+            <a href="login.html"
+               class="glow bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-semibold shadow-lg transition duration-300 transform hover:scale-105">
 
-        </a>
+                🔑 Login
 
+            </a>
+
+            <!-- Sign Up -->
+            <a href="signup.html"
+               class="border-2 border-blue-600 bg-white text-blue-600 px-10 py-4 rounded-full text-lg font-semibold shadow-lg transition duration-300 hover:bg-blue-600 hover:text-white">
+
+                📝 Sign Up
+
+            </a>
+
+        </div>
+
+        <!-- Footer -->
         <p class="mt-8 text-sm text-gray-500">
             Powered by AI • Available 24/7
         </p>
