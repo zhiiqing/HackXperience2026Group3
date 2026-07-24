@@ -1,7 +1,0 @@
-{
-  "name": "hackathon-api",
-  "version": "1.0.0",
-  "description": "Azure Function API",
-  "main": "chat/index.js",
-  "dependencies": {}
-}
