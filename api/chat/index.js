@@ -7,7 +7,7 @@ module.exports = async function (context, req) {
 
     const endpoint = process.env.Endpoint; 
     const apiKey = process.env.API;
-    const deploymentName = process.env.newgpt || "gpt-5.6-sol";
+    const deploymentName = "gpt-5.6-sol";
 
     if (!endpoint || !apiKey) {
         context.res = { body: { reply: "Configuration Error: Endpoint or API key missing in environment variables." } };
