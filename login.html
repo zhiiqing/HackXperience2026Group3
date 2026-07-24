@@ -299,24 +299,17 @@
                     Prototype login only.
                     This is not secure real authentication.
                 */
-                const storage =
-                    rememberMe
-                        ? localStorage
-                        : sessionStorage;
+                localStorage.setItem("loggedIn", "true");
+                localStorage.setItem("userEmail", email);
 
-                storage.setItem(
-                    "loggedIn",
-                    "true"
+                const nextPage = localStorage.getItem("redirectAfterLogin") || "index.html";
+                localStorage.removeItem( 
+                    "redirectAfterLogin"
                 );
 
-                storage.setItem(
-                    "userEmail",
-                    email
-                );
-
-                window.location.href =
-                    "index.html";
+                window.lcoation.href = nextPage;
             }
+            
         );
 
         document
