@@ -13,7 +13,7 @@ module.exports = async function (context, req) {
     try {
         const apiVersion = "2024-05-01-preview";
 
-        // 1. Create a thread and run the agent in a single call
+        // 1. Trigger the Foundry agent thread and run
         const runRes = await fetch(`${endpoint}/openai/threads/runs?api-version=${apiVersion}`, {
             method: 'POST',
             headers: { 
