@@ -1,76 +1,687 @@
-<nav
-    class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200"
->
-    <div
-        class="max-w-6xl mx-auto px-5 py-4 flex flex-wrap items-center justify-between gap-4"
-    >
-        <a
-            href="index.html"
-            class="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-        >
-            TrueSelf
-        </a>
+<!DOCTYPE html>
+<html lang="en">
 
-        <div class="flex flex-wrap items-center gap-3">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>TrueSelf | Home</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #dbeafe,
+                    #f5f3ff
+                );
+        }
+
+        .floating {
+            animation:
+                float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%,
+            100% {
+                transform:
+                    translateY(0);
+            }
+
+            50% {
+                transform:
+                    translateY(-12px);
+            }
+        }
+
+        .glow:hover {
+            box-shadow:
+                0 0 35px rgba(59, 130, 246, 0.35);
+        }
+
+        a:focus-visible,
+        button:focus-visible {
+            outline:
+                3px solid #f59e0b;
+
+            outline-offset:
+                3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation:
+                    none !important;
+
+                transition:
+                    none !important;
+
+                scroll-behavior:
+                    auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen text-gray-800">
+
+    <!-- Navigation -->
+    <nav
+        aria-label="Main navigation"
+        class="sticky top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm"
+    >
+        <div
+            class="max-w-6xl mx-auto px-5 py-4 flex flex-wrap items-center justify-between gap-4"
+        >
+
+            <!-- Logo -->
             <a
                 href="index.html"
-                class="text-gray-600 hover:text-blue-600 font-semibold px-3 py-2"
+                class="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
             >
-                Home
+                TrueSelf
             </a>
 
+            <!-- Navigation links -->
+            <div
+                class="flex flex-wrap items-center justify-end gap-2 md:gap-3"
+            >
+                <a
+                    href="index.html"
+                    class="text-blue-600 bg-blue-50 font-semibold px-3 py-2 rounded-lg"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="forum.html"
+                    class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-semibold px-3 py-2 rounded-lg transition"
+                >
+                    Community
+                </a>
+
+                <a
+                    href="tier.html"
+                    class="px-5 py-2 bg-rose-500 text-white rounded-full font-semibold shadow hover:bg-rose-600 transition"
+                >
+                    Get Help Now
+                </a>
+
+                <!-- Logged-out buttons -->
+                <a
+                    id="login-link"
+                    href="login.html"
+                    class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition"
+                >
+                    Login
+                </a>
+
+                <a
+                    id="signup-link"
+                    href="signup.html"
+                    class="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold shadow hover:scale-105 transition"
+                >
+                    Sign Up
+                </a>
+
+                <!-- Logged-in buttons -->
+                <a
+                    id="chat-link"
+                    href="chat.html"
+                    class="hidden px-5 py-2 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition"
+                >
+                    Support Chat
+                </a>
+
+                <button
+                    id="logout-button"
+                    type="button"
+                    class="hidden px-5 py-2 bg-gray-800 text-white rounded-full font-semibold hover:bg-gray-900 transition"
+                >
+                    Log Out
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Background decoration -->
+    <div
+        class="fixed top-24 left-10 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl pointer-events-none"
+    ></div>
+
+    <div
+        class="fixed bottom-10 right-10 w-80 h-80 bg-purple-300 opacity-20 rounded-full blur-3xl pointer-events-none"
+    ></div>
+
+    <!-- Main content -->
+    <main class="relative max-w-6xl mx-auto px-6 py-14">
+
+        <!-- Hero section -->
+        <section
+            class="bg-white/85 backdrop-blur-lg shadow-2xl rounded-3xl p-8 md:p-12 text-center"
+        >
+
+            <!-- Logo icon -->
+            <div class="floating mb-7">
+
+                <div
+                    class="mx-auto w-24 h-24 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-5xl text-white shadow-xl"
+                >
+                    ♡
+                </div>
+
+            </div>
+
+            <p
+                class="inline-block bg-indigo-50 text-indigo-700 font-semibold px-4 py-2 rounded-full text-sm mb-5"
+            >
+                Mental-wellness support prototype
+            </p>
+
+            <h1
+                class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-5"
+            >
+                A safer space to be your
+
+                <span
+                    class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                >
+                    TrueSelf
+                </span>
+            </h1>
+
+            <p
+                class="text-gray-600 text-lg leading-8 max-w-2xl mx-auto"
+            >
+                Express what you are feeling, use guided reflection,
+                connect with a supportive community and find suitable
+                human or crisis-support resources.
+            </p>
+
+            <!-- Main buttons -->
+            <div
+                class="flex flex-wrap justify-center gap-4 mt-9"
+            >
+                <a
+                    href="#"
+                    onclick="startChat(event)"
+                    class="glow bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition"
+                >
+                    Start Support Chat
+                </a>
+
+                <a
+                    href="forum.html"
+                    class="bg-white border-2 border-indigo-200 text-indigo-700 px-8 py-4 rounded-full text-lg font-semibold hover:bg-indigo-50 transition"
+                >
+                    Visit Community
+                </a>
+
+                <a
+                    href="tier.html"
+                    class="bg-rose-50 border-2 border-rose-200 text-rose-700 px-8 py-4 rounded-full text-lg font-semibold hover:bg-rose-100 transition"
+                >
+                    Find Help Now
+                </a>
+            </div>
+
+            <p
+                id="login-status"
+                class="mt-6 text-sm text-gray-500"
+            >
+                Sign in to access the support chat
+            </p>
+
+        </section>
+
+        <!-- Feature cards -->
+        <section
+            aria-label="TrueSelf features"
+            class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10"
+        >
+
+            <!-- Chat card -->
+            <a
+                href="#"
+                onclick="startChat(event)"
+                class="bg-white/90 rounded-3xl p-7 shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
+            >
+                <div
+                    class="w-14 h-14 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center text-3xl mb-5"
+                >
+                    💬
+                </div>
+
+                <h2
+                    class="text-xl font-bold text-gray-800"
+                >
+                    Guided Support Chat
+                </h2>
+
+                <p
+                    class="text-gray-600 mt-3 leading-7"
+                >
+                    A private rule-based prototype for reflection,
+                    grounding exercises and small next steps.
+                </p>
+
+                <p
+                    class="text-blue-600 font-semibold mt-5"
+                >
+                    Open support chat →
+                </p>
+            </a>
+
+            <!-- Forum card -->
             <a
                 href="forum.html"
-                class="text-gray-600 hover:text-blue-600 font-semibold px-3 py-2"
+                class="bg-white/90 rounded-3xl p-7 shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
             >
-                Community
+                <div
+                    class="w-14 h-14 bg-purple-100 text-purple-700 rounded-2xl flex items-center justify-center text-3xl mb-5"
+                >
+                    🤝
+                </div>
+
+                <h2
+                    class="text-xl font-bold text-gray-800"
+                >
+                    Community Forum
+                </h2>
+
+                <p
+                    class="text-gray-600 mt-3 leading-7"
+                >
+                    Share your experiences using your username or
+                    anonymously and offer supportive responses.
+                </p>
+
+                <p
+                    class="text-purple-600 font-semibold mt-5"
+                >
+                    Visit community →
+                </p>
             </a>
 
+            <!-- Support card -->
             <a
                 href="tier.html"
-                class="text-gray-600 hover:text-blue-600 font-semibold px-3 py-2"
+                class="bg-white/90 rounded-3xl p-7 shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
             >
-                Find Support
+                <div
+                    class="w-14 h-14 bg-rose-100 text-rose-700 rounded-2xl flex items-center justify-center text-3xl mb-5"
+                >
+                    ♡
+                </div>
+
+                <h2
+                    class="text-xl font-bold text-gray-800"
+                >
+                    Help and Support
+                </h2>
+
+                <p
+                    class="text-gray-600 mt-3 leading-7"
+                >
+                    Find country-specific emergency services, crisis
+                    helplines and other available support options.
+                </p>
+
+                <p
+                    class="text-rose-600 font-semibold mt-5"
+                >
+                    View support options →
+                </p>
             </a>
 
-            <a
-                id="login-link"
-                href="login.html"
-                class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition"
-            >
-                Login
-            </a>
+        </section>
 
-            <a
-                id="signup-link"
-                href="signup.html"
-                class="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold hover:scale-105 transition"
-            >
-                Sign Up
-            </a>
+        <!-- How it works -->
+        <section
+            class="bg-white/85 backdrop-blur-md rounded-3xl shadow-lg p-8 md:p-10 mt-10"
+        >
+            <div class="text-center">
 
-            <a
-                id="chat-link"
-                href="chat.html"
-                class="hidden px-5 py-2 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition"
-            >
-                Support Chat
-            </a>
+                <p
+                    class="text-indigo-600 font-semibold"
+                >
+                    HOW IT WORKS
+                </p>
 
-            <button
-                id="logout-button"
-                type="button"
-                class="hidden px-5 py-2 bg-gray-800 text-white rounded-full font-semibold hover:bg-gray-900 transition"
-            >
-                Log Out
-            </button>
+                <h2
+                    class="text-3xl font-bold mt-2"
+                >
+                    Choose the support that fits you
+                </h2>
 
-            <a
-                href="resources.html"
-                class="px-5 py-2 bg-rose-500 text-white rounded-full font-semibold hover:bg-rose-600 transition"
+            </div>
+
+            <div
+                class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"
             >
-                Urgent Help
-            </a>
+
+                <div
+                    class="bg-blue-50 rounded-2xl p-6"
+                >
+                    <span
+                        class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mb-4"
+                    >
+                        1
+                    </span>
+
+                    <h3 class="font-bold text-lg">
+                        Express yourself
+                    </h3>
+
+                    <p class="text-gray-600 mt-2 leading-6">
+                        Use the guided chat or create a community post
+                        about what is on your mind.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-purple-50 rounded-2xl p-6"
+                >
+                    <span
+                        class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold mb-4"
+                    >
+                        2
+                    </span>
+
+                    <h3 class="font-bold text-lg">
+                        Choose your next step
+                    </h3>
+
+                    <p class="text-gray-600 mt-2 leading-6">
+                        Reflect privately, receive community support
+                        or explore available human-support options.
+                    </p>
+                </div>
+
+                <div
+                    class="bg-rose-50 rounded-2xl p-6"
+                >
+                    <span
+                        class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold mb-4"
+                    >
+                        3
+                    </span>
+
+                    <h3 class="font-bold text-lg">
+                        Find urgent help
+                    </h3>
+
+                    <p class="text-gray-600 mt-2 leading-6">
+                        Access country-specific emergency and crisis
+                        resources without signing in.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Prototype notice -->
+        <section
+            class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mt-10"
+        >
+            <h2
+                class="font-bold text-amber-900"
+            >
+                Prototype notice
+            </h2>
+
+            <p
+                class="text-amber-800 text-sm leading-6 mt-1"
+            >
+                TrueSelf is currently a frontend hackathon prototype.
+                The support chat is rule-based and does not use a live
+                AI service. TrueSelf is not an emergency service,
+                therapist or medical provider.
+            </p>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer
+        class="relative bg-gray-900 text-gray-300 mt-12"
+    >
+        <div
+            class="max-w-6xl mx-auto px-6 py-10"
+        >
+            <div
+                class="grid sm:grid-cols-2 md:grid-cols-3 gap-8"
+            >
+                <div>
+                    <h2
+                        class="text-white font-bold text-lg"
+                    >
+                        TrueSelf
+                    </h2>
+
+                    <p
+                        class="text-sm leading-6 mt-3"
+                    >
+                        A hackathon prototype for guided reflection,
+                        community support and help-resource discovery.
+                    </p>
+                </div>
+
+                <div>
+                    <h3
+                        class="text-white font-semibold"
+                    >
+                        Platform
+                    </h3>
+
+                    <div
+                        class="grid gap-2 mt-3 text-sm"
+                    >
+                        <a
+                            href="index.html"
+                            class="hover:text-white"
+                        >
+                            Home
+                        </a>
+
+                        <a
+                            href="forum.html"
+                            class="hover:text-white"
+                        >
+                            Community Forum
+                        </a>
+
+                        <a
+                            href="#"
+                            onclick="startChat(event)"
+                            class="hover:text-white"
+                        >
+                            Support Chat
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3
+                        class="text-white font-semibold"
+                    >
+                        Get Support
+                    </h3>
+
+                    <div
+                        class="grid gap-2 mt-3 text-sm"
+                    >
+                        <a
+                            href="tier.html"
+                            class="text-rose-300 hover:text-rose-200 font-semibold"
+                        >
+                            Get Help Now
+                        </a>
+
+                        <a
+                            href="login.html"
+                            class="hover:text-white"
+                        >
+                            Login
+                        </a>
+
+                        <a
+                            href="signup.html"
+                            class="hover:text-white"
+                        >
+                            Create Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-gray-700 mt-8 pt-6 text-xs text-center text-gray-400"
+            >
+                TrueSelf is a prototype and is not an emergency,
+                counselling or medical service.
+            </div>
         </div>
-    </div>
-</nav>
+    </footer>
+
+    <script>
+        const loginLink =
+            document.getElementById(
+                "login-link"
+            );
+
+        const signupLink =
+            document.getElementById(
+                "signup-link"
+            );
+
+        const chatLink =
+            document.getElementById(
+                "chat-link"
+            );
+
+        const logoutButton =
+            document.getElementById(
+                "logout-button"
+            );
+
+        const loginStatus =
+            document.getElementById(
+                "login-status"
+            );
+
+        function isLoggedIn() {
+            return (
+                localStorage.getItem(
+                    "loggedIn"
+                ) === "true"
+            );
+        }
+
+        function updateNavigation() {
+            if (isLoggedIn()) {
+                loginLink.classList.add(
+                    "hidden"
+                );
+
+                signupLink.classList.add(
+                    "hidden"
+                );
+
+                chatLink.classList.remove(
+                    "hidden"
+                );
+
+                logoutButton.classList.remove(
+                    "hidden"
+                );
+
+                const userEmail =
+                    localStorage.getItem(
+                        "userEmail"
+                    );
+
+                if (userEmail) {
+                    loginStatus.textContent =
+                        "Signed in as " +
+                        userEmail;
+                }
+                else {
+                    loginStatus.textContent =
+                        "You are signed in";
+                }
+            }
+            else {
+                loginLink.classList.remove(
+                    "hidden"
+                );
+
+                signupLink.classList.remove(
+                    "hidden"
+                );
+
+                chatLink.classList.add(
+                    "hidden"
+                );
+
+                logoutButton.classList.add(
+                    "hidden"
+                );
+
+                loginStatus.textContent =
+                    "Sign in to access the support chat";
+            }
+        }
+
+        function startChat(event) {
+            event.preventDefault();
+
+            if (isLoggedIn()) {
+                window.location.href =
+                    "chat.html";
+            }
+            else {
+                localStorage.setItem(
+                    "redirectAfterLogin",
+                    "chat.html"
+                );
+
+                window.location.href =
+                    "login.html";
+            }
+        }
+
+        logoutButton.addEventListener(
+            "click",
+            function () {
+                localStorage.removeItem(
+                    "loggedIn"
+                );
+
+                localStorage.removeItem(
+                    "userEmail"
+                );
+
+                localStorage.removeItem(
+                    "redirectAfterLogin"
+                );
+
+                updateNavigation();
+            }
+        );
+
+        updateNavigation();
+    </script>
+
+</body>
+</html>
