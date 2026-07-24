@@ -7,10 +7,16 @@ module.exports = async function (context, req) {
 
     const endpoint = process.env.Endpoint; 
     const apiKey = process.env.API;
+    const deploymentName = process.env.gpt5.6 || "gpt-5.6-sol"; // Fallback to your model name
+
+    if (!endpoint || !apiKey) {
+        context.res = { body: { reply: "Configuration Error: Endpoint or API key missing in environment variables." } };
+        return;
+    }
 
     try {
         const cleanEndpoint = endpoint.replace(/\/$/, "");
-        const chatUrl = `${cleanEndpoint}/openai/deployments/gpt-5.6-sol/chat/completions?api-version=2024-02-01`;
+        const chatUrl = `${cleanEndpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=2024-02-01`;
 
         const response = await fetch(chatUrl, {
             method: 'POST',
@@ -28,13 +34,16 @@ module.exports = async function (context, req) {
         });
 
         const rawText = await response.text();
-        if (!response.ok) throw new Error(`Azure Error (${response.status}): ${rawText}`);
+        if (!response.ok) {
+            context.res = { body: { reply: `Azure API Error (${response.status}): ${rawText}` } };
+            return;
+        }
 
         const data = JSON.parse(rawText);
         const replyText = data.choices?.[0]?.message?.content || "No response generated.";
 
         context.res = { body: { reply: replyText } };
     } catch (error) {
-        context.res = { status: 500, body: { reply: "Server Error: " + error.message } };
+        context.res = { body: { reply: "Server Error: " + error.message } };
     }
 };
