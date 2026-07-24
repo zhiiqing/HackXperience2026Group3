@@ -27,18 +27,40 @@
     </footer>
 
     <script>
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('user-input');
             const chatWindow = document.getElementById('chat-window');
             
             if (input.value.trim() !== "") {
+                // 1. Add User Message to UI
                 const userMsg = document.createElement('div');
                 userMsg.className = "bg-blue-100 p-3 rounded-lg shadow w-fit ml-auto";
                 userMsg.textContent = input.value;
                 chatWindow.appendChild(userMsg);
                 
+                const userText = input.value;
                 input.value = "";
-                chatWindow.scrollTop = chatWindow.scrollHeight;
+    
+                // 2. Send to your Azure API
+                try {
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ message: userText })
+                    });
+    
+                    const data = await response.json();
+    
+                    // 3. Add AI Response to UI
+                    const aiMsg = document.createElement('div');
+                    aiMsg.className = "bg-white p-3 rounded-lg shadow w-fit";
+                    aiMsg.textContent = data.reply;
+                    chatWindow.appendChild(aiMsg);
+                    
+                    chatWindow.scrollTop = chatWindow.scrollHeight;
+                } catch (error) {
+                    console.error("Error connecting to Agent:", error);
+                }
             }
         }
     </script>
