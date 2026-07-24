@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackXperience | Login</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body{
+            background: linear-gradient(135deg,#dbeafe,#eef2ff,#ede9fe);
+        }
+
+        .glass{
+            background: rgba(255,255,255,0.8);
+            backdrop-filter: blur(15px);
+        }
+
+        .floating{
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float{
+            0%,100%{
+                transform:translateY(0);
+            }
+            50%{
+                transform:translateY(-10px);
+            }
+        }
+    </style>
+
+</head>
+
+<body class="min-h-screen flex items-center justify-center px-4">
+
+    <!-- Background Decorations -->
+    <div class="absolute top-10 left-10 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 right-10 w-72 h-72 bg-purple-300 opacity-20 rounded-full blur-3xl"></div>
+
+    <!-- Login Card -->
+    <div class="glass relative w-full max-w-md rounded-3xl shadow-2xl p-8">
+
+        <!-- AI Icon -->
+        <div class="floating flex justify-center mb-6">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-4xl shadow-lg">
+                🤖
+            </div>
+        </div>
+
+        <h1 class="text-3xl font-bold text-center text-gray-800">
+            Welcome Back
+        </h1>
+
+        <p class="text-center text-gray-500 mt-2 mb-8">
+            Sign in to continue to HackXperience
+        </p>
+
+        <form action="chat.html" method="post">
+
+            <!-- Email -->
+            <div class="mb-5">
+                <label class="block text-gray-700 mb-2">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    placeholder="Enter your email"
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Password -->
+            <div class="mb-2">
+                <label class="block text-gray-700 mb-2">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    placeholder="Enter your password"
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <!-- Remember Me -->
+            <div class="flex justify-between items-center text-sm mb-6 mt-3">
+
+                <label class="flex items-center">
+                    <input type="checkbox" class="mr-2">
+                    Remember Me
+                </label>
+
+                <a href="#" class="text-blue-600 hover:underline">
+                    Forgot Password?
+                </a>
+
+            </div>
+
+            <!-- Login Button -->
+            <button
+                type="submit"
+                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:scale-105 transition duration-300 shadow-lg">
+
+                Login
+
+            </button>
+
+        </form>
+
+        <!-- Divider -->
+        <div class="flex items-center my-6">
+            <hr class="flex-grow border-gray-300">
+            <span class="mx-4 text-gray-400 text-sm">OR</span>
+            <hr class="flex-grow border-gray-300">
+        </div>
+
+        <!-- Google Login -->
+        <button
+            class="w-full border py-3 rounded-xl flex justify-center items-center gap-3 hover:bg-gray-100 transition">
+
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg"
+                 class="w-6 h-6">
+
+            Continue with Google
+
+        </button>
+
+        <!-- Sign Up -->
+        <p class="text-center text-gray-600 mt-8">
+            Don't have an account?
+
+            <a href="signup.html"
+               class="text-blue-600 font-semibold hover:underline">
+
+                Create Account
+
+            </a>
+
+        </p>
+
+        <!-- Home -->
+        <div class="text-center mt-5">
+            <a href="index.html"
+               class="text-gray-500 hover:text-blue-600">
+
+                ← Back to Home
+
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
