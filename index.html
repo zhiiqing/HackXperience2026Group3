@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrueSelf</title>
+    <title>TrueSelf Sign Up</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
         body{
-            background: linear-gradient(135deg,#eef2ff,#dbeafe,#f5f3ff);
-            overflow:hidden;
+            background: linear-gradient(135deg,#dbeafe,#eef2ff,#ede9fe);
+        }
+
+        .glass{
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(15px);
         }
 
         .floating{
@@ -18,125 +22,193 @@
         }
 
         @keyframes float{
-            0%,100%{
-                transform:translateY(0px);
-            }
-            50%{
-                transform:translateY(-15px);
-            }
-        }
-
-        .glow:hover{
-            box-shadow:0 0 35px rgba(59,130,246,.45);
+            0%,100%{transform:translateY(0);}
+            50%{transform:translateY(-10px);}
         }
     </style>
 
 </head>
 
-<body class="min-h-screen flex items-center justify-center px-6">
+<body class="min-h-screen flex items-center justify-center px-4 py-12 relative">
 
-    <!-- Top Right Navigation -->
-    <div class="absolute top-6 right-6 flex gap-3 z-50">
-
-        <!-- Login Button -->
-        <a href="login.html"
-           class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition">
-
-            Login
-
+    <!-- Top Left Fixed Back to Home Button with Icon -->
+    <div class="fixed top-6 left-6 z-50">
+        <a href="index.html" class="bg-white/80 hover:bg-white transition px-4 py-2 rounded-full text-blue-600 border border-blue-200 font-medium shadow-sm flex items-center gap-2">
+            🏠 Back to Home
         </a>
-
-        <!-- Sign Up Button -->
-        <a href="signup.html"
-           class="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-semibold shadow hover:scale-105 transition">
-
-            Sign Up
-
-        </a>
-
-        <!-- Forum Button -->
-        <a href="forum.html" 
-           class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition">
-            
-            Forum
-            
-        </a>
-
     </div>
 
-    <!-- Background Decorations -->
-    <div class="absolute top-20 left-20 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-20 right-20 w-80 h-80 bg-purple-300 opacity-20 rounded-full blur-3xl"></div>
+    <!-- Background Blur -->
+    <div class="absolute top-10 left-10 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-10 right-10 w-72 h-72 bg-purple-300 opacity-20 rounded-full blur-3xl"></div>
 
-    <!-- Hero Card -->
-    <div class="relative bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl max-w-3xl w-full p-12 text-center">
+    <!-- Sign Up Card -->
+    <div class="glass relative w-full max-w-md rounded-3xl shadow-2xl p-8">
 
         <!-- AI Icon -->
-        <div class="floating mb-8">
-            <div class="mx-auto w-28 h-28 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-6xl shadow-xl">
+        <div class="floating flex justify-center mb-6">
+            <div class="w-20 h-20 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-4xl shadow-lg">
                 🤖
             </div>
         </div>
 
-        <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
-            Welcome to
-            <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                TrueSelf
-            </span>
+        <h1 class="text-3xl font-bold text-center text-gray-800">
+            Create Account
         </h1>
 
-        <p class="text-gray-600 text-lg leading-8 max-w-xl mx-auto">
-            TrueSelf is an intelligent AI companion designed to provide a safe,
-            supportive environment for you to share your feelings,
-            process your emotions through journaling, and track your daily moods. 
-            
-            Beyond AI support, it connects you with professional help starting at just $5, 
-            making mental wellness accessible and affordable.
+        <p class="text-center text-gray-500 mt-2 mb-6">
+            Join TrueSelf today. (For users 16 and older)
         </p>
 
-        <!-- Features -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 mb-10">
-
-            <div class="bg-blue-50 rounded-2xl p-5">
-                <div class="text-4xl mb-3">💬</div>
-                <h3 class="font-bold text-gray-700">AI Chat</h3>
-                <p class="text-gray-500 text-sm mt-2">
-                    Ask questions anytime.
-                </p>
-            </div>
-
-            <div class="bg-purple-50 rounded-2xl p-5">
-                <div class="text-4xl mb-3">⚡</div>
-                <h3 class="font-bold text-gray-700">Fast Responses</h3>
-                <p class="text-gray-500 text-sm mt-2">
-                    Get instant AI-powered answers.
-                </p>
-            </div>
-
-            <div class="bg-indigo-50 rounded-2xl p-5">
-                <div class="text-4xl mb-3">🧠</div>
-                <h3 class="font-bold text-gray-700">Smart Assistant</h3>
-                <p class="text-gray-500 text-sm mt-2">
-                    Helpful, reliable, and always available.
-                </p>
-            </div>
-
+        <!-- Toggle Bar (Login / Sign Up) -->
+        <div class="flex bg-gray-200 p-1 rounded-full mb-6">
+            <a href="login.html" class="w-1/2 py-2 text-center text-sm font-semibold text-gray-600 rounded-full transition">
+                Login
+            </a>
+            <a href="signup.html" class="w-1/2 py-2 text-center text-sm font-semibold text-blue-600 bg-white rounded-full shadow transition">
+                Sign Up
+            </a>
         </div>
 
-        <!-- Start Chatting Button -->
-        <a href="signup.html"
-           class="glow inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105">
+        <form id="signupForm">
 
-            Start Chatting
-            →
+            <!-- Full Name -->
+            <div class="mb-5">
+                <label class="block text-gray-700 mb-2">
+                    Full Name
+                </label>
 
-        </a>
+                <input
+                    type="text"
+                    placeholder="Enter your full name"
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+            </div>
 
-        <p class="mt-8 text-sm text-gray-500">
-            Powered by AI • Available 24/7
+            <!-- Email -->
+            <div class="mb-5">
+                <label class="block text-gray-700 mb-2">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="emailInput"
+                    placeholder="example@email.com"
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                
+                <!-- Existing Account Prompt Container -->
+                <div id="existingAccountPrompt" class="hidden mt-2 p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl flex items-center justify-between">
+                    <span>You have an existing account.</span>
+                    <a href="login.html" class="font-bold underline text-blue-600 hover:text-blue-800">Login here</a>
+                </div>
+            </div>
+
+            <!-- Date of Birth -->
+            <div class="mb-5">
+                <label class="block text-gray-700 mb-2">
+                    Date of Birth
+                </label>
+
+                <input
+                    type="date"
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                <span class="text-xs text-gray-500 mt-1 block">You must be at least 16 years old to register.</span>
+            </div>
+
+            <!-- Identity Document Upload -->
+            <div class="mb-5">
+                <label class="block text-gray-700 mb-2">
+                    Identity Document (Age Verification 16+)
+                </label>
+
+                <input
+                    type="file"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required
+                    class="w-full border rounded-xl p-2.5 bg-white text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
+                <span class="text-xs text-gray-500 mt-1 block">Upload a valid ID proving your age (Accepted: JPG, PNG, PDF).</span>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-5">
+                <label class="block text-gray-700 mb-2">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    placeholder="Create a password"
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="mb-6">
+                <label class="block text-gray-700 mb-2">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    placeholder="Confirm your password"
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+            </div>
+
+            <!-- Checkbox -->
+            <div class="flex items-center mb-6">
+                <input
+                    type="checkbox"
+                    required
+                    class="mr-2">
+
+                <span class="text-sm text-gray-600">
+                    I agree to the Terms & Conditions
+                </span>
+            </div>
+
+            <!-- Button -->
+            <button
+                type="submit"
+                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:scale-105 transition flex items-center justify-center gap-2">
+
+                💬 Create Account
+
+            </button>
+
+        </form>
+
+        <!-- Login Link -->
+        <p class="text-center text-gray-600 mt-6">
+            Already have an account?
+
+            <a
+                href="login.html"
+                class="text-blue-600 font-semibold hover:underline">
+
+                Login
+
+            </a>
+
         </p>
 
     </div>
+
+    <script>
+        const emailInput = document.getElementById('emailInput');
+        const promptBox = document.getElementById('existingAccountPrompt');
+
+        emailInput.addEventListener('input', () => {
+            if (emailInput.value.trim().toLowerCase() === 'test@gmail.com') {
+                promptBox.classList.remove('hidden');
+            } else {
+                promptBox.classList.add('hidden');
+            }
+        });
+    </script>
 
 </body>
 </html>
