@@ -146,16 +146,6 @@
             margin-bottom: 4px;
         }
 
-        .message-bubble code {
-            background-color: #f3f4f6;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            font-size: 14px;
-            color: #374151;
-            border: 1px solid #e5e7eb;
-        }
-
         /* Bottom Input Area */
         .footer-input-container {
             background-color: #ffffff;
@@ -205,6 +195,67 @@
         .send-btn:hover {
             background-color: #4c1d95;
         }
+
+        /* Custom Modal Popup Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .modal-box h3 {
+            color: #7c3aed;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .modal-box p {
+            color: #4b5563;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .modal-btn {
+            background-color: #7c3aed;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .modal-btn:hover {
+            background-color: #6d28d9;
+        }
     </style>
 </head>
 <body>
@@ -240,10 +291,55 @@
         <button id="sendBtn" class="send-btn">Send</button>
     </div>
 
+    <!-- Modal Popup -->
+    <div class="modal-overlay" id="popupModal">
+        <div class="modal-box">
+            <h3>We're Here For You</h3>
+            <p>You don't have to go through this alone. Please click below to access immediate support resources.</p>
+            <button class="modal-btn" id="modalRedirectBtn">Get Support</button>
+        </div>
+    </div>
+
     <script>
         const chatContainer = document.getElementById('chatContainer');
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
+        const popupModal = document.getElementById('popupModal');
+        const modalRedirectBtn = document.getElementById('modalRedirectBtn');
+
+        const supportMessage = 
+            `I’m really sorry you’re feeling that way — that sounds really tough. I’m here for you. 
+            
+            Try one of these:
+            • 5-4-3-2-1 grounding: name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.
+            • Slow breathing: inhale for 4, hold 4, exhale 4 (or try 4–6–8). Repeat 4 times.
+            • Move a little: stand, stretch, or step outside for a minute of fresh air.
+            • Write one sentence about what’s hardest right now — just getting it out can help.
+            • Reach out: text or call someone you trust and say, “I’m having a rough time — can we talk?”
+    
+            If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988. 
+            You don’t have to handle this alone.`;
+
+        const stressMessage = 
+            `I’m sorry — stress is really hard. I can help right now. 
+            If you want something fast, try one of these (pick one and I can guide you through it):
+            • Box/4-4-6 breathing (2 minutes)
+            Sit or stand comfortably.
+            Inhale slowly for 4 seconds. Hold for 4 seconds. Exhale for 6–8 seconds.
+            Repeat for 6–10 breaths.
+            • 5-4-3-2-1 grounding (1–2 minutes)
+            Name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.
+            • Quick reset (3–5 minutes)
+            Stand, stretch, and walk for one minute.
+            Splash water on your face or get a glass of water.
+            Do a single progressive muscle tension-release: tense shoulders for 5s, then release.
+            If you want a short plan to reduce stress for the rest of today:
+            • Pick 1–3 must-do tasks and delay or delegate the rest.
+            • Use a 25-minute focused timer (Pomodoro), then take a 5–10 minute break.
+            • Do one soothing activity tonight (short walk, warm shower, 20 minutes reading).
+            • Sleep: try a wind-down routine (no screens 30–60 minutes before bed).
+            Longer-term ideas (if helpful): regular exercise, 10 minutes daily mindfulness or breathing, clearer boundaries (saying “I can’t do that right now”), talking with someone you trust, and professional help if stress is persistent. If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988. 
+            You don’t have to handle this alone.`;
 
         function handleSendMessage() {
             const text = messageInput.value.trim();
@@ -263,6 +359,12 @@
 
             const normalizedInput = text.toLowerCase().replace(/['‘’]/g, "'").trim();
             
+            // Check for trigger phrase
+            if (normalizedInput === 'i want to die') {
+                popupModal.classList.add('active');
+                return;
+            }
+
             setTimeout(() => {
                 const aiRow = document.createElement('div');
                 aiRow.className = 'message-row';
@@ -323,6 +425,11 @@
             if (e.key === 'Enter') {
                 handleSendMessage();
             }
+        });
+
+        // Redirect logic when clicking the button inside the popup
+        modalRedirectBtn.addEventListener('click', () => {
+            window.location.href = 'tier.html';
         });
     </script>
 </body>
