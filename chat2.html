@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HackXperience AI Assistant</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="h-screen flex flex-col bg-gray-50">
+
+<!-- Header -->
+<header class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg p-4 flex items-center justify-between">
+    <div class="flex items-center gap-4">
+        <a href="index.html" class="bg-white/20 hover:bg-white/30 transition px-4 py-2 rounded-full">← Back</a>
+        <h1 class="text-xl font-bold">HackXperience AI Assistant</h1>
+    </div>
+    <div class="text-2xl">🤖</div>
+</header>
+
+<!-- Chat Window -->
+<main id="chat-window" class="flex-1 overflow-y-auto p-6 space-y-4 max-w-4xl mx-auto w-full">
+    <div class="flex items-start gap-3">
+        <div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">AI</div>
+        <div class="bg-white rounded-2xl shadow p-4 max-w-xl text-gray-700">
+            Hello! 👋 I'm your AI assistant powered by `gpt-5.6-sol`. Ask me anything!
+        </div>
+    </div>
+</main>
+
+<!-- Footer Input -->
+<footer class="bg-white border-t p-4 shadow-lg">
+    <div class="max-w-4xl mx-auto flex gap-3">
+        <input id="user-input" type="text" placeholder="Type your message..." class="flex-1 border rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-indigo-500">
+        <button onclick="sendMessage()" class="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition">Send</button>
+    </div>
+</footer>
+
+<script>
+const chatWindow = document.getElementById("chat-window");
+const input = document.getElementById("user-input");
+
+input.addEventListener("keypress", (e) => { if (e.key === "Enter") sendMessage(); });
+
+async function sendMessage() {
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = "";
+
+    // Append User Bubble
+    chatWindow.innerHTML += `<div class="flex justify-end"><div class="bg-indigo-600 text-white rounded-2xl p-4 max-w-xl shadow">${text}</div></div>`;
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+    // Loading Bubble
+    const loadId = "load-" + Date.now();
+    chatWindow.innerHTML += `<div id="${loadId}" class="flex items-start gap-3"><div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">AI</div><div class="bg-white rounded-2xl shadow p-4 text-gray-500">Thinking...</div></div>`;
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+
+    try {
+        const res = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text })
+        });
+        const data = await res.json();
+        document.getElementById(loadId).remove();
+
+        // Append AI Reply
+        chatWindow.innerHTML += `<div class="flex items-start gap-3"><div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">AI</div><div class="bg-white rounded-2xl shadow p-4 max-w-xl text-gray-700 whitespace-pre-wrap">${data.reply}</div></div>`;
+    } catch (err) {
+        document.getElementById(loadId).remove();
+        chatWindow.innerHTML += `<div class="text-red-500 p-2">Error connecting to assistant server.</div>`;
+    }
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+</script>
+</body>
+</html>
