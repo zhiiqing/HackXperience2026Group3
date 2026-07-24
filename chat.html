@@ -80,38 +80,6 @@
         const popupModal = document.getElementById('popupModal');
         const modalRedirectBtn = document.getElementById('modalRedirectBtn');
 
-        const supportMessage = `I’m really sorry you’re feeling that way — that sounds really tough. I’m here for you. 
-
-Try one of these:
-• 5-4-3-2-1 grounding: name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.
-• Slow breathing: inhale for 4, hold 4, exhale 4 (or try 4–6–8). Repeat 4 times.
-• Move a little: stand, stretch, or step outside for a minute of fresh air.
-• Write one sentence about what’s hardest right now — just getting it out can help.
-• Reach out: text or call someone you trust and say, “I’m having a rough time — can we talk?”
-
-If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988. 
-You don’t have to handle this alone.`;
-
-        const stressMessage = `I’m sorry — stress is really hard. I can help right now. 
-If you want something fast, try one of these (pick one and I can guide you through it):
-• Box/4-4-6 breathing (2 minutes)
-Sit or stand comfortably.
-Inhale slowly for 4 seconds. Hold for 4 seconds. Exhale for 6–8 seconds.
-Repeat for 6–10 breaths.
-• 5-4-3-2-1 grounding (1–2 minutes)
-Name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.
-• Quick reset (3–5 minutes)
-Stand, stretch, and walk for one minute.
-Splash water on your face or get a glass of water.
-Do a single progressive muscle tension-release: tense shoulders for 5s, then release.
-If you want a short plan to reduce stress for the rest of today:
-• Pick 1–3 must-do tasks and delay or delegate the rest.
-• Use a 25-minute focused timer (Pomodoro), then take a 5–10 minute break.
-• Do one soothing activity tonight (short walk, warm shower, 20 minutes reading).
-• Sleep: try a wind-down routine (no screens 30–60 minutes before bed).
-Longer-term ideas (if helpful): regular exercise, 10 minutes daily mindfulness or breathing, clearer boundaries (saying “I can’t do that right now”), talking with someone you trust, and professional help if stress is persistent. If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988. 
-You don’t have to handle this alone.`;
-
         function handleSendMessage() {
             const text = messageInput.value.trim();
             if (!text) return;
@@ -207,7 +175,7 @@ You don’t have to handle this alone.`;
             }
         });
 
-        // Redirect logic when clicking the button inside the popup
+        // Redirects to tier.html when clicking "Get Support"
         modalRedirectBtn.addEventListener('click', () => {
             window.location.href = 'tier.html';
         });
