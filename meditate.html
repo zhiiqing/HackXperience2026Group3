@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueSelf - Meditation Clock</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #eef2ff, #dbeafe, #f5f3ff);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Top Navigation Bar -->
+    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="dashboard.html" class="px-4 py-2 rounded-full bg-blue-50 text-blue-600 font-medium transition flex items-center gap-2">
+                &larr; Back to Dashboard
+            </a>
+            <div class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Meditation Session
+            </div>
+            <div class="w-24"></div> <!-- Spacer for alignment -->
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-6 py-10 flex flex-col items-center justify-center">
+
+        <div class="glass w-full rounded-3xl shadow-xl p-8 border border-white/80 text-center">
+            
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">Daily Mindfulness Meditation</h1>
+            <p class="text-gray-500 text-sm mb-8">Settle in, focus your breathing, and let your mind find stillness.</p>
+
+            <!-- Embedded YouTube Video Container -->
+            <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg mb-8 bg-black">
+                <iframe 
+                    id="youtubePlayer"
+                    class="w-full h-full"
+                    src="https://www.youtube.com/embed/ZToicYcHIOU?enablejsapi=1" 
+                    title="Daily Calm | 10 Minute Mindfulness Meditation" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+            <!-- Timer Section -->
+            <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 flex flex-col items-center">
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">Meditation Timer</span>
+                <div id="timerDisplay" class="text-6xl font-black text-gray-800 tracking-wider mb-2">10:00</div>
+                <p id="timerStatus" class="text-sm text-gray-500">Timer will auto-start when the video reaches 0:30</p>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- YouTube IFrame Player API & Custom Timer Logic -->
+    <script>
+        let player;
+        let timerInterval = null;
+        let timeLeft = 600; // 10 minutes in seconds
+        let timerStarted = false;
+
+        // Load YouTube IFrame API script dynamically
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        // This function is called automatically by the YouTube API
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer', {
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        function onPlayerStateChange(event) {
+            // Check if video is playing (YT.PlayerState.PLAYING is 1)
+            if (event.data === YT.PlayerState.PLAYING) {
+                checkVideoTime();
+            } else {
+                // If paused or ended, clear interval checks
+                if (window.timeChecker) clearInterval(window.timeChecker);
+            }
+        }
+
+        function checkVideoTime() {
+            if (window.timeChecker) clearInterval(window.timeChecker);
+
+            window.timeChecker = setInterval(() => {
+                if (player && typeof player.getCurrentTime === 'function') {
+                    const currentTime = player.getCurrentTime();
+                    
+                    // Auto-start timer when video hits 0:30 (30 seconds)
+                    if (currentTime >= 30 && !timerStarted) {
+                        startTimer();
+                        clearInterval(window.timeChecker);
+                    }
+                }
+            }, 500);
+        }
+
+        function startTimer() {
+            timerStarted = true;
+            document.getElementById('timerStatus').textContent = "Meditation session in progress...";
+            document.getElementById('timerStatus').className = "text-sm text-blue-600 font-semibold animate-pulse";
+
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    let minutes = Math.floor(timeLeft / 60);
+                    let seconds = timeLeft % 60;
+                    document.getElementById('timerDisplay').textContent = 
+                        String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
+                } else {
+                    clearInterval(timerInterval);
+                    document.getElementById('timerStatus').textContent = "Session complete! Great job taking time for yourself.";
+                    document.getElementById('timerStatus').className = "text-sm text-purple-600 font-bold";
+                }
+            }, 1000);
+        }
+    </script>
+
+</body>
+</html>
