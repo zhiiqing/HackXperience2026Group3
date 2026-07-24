@@ -2,183 +2,742 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chatbot</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Support Chat — HackXperience</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
-        .support-button.supported {
-            background: #e0e7ff;
-            color: #4338ca;
+        body {
+            background: #f4f7fb;
+        }
+
+        #chat-window {
+            scroll-behavior: smooth;
+        }
+
+        .message {
+            animation: fade 0.3s ease;
+        }
+
+        @keyframes fade {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 20px;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col bg-[#f4f7fb] text-gray-700 relative overflow-hidden">
 
-    <!-- Background Decorations -->
-    <div class="fixed rounded-full filter blur-[90px] opacity-25 -z-10 w-[300px] h-[300px] bg-[#93c5fd] top-[50px] left-[50px]"></div>
-    <div class="fixed rounded-full filter blur-[90px] opacity-25 -z-10 w-[360px] h-[360px] bg-[#c4b5fd] bottom-[50px] right-[50px]"></div>
+<body class="h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg backdrop-blur-md flex-shrink-0">
-        <div class="max-w-6xl mx-auto flex items-center justify-between p-4">
-            <div class="flex items-center gap-4">
-                <a href="index.html" class="bg-white/20 hover:bg-white/30 transition px-4 py-2 rounded-full text-white font-medium">
-                    &larr; Back
+    <header
+        class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg"
+    >
+        <div
+            class="max-w-6xl mx-auto flex items-center justify-between p-4"
+        >
+            <div class="flex items-center gap-3">
+
+                <a
+                    href="index.html"
+                    class="bg-white/20 hover:bg-white/30 transition px-4 py-2 rounded-full"
+                >
+                    ← Home
                 </a>
-                <div>
-                    <h1 class="text-2xl font-bold tracking-wide">AI Chatbot</h1>
-                    <p class="text-sm opacity-90">Your mental wellness companion</p>
-                </div>
+
+                <a
+                    href="forum.html"
+                    class="bg-white/20 hover:bg-white/30 transition px-4 py-2 rounded-full"
+                >
+                    Forum
+                </a>
+
+                <a
+                    href="tier.html"
+                    class="bg-rose-500 hover:bg-rose-600 transition px-4 py-2 rounded-full"
+                >
+                    Seek Help Now
+                </a>
+
             </div>
-            <div class="bg-white/20 w-10 h-10 rounded-full flex items-center justify-center text-xl shadow-inner">
-                🤖
+
+            <div class="flex items-center gap-3">
+
+                <button
+                    id="clear-chat"
+                    type="button"
+                    class="bg-white/20 hover:bg-white/30 transition px-4 py-2 rounded-full"
+                >
+                    Clear Chat
+                </button>
+
+                <button
+                    id="logout-button"
+                    type="button"
+                    class="bg-white text-indigo-700 hover:bg-gray-100 transition px-4 py-2 rounded-full font-semibold"
+                >
+                    Log Out
+                </button>
+
             </div>
+        </div>
+
+        <div class="max-w-5xl mx-auto px-5 pb-4">
+
+            <h1 class="text-2xl font-bold">
+                Support Chat
+            </h1>
+
+            <p class="text-sm opacity-90">
+                A private prototype space to express what you are feeling
+            </p>
+
         </div>
     </header>
 
-    <!-- Chat Messages Container -->
-    <main class="flex-1 overflow-y-auto p-6 min-h-0">
-        <div class="max-w-3xl mx-auto flex flex-col gap-5" id="chatContainer">
-            <div class="message-row flex items-start gap-3">
-                <div class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-md">
-                    AI
-                </div>
-                <div class="message-bubble bg-white border border-gray-100 rounded-2xl shadow-md p-5 text-gray-800 max-w-xl leading-relaxed">
-                    Hello! 👋 I'm your AI Chatbot. Feel free to chat with me about your mental wellness 😊
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <!-- Bottom Input Section -->
-    <div class="bg-white/90 backdrop-blur-md p-4 border-t border-gray-200/50 shadow-lg flex-shrink-0">
-        <div class="max-w-3xl mx-auto flex items-center gap-3">
-            <div class="flex-1 relative">
-                <input type="text" id="messageInput" class="w-full px-5 py-3 border border-gray-300 rounded-full text-sm outline-none transition focus:border-indigo-600 focus:ring-2 focus:ring-indigo-100 bg-white" placeholder="Type your message...">
-            </div>
-            <button id="sendBtn" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition">
-                Send
-            </button>
-        </div>
+    <!-- Prototype notice -->
+    <div
+        class="bg-amber-50 border-b border-amber-200 px-5 py-3"
+    >
+        <p
+            class="max-w-5xl mx-auto text-sm text-amber-800 text-center"
+        >
+            This is a frontend prototype, not a professional counselling
+            or emergency service.
+        </p>
     </div>
 
-    <!-- Modal Popup -->
-    <div class="modal-overlay fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 opacity-0 invisible transition-all duration-300" id="popupModal">
-        <div class="modal-box bg-white p-8 rounded-2xl max-w-md w-[90%] shadow-2xl text-center border border-white/80">
-            <h3 class="text-xl font-bold text-gray-800 mb-3">We're Here For You</h3>
-            <p class="text-gray-600 text-sm leading-relaxed mb-6">You don't have to go through this alone. Please click below to access immediate support resources.</p>
-            <button class="modal-btn bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg hover:scale-105 transition w-full" id="modalRedirectBtn">
-                Get Support
+    <!-- Chat area -->
+    <main
+        id="chat-window"
+        class="flex-1 overflow-y-auto p-6"
+    >
+        <div
+            id="chat-messages"
+            class="max-w-5xl mx-auto space-y-6"
+        ></div>
+    </main>
+
+    <!-- Suggested responses -->
+    <section class="bg-white border-t px-5 pt-4">
+
+        <div
+            class="max-w-5xl mx-auto flex gap-2 overflow-x-auto pb-3"
+        >
+            <button
+                type="button"
+                class="suggestion whitespace-nowrap bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full"
+                data-message="I just need someone to listen."
+            >
+                I just need someone to listen
             </button>
+
+            <button
+                type="button"
+                class="suggestion whitespace-nowrap bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full"
+                data-message="I feel stressed and overwhelmed."
+            >
+                I feel overwhelmed
+            </button>
+
+            <button
+                type="button"
+                class="suggestion whitespace-nowrap bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full"
+                data-message="Can you help me calm down?"
+            >
+                Help me calm down
+            </button>
+
+            <button
+                type="button"
+                class="suggestion whitespace-nowrap bg-indigo-50 text-indigo-700 px-4 py-2 rounded-full"
+                data-message="I want to make a small plan."
+            >
+                Help me make a plan
+            </button>
+        </div>
+
+    </section>
+
+    <!-- Message input -->
+    <footer class="bg-white border-t shadow-lg">
+
+        <div class="max-w-5xl mx-auto p-5">
+
+            <form
+                id="chat-form"
+                class="flex items-center gap-3"
+            >
+                <input
+                    id="user-input"
+                    type="text"
+                    maxlength="1000"
+                    placeholder="Share what is on your mind..."
+                    autocomplete="off"
+                    class="flex-1 rounded-full border border-gray-300 px-6 py-4 outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                >
+
+                <button
+                    type="submit"
+                    class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:scale-105 transition text-white px-7 py-4 rounded-full shadow-lg font-semibold"
+                >
+                    Send
+                </button>
+            </form>
+
+        </div>
+
+    </footer>
+
+    <!-- Safety popup -->
+    <div
+        id="safety-popup"
+        class="fixed inset-0 bg-black/50 hidden items-center justify-center p-5 z-50"
+    >
+        <div
+            class="bg-white rounded-3xl shadow-2xl max-w-lg w-full p-7"
+        >
+            <div
+                class="w-14 h-14 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center text-2xl mb-4"
+            >
+                ♡
+            </div>
+
+            <h2 class="text-2xl font-bold text-gray-800">
+                Your safety matters
+            </h2>
+
+            <p class="text-gray-600 leading-7 mt-3">
+                Some of what you shared sounds serious. You are not in
+                trouble, and you do not have to deal with this alone.
+            </p>
+
+            <div
+                class="bg-rose-50 border border-rose-200 rounded-2xl p-4 mt-5"
+            >
+                <p class="font-semibold text-rose-800">
+                    Are you in immediate danger or about to act?
+                </p>
+
+                <p class="text-rose-700 text-sm mt-1">
+                    Contact your local emergency service or go to the
+                    nearest emergency department now.
+                </p>
+            </div>
+
+            <div class="grid gap-3 mt-6">
+
+                <a
+                    href="tier.html"
+                    class="bg-indigo-600 hover:bg-indigo-700 text-white text-center font-bold px-6 py-3 rounded-full transition"
+                >
+                    View Help Options
+                </a>
+
+                <a
+                    href="forum.html"
+                    class="bg-indigo-50 text-indigo-700 text-center font-bold px-6 py-3 rounded-full"
+                >
+                    Visit Community Forum
+                </a>
+
+                <button
+                    id="close-safety-popup"
+                    type="button"
+                    class="text-gray-500 hover:text-gray-800 px-6 py-3"
+                >
+                    I am safe for now
+                </button>
+
+            </div>
         </div>
     </div>
 
     <script>
-        const chatContainer = document.getElementById('chatContainer');
-        const messageInput = document.getElementById('messageInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const popupModal = document.getElementById('popupModal');
-        const modalRedirectBtn = document.getElementById('modalRedirectBtn');
+        /*
+            LOGIN CHECK
 
-        function handleSendMessage() {
-            const text = messageInput.value.trim();
-            if (!text) return;
+            If the user is not logged in, remember that they wanted
+            to open chat.html and send them to login.html.
+        */
+        const loggedIn =
+            localStorage.getItem("loggedIn");
 
-            // Append user message
-            const userRow = document.createElement('div');
-            userRow.className = 'message-row flex items-start gap-3 flex-row-reverse';
-            userRow.innerHTML = `
-                <div class="w-11 h-11 rounded-full bg-gray-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-md">
-                    U
-                </div>
-                <div class="message-bubble bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl shadow-md p-5 max-w-xl leading-relaxed whitespace-pre-line">
-                    ${escapeHtml(text)}
-                </div>
-            `;
-            chatContainer.appendChild(userRow);
+        if (loggedIn !== "true") {
+            localStorage.setItem(
+                "redirectAfterLogin",
+                "chat.html"
+            );
 
-            messageInput.value = '';
-            chatContainer.scrollTop = chatContainer.scrollHeight;
+            window.location.replace(
+                "login.html"
+            );
+        }
 
-            const normalizedInput = text.toLowerCase().replace(/['‘’]/g, "'").trim();
-            
-            // Check for trigger phrase
-            if (normalizedInput === 'i want to die') {
-                popupModal.classList.remove('opacity-0', 'invisible');
-                popupModal.classList.add('opacity-100', 'visible');
+        const chatForm =
+            document.getElementById("chat-form");
+
+        const userInput =
+            document.getElementById("user-input");
+
+        const chatMessages =
+            document.getElementById("chat-messages");
+
+        const safetyPopup =
+            document.getElementById("safety-popup");
+
+        const closeSafetyPopup =
+            document.getElementById(
+                "close-safety-popup"
+            );
+
+        const chatStorageKey =
+            "prototypeChatMessages";
+
+        const concerningPhrases = [
+            "i want to die",
+            "i wanna die",
+            "i want to suicide",
+            "i wanna suicide",
+            "kill myself",
+            "end my life",
+            "take my own life",
+            "do not want to live",
+            "don't want to live",
+            "do not want to be alive",
+            "don't want to be alive",
+            "better off dead",
+            "hurt myself",
+            "harm myself",
+            "self harm",
+            "suicidal",
+            "suicide",
+            "about to do it",
+            "cannot go on anymore",
+            "can't go on anymore"
+        ];
+
+        function containsConcerningLanguage(text) {
+            const normalText =
+                text.toLowerCase().trim();
+
+            return concerningPhrases.some(
+                phrase =>
+                    normalText.includes(phrase)
+            );
+        }
+
+        function openSafetyPopup() {
+            safetyPopup.classList.remove(
+                "hidden"
+            );
+
+            safetyPopup.classList.add(
+                "flex"
+            );
+        }
+
+        function closePopup() {
+            safetyPopup.classList.add(
+                "hidden"
+            );
+
+            safetyPopup.classList.remove(
+                "flex"
+            );
+        }
+
+        function scrollBottom() {
+            const chatWindow =
+                document.getElementById(
+                    "chat-window"
+                );
+
+            chatWindow.scrollTop =
+                chatWindow.scrollHeight;
+        }
+
+        function getSavedMessages() {
+            try {
+                return JSON.parse(
+                    localStorage.getItem(
+                        chatStorageKey
+                    )
+                ) || [];
+            }
+            catch (error) {
+                return [];
+            }
+        }
+
+        function saveMessages(messages) {
+            localStorage.setItem(
+                chatStorageKey,
+                JSON.stringify(messages)
+            );
+        }
+
+        function createUserMessage(text) {
+            const wrapper =
+                document.createElement("div");
+
+            wrapper.className =
+                "flex justify-end message";
+
+            const row =
+                document.createElement("div");
+
+            row.className =
+                "flex items-end gap-3";
+
+            const bubble =
+                document.createElement("div");
+
+            bubble.className =
+                "bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-2xl rounded-br-sm px-5 py-4 shadow-lg max-w-xl whitespace-pre-wrap";
+
+            bubble.textContent =
+                text;
+
+            const avatar =
+                document.createElement("div");
+
+            avatar.className =
+                "w-11 h-11 rounded-full bg-gray-700 text-white flex items-center justify-center";
+
+            avatar.textContent =
+                "👤";
+
+            row.appendChild(bubble);
+            row.appendChild(avatar);
+            wrapper.appendChild(row);
+
+            chatMessages.appendChild(
+                wrapper
+            );
+        }
+
+        function createSupportMessage(text) {
+            const wrapper =
+                document.createElement("div");
+
+            wrapper.className =
+                "flex items-start gap-3 message";
+
+            const avatar =
+                document.createElement("div");
+
+            avatar.className =
+                "w-11 h-11 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xl shadow-lg";
+
+            avatar.textContent =
+                "♡";
+
+            const bubble =
+                document.createElement("div");
+
+            bubble.className =
+                "bg-white rounded-2xl rounded-tl-sm shadow-lg px-5 py-4 max-w-xl";
+
+            const heading =
+                document.createElement("h3");
+
+            heading.className =
+                "font-semibold text-gray-700 mb-1";
+
+            heading.textContent =
+                "Support Companion";
+
+            const paragraph =
+                document.createElement("p");
+
+            paragraph.className =
+                "text-gray-600 leading-7 whitespace-pre-wrap";
+
+            paragraph.textContent =
+                text;
+
+            bubble.appendChild(heading);
+            bubble.appendChild(paragraph);
+
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(bubble);
+
+            chatMessages.appendChild(
+                wrapper
+            );
+        }
+
+        function getPrototypeReply(message) {
+            const text =
+                message.toLowerCase();
+
+            if (
+                text.includes("listen") ||
+                text.includes("vent")
+            ) {
+                return (
+                    "I am here to listen. You do not need to solve " +
+                    "everything immediately. What has been weighing " +
+                    "on you the most?"
+                );
+            }
+
+            if (
+                text.includes("stress") ||
+                text.includes("overwhelmed") ||
+                text.includes("anxious")
+            ) {
+                return (
+                    "That sounds overwhelming. Try pausing for one " +
+                    "slow breath. Then choose only one small thing " +
+                    "that needs your attention first. What feels " +
+                    "most urgent right now?"
+                );
+            }
+
+            if (
+                text.includes("calm") ||
+                text.includes("panic")
+            ) {
+                return (
+                    "Let us slow things down. Place both feet on the " +
+                    "floor and notice five things you can see, four " +
+                    "things you can feel, and three things you can hear."
+                );
+            }
+
+            if (
+                text.includes("plan") ||
+                text.includes("what should i do")
+            ) {
+                return (
+                    "We can make the next step very small. First, name " +
+                    "one problem. Next, choose one action that takes " +
+                    "less than ten minutes. What small action feels possible?"
+                );
+            }
+
+            if (
+                text.includes("lonely") ||
+                text.includes("alone")
+            ) {
+                return (
+                    "Feeling alone can be painful, even when other " +
+                    "people are around. Is there one person you might " +
+                    "feel comfortable messaging today?"
+                );
+            }
+
+            if (
+                text.includes("school") ||
+                text.includes("assignment") ||
+                text.includes("exam")
+            ) {
+                return (
+                    "School pressure can build up quickly. Try choosing " +
+                    "one task and working on it for only five minutes. " +
+                    "Starting small still counts as progress."
+                );
+            }
+
+            return (
+                "Thank you for sharing that. It sounds like this has " +
+                "been affecting you. Would you prefer someone to listen, " +
+                "help you calm down, or help you think about a small next step?"
+            );
+        }
+
+        function addConversationMessage(
+            role,
+            text,
+            save = true
+        ) {
+            if (role === "user") {
+                createUserMessage(text);
+            }
+            else {
+                createSupportMessage(text);
+            }
+
+            if (save) {
+                const messages =
+                    getSavedMessages();
+
+                messages.push({
+                    role: role,
+                    text: text
+                });
+
+                saveMessages(messages);
+            }
+
+            scrollBottom();
+        }
+
+        function loadChat() {
+            const messages =
+                getSavedMessages();
+
+            if (messages.length === 0) {
+                addConversationMessage(
+                    "support",
+                    "Hello. This is a safe prototype space where you can express what is on your mind. Would you like me to listen, help you calm down, or help you make a small plan?"
+                );
+
                 return;
             }
 
-            setTimeout(() => {
-                const aiRow = document.createElement('div');
-                aiRow.className = 'message-row flex items-start gap-3';
-                const aiBubble = document.createElement('div');
-                aiBubble.className = 'message-bubble bg-white border border-gray-100 rounded-2xl shadow-md p-5 text-gray-800 max-w-xl leading-relaxed';
-                
-                if (normalizedInput === 'i am sad' || normalizedInput === 'i’m sad') {
-                    aiBubble.innerHTML = `
-                        <p class="mb-2">I’m really sorry you’re feeling that way — that sounds really tough. I’m here for you.</p>
-                        <p class="mb-2">Try one of these:</p>
-                        <ul class="list-disc list-inside mb-2 space-y-1">
-                            <li><strong>5-4-3-2-1 grounding:</strong> name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.</li>
-                            <li><strong>Slow breathing:</strong> inhale for 4, hold 4, exhale 4 (or try 4–6–8). Repeat 4 times.</li>
-                            <li><strong>Move a little:</strong> stand, stretch, or step outside for a minute of fresh air.</li>
-                            <li><strong>Write one sentence:</strong> about what’s hardest right now — just getting it out can help.</li>
-                            <li><strong>Reach out:</strong> text or call someone you trust and say, “I’m having a rough time — can we talk?”</li>
-                        </ul>
-                        <p class="mb-2">If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988.</p>
-                        <p>You don’t have to handle this alone.</p>
-                    `;
-                } else if (normalizedInput === 'i am stress' || normalizedInput === 'i am stressed' || normalizedInput === 'i’m stressed') {
-                    aiBubble.innerHTML = `
-                        <p class="mb-2">I’m sorry — stress is really hard. I can help right now.</p>
-                        <p class="mb-2">If you want something fast, try one of these (pick one and I can guide you through it):</p>
-                        <ul class="list-disc list-inside mb-2 space-y-1">
-                            <li><strong>Box/4-4-6 breathing (2 minutes):</strong> Sit or stand comfortably. Inhale slowly for 4 seconds. Hold for 4 seconds. Exhale for 6–8 seconds. Repeat for 6–10 breaths.</li>
-                            <li><strong>5-4-3-2-1 grounding (1–2 minutes):</strong> Name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.</li>
-                            <li><strong>Quick reset (3–5 minutes):</strong> Stand, stretch, and walk for one minute. Splash water on your face or get a glass of water. Do a single progressive muscle tension-release: tense shoulders for 5s, then release.</li>
-                        </ul>
-                        <p class="mb-2">If you want a short plan to reduce stress for the rest of today:</p>
-                        <ul class="list-disc list-inside mb-2 space-y-1">
-                            <li>Pick 1–3 must-do tasks and delay or delegate the rest.</li>
-                            <li>Use a 25-minute focused timer (Pomodoro), then take a 5–10 minute break.</li>
-                            <li>Do one soothing activity tonight (short walk, warm shower, 20 minutes reading).</li>
-                            <li>Sleep: try a wind-down routine (no screens 30–60 minutes before bed).</li>
-                        </ul>
-                        <p class="mb-2">Longer-term ideas (if helpful): regular exercise, 10 minutes daily mindfulness or breathing, clearer boundaries (saying “I can’t do that right now”), talking with someone you trust, and professional help if stress is persistent.</p>
-                        <p class="mb-2">If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988.</p>
-                        <p>You don’t have to handle this alone.</p>
-                    `;
-                } else {
-                    aiBubble.textContent = `I received your message: "${text}". How else can I help you today?`;
-                }
-
-                aiRow.innerHTML = `
-                    <div class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-md">
-                        AI
-                    </div>
-                `;
-                aiRow.appendChild(aiBubble);
-                chatContainer.appendChild(aiRow);
-                chatContainer.scrollTop = chatContainer.scrollHeight;
-            }, 500);
+            messages.forEach(message => {
+                addConversationMessage(
+                    message.role,
+                    message.text,
+                    false
+                );
+            });
         }
 
-        function escapeHtml(string) {
-            return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        }
+        function sendMessage(message) {
+            const text =
+                message.trim();
 
-        sendBtn.addEventListener('click', handleSendMessage);
-        messageInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                handleSendMessage();
+            if (text === "") {
+                return;
             }
-        });
 
-        // Redirects to tier.html when clicking "Get Support"
-        modalRedirectBtn.addEventListener('click', () => {
-            window.location.href = 'tier.html';
-        });
+            addConversationMessage(
+                "user",
+                text
+            );
+
+            if (
+                containsConcerningLanguage(text)
+            ) {
+                openSafetyPopup();
+
+                addConversationMessage(
+                    "support",
+                    "I am concerned about your safety. Please open the help options shown on the screen and contact emergency or crisis support if you may act soon."
+                );
+
+                return;
+            }
+
+            const reply =
+                getPrototypeReply(text);
+
+            window.setTimeout(
+                function () {
+                    addConversationMessage(
+                        "support",
+                        reply
+                    );
+                },
+                500
+            );
+        }
+
+        chatForm.addEventListener(
+            "submit",
+            function (event) {
+                event.preventDefault();
+
+                const message =
+                    userInput.value;
+
+                userInput.value = "";
+
+                sendMessage(message);
+            }
+        );
+
+        document
+            .querySelectorAll(".suggestion")
+            .forEach(button => {
+                button.addEventListener(
+                    "click",
+                    function () {
+                        sendMessage(
+                            button.dataset.message
+                        );
+                    }
+                );
+            });
+
+        closeSafetyPopup.addEventListener(
+            "click",
+            closePopup
+        );
+
+        document
+            .getElementById("clear-chat")
+            .addEventListener(
+                "click",
+                function () {
+                    const confirmed =
+                        confirm(
+                            "Clear this chat conversation?"
+                        );
+
+                    if (!confirmed) {
+                        return;
+                    }
+
+                    localStorage.removeItem(
+                        chatStorageKey
+                    );
+
+                    chatMessages.innerHTML = "";
+
+                    loadChat();
+                }
+            );
+
+        document
+            .getElementById("logout-button")
+            .addEventListener(
+                "click",
+                function () {
+                    localStorage.removeItem(
+                        "loggedIn"
+                    );
+
+                    localStorage.removeItem(
+                        "userEmail"
+                    );
+
+                    localStorage.removeItem(
+                        "redirectAfterLogin"
+                    );
+
+                    window.location.href =
+                        "login.html";
+                }
+            );
+
+        loadChat();
     </script>
+
 </body>
 </html>
