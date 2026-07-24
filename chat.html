@@ -89,6 +89,10 @@
             gap: 12px;
         }
 
+        .message-row.user {
+            flex-direction: row-reverse;
+        }
+
         .avatar {
             background-color: #5b21b6;
             color: white;
@@ -103,6 +107,10 @@
             flex-shrink: 0;
         }
 
+        .message-row.user .avatar {
+            background-color: #4b5563;
+        }
+
         .message-bubble {
             background-color: #ffffff;
             border: 1px solid #e5e7eb;
@@ -113,6 +121,13 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
             max-width: 600px;
             line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .message-row.user .message-bubble {
+            background-color: #7c3aed;
+            color: #ffffff;
+            border-color: #7c3aed;
         }
 
         .message-bubble code {
@@ -192,11 +207,11 @@
     </header>
 
     <!-- Chat Messages Container -->
-    <div class="chat-container">
+    <div class="chat-container" id="chatContainer">
         <div class="message-row">
             <div class="avatar">AI</div>
             <div class="message-bubble">
-                Hello! 👋 I'm your AI assistant powered by <code>gpt-5.6-sol</code>. Ask me anything!
+                Hello! 👋 I'm your AI assistant powered by `gpt-5.6-sol`. Ask me anything!
             </div>
         </div>
     </div>
@@ -204,10 +219,76 @@
     <!-- Bottom Input Section -->
     <div class="footer-input-container">
         <div class="input-wrapper">
-            <input type="text" class="message-input" placeholder="Type your message...">
+            <input type="text" id="messageInput" class="message-input" placeholder="Type your message...">
         </div>
-        <button class="send-btn">Send</button>
+        <button id="sendBtn" class="send-btn">Send</button>
     </div>
 
+    <script>
+        const chatContainer = document.getElementById('chatContainer');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+
+        const supportMessage = `I’m really sorry you’re feeling that way — that sounds really tough. I’m here for you. Do you want to tell me what’s making you feel sad right now, or would you like a few quick things you can try to feel a little better in the moment?
+
+If you want quick options now, try one of these:
+• 5-4-3-2-1 grounding: name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.
+• Slow breathing: inhale for 4, hold 4, exhale 4 (or try 4–6–8). Repeat 4 times.
+• Move a little: stand, stretch, or step outside for a minute of fresh air.
+• Write one sentence about what’s hardest right now — just getting it out can help.
+• Reach out: text or call someone you trust and say, “I’m having a rough time — can we talk?”
+
+If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988. If you prefer, I can stay with you here and help you make a safety plan or find ways to contact someone who can be with you.
+
+You don’t have to handle this alone. Tell me what feels most helpful — to talk about what’s making you sad, try a grounding exercise together, or get help right now.`;
+
+        function handleSendMessage() {
+            const text = messageInput.value.trim();
+            if (!text) return;
+
+            // Append user message
+            const userRow = document.createElement('div');
+            userRow.className = 'message-row user';
+            userRow.innerHTML = `
+                <div class="avatar">U</div>
+                <div class="message-bubble">${escapeHtml(text)}</div>
+            `;
+            chatContainer.appendChild(userRow);
+
+            messageInput.value = '';
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            // Check if user input matches "i am sad" (case-insensitive, trimming whitespace/punctuation)
+            const normalizedInput = text.toLowerCase().replace(/['‘’]/g, "'").trim();
+            
+            setTimeout(() => {
+                const aiRow = document.createElement('div');
+                aiRow.className = 'message-row';
+                
+                let responseText = `I received your message: "${text}". How else can I help you today?`;
+                if (normalizedInput === 'i am sad' || normalizedInput === 'i’m sad') {
+                    responseText = supportMessage;
+                }
+
+                aiRow.innerHTML = `
+                    <div class="avatar">AI</div>
+                    <div class="message-bubble">${escapeHtml(responseText)}</div>
+                `;
+                chatContainer.appendChild(aiRow);
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }, 500);
+        }
+
+        function escapeHtml(string) {
+            return string.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        sendBtn.addEventListener('click', handleSendMessage);
+        messageInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                handleSendMessage();
+            }
+        });
+    </script>
 </body>
 </html>
