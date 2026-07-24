@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -13,15 +14,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        /*
-            Paste everything from forum.css here.
-        */
-
         body {
             background: #f4f7fb;
         }
 
-        .message {
+        .post-card {
             animation: fade 0.3s ease;
         }
 
@@ -36,11 +33,17 @@
                 transform: translateY(0);
             }
         }
+
+        .support-button.supported {
+            background: #e0e7ff;
+            color: #4338ca;
+        }
     </style>
 </head>
 
 <body class="min-h-screen flex flex-col">
 
+    <!-- Header -->
     <header
         class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg"
     >
@@ -77,23 +80,369 @@
         </div>
     </header>
 
+    <!-- Forum -->
     <main class="flex-1 overflow-y-auto p-6">
 
-        <div
-            id="post-list"
-            class="max-w-3xl mx-auto space-y-5"
-        >
-            <p class="text-gray-500 text-center">
-                Loading posts...
-            </p>
+        <div class="max-w-3xl mx-auto">
+
+            <!-- Forum reminder -->
+            <div
+                class="bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6"
+            >
+                <p class="text-blue-800 text-sm">
+                    This is a supportive community. Please respond with
+                    kindness and avoid sharing personal contact information.
+                </p>
+            </div>
+
+            <!-- Posts will appear here -->
+            <div
+                id="post-list"
+                class="space-y-5"
+            >
+                <p class="text-gray-500 text-center">
+                    Loading posts...
+                </p>
+            </div>
+
         </div>
 
     </main>
 
     <script>
+        const storageKey = "forumPosts";
+
         /*
-            Paste everything from forum.js here.
+            These are the example posts shown when the forum
+            does not have any saved posts yet.
         */
+        const samplePosts = [
+            {
+                id: 1,
+                author: "calmcloud21",
+                anonymous: false,
+                category: "School",
+                title: "Feeling overwhelmed by assignments",
+                content:
+                    "I have several assignments due next week, but I keep freezing instead of starting. What helps you begin when everything feels overwhelming?",
+                time: "35 minutes ago",
+                supports: 12,
+                comments: 3,
+                sensitive: false
+            },
+
+            {
+                id: 2,
+                author: "Anonymous",
+                anonymous: true,
+                category: "Loneliness",
+                title: "Feeling alone even when I am around people",
+                content:
+                    "I have friends around me, but I still feel disconnected sometimes. I am not looking for solutions right now. I mainly wanted somewhere safe to say it.",
+                time: "2 hours ago",
+                supports: 24,
+                comments: 6,
+                sensitive: false
+            },
+
+            {
+                id: 3,
+                author: "studybean",
+                anonymous: false,
+                category: "Motivation",
+                title: "A small achievement today",
+                content:
+                    "I finally cleaned my room after putting it off for several days. It may sound small, but I feel a little lighter now.",
+                time: "5 hours ago",
+                supports: 18,
+                comments: 4,
+                sensitive: false
+            },
+
+            {
+                id: 4,
+                author: "Anonymous",
+                anonymous: true,
+                category: "Relationships",
+                title: "Trying to move on from a difficult friendship",
+                content:
+                    "A close friendship ended recently, and I am still processing it. Some days are easier than others, but today has been difficult.",
+                time: "Yesterday",
+                supports: 10,
+                comments: 2,
+                sensitive: true
+            }
+        ];
+
+        /*
+            Load saved posts from the browser.
+            If there are none, save and use the sample posts.
+        */
+        function getPosts() {
+            const savedPosts =
+                localStorage.getItem(storageKey);
+
+            if (savedPosts === null) {
+                localStorage.setItem(
+                    storageKey,
+                    JSON.stringify(samplePosts)
+                );
+
+                return samplePosts;
+            }
+
+            try {
+                return JSON.parse(savedPosts);
+            }
+            catch (error) {
+                console.error(
+                    "Could not load forum posts:",
+                    error
+                );
+
+                return samplePosts;
+            }
+        }
+
+        function savePosts(posts) {
+            localStorage.setItem(
+                storageKey,
+                JSON.stringify(posts)
+            );
+        }
+
+        /*
+            Prevent HTML entered by users from being treated
+            as real HTML code.
+        */
+        function escapeHTML(text) {
+            const element =
+                document.createElement("div");
+
+            element.textContent =
+                String(text || "");
+
+            return element.innerHTML;
+        }
+
+        function renderPosts() {
+            const postList =
+                document.getElementById("post-list");
+
+            const posts =
+                getPosts();
+
+            if (posts.length === 0) {
+                postList.innerHTML = `
+                    <div
+                        class="bg-white rounded-2xl shadow-md p-8 text-center"
+                    >
+                        <h2 class="text-xl font-bold text-gray-700">
+                            No posts yet
+                        </h2>
+
+                        <p class="text-gray-500 mt-2">
+                            Be the first person to share something.
+                        </p>
+
+                        <a
+                            href="post.html"
+                            class="inline-block mt-5 bg-indigo-600 text-white px-6 py-3 rounded-full"
+                        >
+                            Create a Post
+                        </a>
+                    </div>
+                `;
+
+                return;
+            }
+
+            postList.innerHTML =
+                posts.map(post => {
+
+                    const displayName =
+                        post.anonymous
+                            ? "Anonymous"
+                            : "@" + escapeHTML(post.author);
+
+                    const avatarLetter =
+                        post.anonymous
+                            ? "A"
+                            : escapeHTML(
+                                post.author
+                                    .charAt(0)
+                                    .toUpperCase()
+                            );
+
+                    return `
+                        <article
+                            class="post-card bg-white border border-gray-100 rounded-2xl shadow-md p-6"
+                            data-post-id="${post.id}"
+                        >
+
+                            <div
+                                class="flex items-start justify-between gap-4"
+                            >
+
+                                <div class="flex items-center gap-3">
+
+                                    <div
+                                        class="w-11 h-11 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white flex items-center justify-center font-bold"
+                                    >
+                                        ${avatarLetter}
+                                    </div>
+
+                                    <div>
+                                        <p class="font-semibold text-gray-800">
+                                            ${displayName}
+                                        </p>
+
+                                        <p class="text-xs text-gray-500">
+                                            ${escapeHTML(post.time)}
+                                        </p>
+                                    </div>
+
+                                </div>
+
+                                <span
+                                    class="bg-indigo-50 text-indigo-600 text-xs font-semibold px-3 py-1 rounded-full"
+                                >
+                                    ${escapeHTML(post.category)}
+                                </span>
+
+                            </div>
+
+                            <h2
+                                class="text-xl font-bold text-gray-800 mt-5"
+                            >
+                                ${escapeHTML(post.title)}
+                            </h2>
+
+                            ${
+                                post.sensitive
+                                    ? `
+                                        <div
+                                            class="bg-rose-50 border border-rose-200 text-rose-700 text-sm rounded-xl p-3 mt-4"
+                                        >
+                                            Sensitive topic: Please take care
+                                            while reading and responding.
+                                        </div>
+                                    `
+                                    : ""
+                            }
+
+                            <p
+                                class="text-gray-600 leading-7 mt-3"
+                            >
+                                ${escapeHTML(post.content)}
+                            </p>
+
+                            <div
+                                class="border-t border-gray-100 mt-5 pt-4 flex items-center gap-3"
+                            >
+
+                                <button
+                                    type="button"
+                                    class="support-button bg-gray-100 hover:bg-indigo-100 text-gray-700 px-4 py-2 rounded-full font-medium transition"
+                                >
+                                    ♡ Support
+                                    (<span class="support-count">${post.supports || 0}</span>)
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-full font-medium transition"
+                                    onclick="showCommentMessage()"
+                                >
+                                    💬 Comments (${post.comments || 0})
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="report-button ml-auto text-red-500 hover:bg-red-50 px-4 py-2 rounded-full font-medium transition"
+                                >
+                                    Report
+                                </button>
+
+                            </div>
+
+                        </article>
+                    `;
+                }).join("");
+
+            connectPostButtons();
+        }
+
+        function connectPostButtons() {
+            const postCards =
+                document.querySelectorAll(".post-card");
+
+            postCards.forEach(postCard => {
+                const postId =
+                    Number(postCard.dataset.postId);
+
+                const supportButton =
+                    postCard.querySelector(
+                        ".support-button"
+                    );
+
+                const supportCount =
+                    postCard.querySelector(
+                        ".support-count"
+                    );
+
+                const reportButton =
+                    postCard.querySelector(
+                        ".report-button"
+                    );
+
+                supportButton.addEventListener(
+                    "click",
+                    function () {
+                        const posts =
+                            getPosts();
+
+                        const selectedPost =
+                            posts.find(
+                                post => Number(post.id) === postId
+                            );
+
+                        if (!selectedPost) {
+                            return;
+                        }
+
+                        selectedPost.supports =
+                            Number(selectedPost.supports || 0) + 1;
+
+                        supportCount.textContent =
+                            selectedPost.supports;
+
+                        supportButton.classList.add(
+                            "supported"
+                        );
+
+                        savePosts(posts);
+                    }
+                );
+
+                reportButton.addEventListener(
+                    "click",
+                    function () {
+                        alert(
+                            "The post has been reported for moderator review."
+                        );
+                    }
+                );
+            });
+        }
+
+        function showCommentMessage() {
+            alert(
+                "The comment feature will be added next."
+            );
+        }
+
+        renderPosts();
     </script>
 
 </body>
