@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TrueSelf - Professional Counseling Tiers</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body{
+            background: linear-gradient(135deg,#eef2ff,#dbeafe,#f5f3ff);
+            min-height: 100vh;
+        }
+
+        .glow:hover{
+            box-shadow:0 0 35px rgba(59,130,246,.45);
+        }
+    </style>
+</head>
+
+<body class="py-12 px-6 flex flex-col items-center justify-center">
+
+    <!-- Top Navigation Link Back -->
+    <div class="absolute top-6 left-6 z-50">
+        <a href="index.html" class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition">
+            ← Back to Home
+        </a>
+    </div>
+
+    <!-- Header Section -->
+    <div class="text-center max-w-2xl mx-auto mb-12">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4">
+            Choose Your
+            <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                Support Tier
+            </span>
+        </h1>
+        <p class="text-gray-600 text-lg leading-relaxed">
+            Connect with compassionate listeners and licensed professionals tailored to your needs and budget.
+        </p>
+    </div>
+
+    <!-- Pricing / Tier Cards Container -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full mb-12">
+
+        <!-- Tier 1: Trainee -->
+        <div class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-xl p-8 flex flex-col justify-between border border-blue-100 transition transform hover:-translate-y-2">
+            <div>
+                <span class="inline-block px-3 py-1 bg-blue-50 text-blue-600 text-xs font-bold rounded-full mb-4">
+                    BUDGET-FRIENDLY
+                </span>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Tier 1: Trainee</h3>
+                <p class="text-gray-500 text-sm mb-6">
+                    Supervised student counselors offering a safe, empathetic ear at an ultra-accessible rate.
+                </p>
+                <div class="text-4xl font-extrabold text-gray-800 mb-6">
+                    $5 <span class="text-sm font-normal text-gray-500">/ session</span>
+                </div>
+                <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                    <li class="flex items-center gap-2">✅ Supervised trainees</li>
+                    <li class="flex items-center gap-2">✅ Safe, confidential space</li>
+                    <li class="flex items-center gap-2">✅ Text & chat sessions</li>
+                </ul>
+            </div>
+            <a href="book.html?tier=1" class="w-full text-center bg-blue-50 text-blue-600 py-3 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition">
+                Select Tier 1
+            </a>
+        </div>
+
+        <!-- Tier 2: Experienced Volunteers (Highlighted / Popular) -->
+        <div class="bg-gradient-to-b from-blue-600 to-purple-600 text-white rounded-3xl shadow-2xl p-8 flex flex-col justify-between transform md:-translate-y-4 relative glow">
+            <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-white text-blue-600 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow">
+                Most Popular
+            </div>
+            <div>
+                <span class="inline-block px-3 py-1 bg-white/20 text-white text-xs font-bold rounded-full mb-4">
+                    COMMUNITY LEADERS
+                </span>
+                <h3 class="text-2xl font-bold mb-2">Tier 2: Experienced Volunteers</h3>
+                <p class="text-blue-100 text-sm mb-6">
+                    Trained volunteer mentors with extensive peer support experience and practical guidance skills.
+                </p>
+                <div class="text-4xl font-extrabold mb-6">
+                    $25 <span class="text-sm font-normal text-blue-200">/ session</span>
+                </div>
+                <ul class="space-y-3 text-sm text-blue-100 mb-8">
+                    <li class="flex items-center gap-2">⭐ Trained peer mentors</li>
+                    <li class="flex items-center gap-2">⭐ Practical coping strategies</li>
+                    <li class="flex items-center gap-2">⭐ Video & voice options</li>
+                </ul>
+            </div>
+            <a href="book.html?tier=2" class="w-full text-center bg-white text-blue-600 py-3 rounded-full font-semibold hover:bg-gray-100 transition shadow">
+                Select Tier 2
+            </a>
+        </div>
+
+        <!-- Tier 3: Professional -->
+        <div class="bg-white/90 backdrop-blur-lg rounded-3xl shadow-xl p-8 flex flex-col justify-between border border-purple-100 transition transform hover:-translate-y-2">
+            <div>
+                <span class="inline-block px-3 py-1 bg-purple-50 text-purple-600 text-xs font-bold rounded-full mb-4">
+                    CLINICAL EXPERTISE
+                </span>
+                <h3 class="text-2xl font-bold text-gray-800 mb-2">Tier 3: Professional</h3>
+                <p class="text-gray-500 text-sm mb-6">
+                    Licensed therapists and certified mental health professionals for advanced clinical care.
+                </p>
+                <div class="text-4xl font-extrabold text-gray-800 mb-6">
+                    $50 <span class="text-sm font-normal text-gray-500">/ session</span>
+                </div>
+                <ul class="space-y-3 text-sm text-gray-600 mb-8">
+                    <li class="flex items-center gap-2">🧠 Fully licensed therapists</li>
+                    <li class="flex items-center gap-2">🧠 Clinical diagnosis & treatment</li>
+                    <li class="flex items-center gap-2">🧠 Premium video consultation</li>
+                </ul>
+            </div>
+            <a href="book.html?tier=3" class="w-full text-center bg-purple-50 text-purple-600 py-3 rounded-full font-semibold hover:bg-purple-600 hover:text-white transition">
+                Select Tier 3
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Footer Note -->
+    <p class="text-xs text-gray-500 text-center">
+        All sessions are completely confidential. Need help choosing? Chat with our AI assistant first.
+    </p>
+
+</body>
+</html>
