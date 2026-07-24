@@ -17,55 +17,50 @@
             background:linear-gradient(135deg,#eef2ff,#dbeafe,#f5f3ff);
             min-height:100vh;
             color:#374151;
-            overflow-x:hidden;
         }
 
-        /* Background Blur Circles */
+        /* Background Decorations */
 
         .bg-circle{
             position:fixed;
             border-radius:50%;
-            filter:blur(100px);
+            filter:blur(90px);
             opacity:.25;
             z-index:-1;
         }
 
         .circle1{
-            width:320px;
-            height:320px;
+            width:300px;
+            height:300px;
             background:#93c5fd;
-            top:60px;
-            left:60px;
+            top:50px;
+            left:50px;
         }
 
         .circle2{
-            width:380px;
-            height:380px;
+            width:360px;
+            height:360px;
             background:#c4b5fd;
-            right:60px;
-            bottom:60px;
+            bottom:50px;
+            right:50px;
         }
 
         /* Header */
 
         header{
-            background:rgba(255,255,255,.65);
-            backdrop-filter:blur(15px);
-            padding:25px;
             text-align:center;
-            border-bottom:1px solid rgba(255,255,255,.5);
-            box-shadow:0 5px 20px rgba(0,0,0,.05);
+            padding:35px 20px;
         }
 
         header h1{
-            font-size:2.2rem;
-            color:#1e3a8a;
+            font-size:2.3rem;
+            color:#1f2937;
             margin-bottom:8px;
         }
 
         header p{
             color:#6b7280;
-            margin-bottom:20px;
+            margin-bottom:25px;
         }
 
         /* Navigation */
@@ -79,12 +74,13 @@
 
         .top-nav a{
             text-decoration:none;
-            color:#374151;
-            padding:10px 24px;
+            padding:12px 24px;
             border-radius:999px;
-            background:rgba(255,255,255,.75);
+            color:#2563eb;
+            background:white;
+            border:1px solid #2563eb;
+            font-weight:bold;
             transition:.3s;
-            font-weight:600;
         }
 
         .top-nav a:hover{
@@ -95,18 +91,19 @@
         .top-nav .active{
             background:linear-gradient(to right,#2563eb,#7c3aed);
             color:white;
+            border:none;
         }
 
         /* Main Card */
 
         .forum-main{
+            width:90%;
             max-width:850px;
-            margin:50px auto;
-            background:rgba(255,255,255,.75);
-            backdrop-filter:blur(20px);
-            border-radius:30px;
-            padding:40px;
-            box-shadow:0 20px 40px rgba(0,0,0,.12);
+            margin:40px auto;
+            background:white;
+            border-radius:25px;
+            padding:35px;
+            box-shadow:0 15px 40px rgba(0,0,0,.08);
         }
 
         .back-link{
@@ -121,13 +118,13 @@
 
         h2{
             margin-top:20px;
-            font-size:2rem;
             color:#1f2937;
+            margin-bottom:10px;
         }
 
         .forum-subtitle{
-            margin:15px 0 30px;
             color:#6b7280;
+            margin-bottom:30px;
             line-height:1.7;
         }
 
@@ -148,12 +145,11 @@
         input,
         textarea{
             width:100%;
-            padding:15px;
-            border-radius:15px;
-            border:1px solid #dbeafe;
+            padding:14px;
+            border:1px solid #d1d5db;
+            border-radius:12px;
             font-size:15px;
             transition:.3s;
-            background:white;
         }
 
         textarea{
@@ -166,29 +162,29 @@
         textarea:focus{
             outline:none;
             border-color:#2563eb;
-            box-shadow:0 0 15px rgba(37,99,235,.2);
+            box-shadow:0 0 12px rgba(37,99,235,.2);
         }
 
-        /* Anonymous */
+        /* Anonymous Box */
 
         .anon-toggle{
             display:flex;
-            align-items:flex-start;
             gap:18px;
-            background:#eef2ff;
-            padding:20px;
-            border-radius:18px;
+            align-items:flex-start;
+            padding:18px;
+            background:#f3f4f6;
+            border-radius:15px;
         }
 
         .anon-text strong{
-            color:#1e3a8a;
+            color:#1f2937;
             display:block;
-            margin-bottom:6px;
+            margin-bottom:5px;
         }
 
         .anon-text p{
             color:#6b7280;
-            line-height:1.6;
+            line-height:1.5;
             font-size:14px;
         }
 
@@ -196,9 +192,9 @@
 
         .switch{
             position:relative;
+            width:55px;
+            height:28px;
             display:inline-block;
-            width:58px;
-            height:30px;
         }
 
         .switch input{
@@ -215,10 +211,10 @@
         }
 
         .slider:before{
-            position:absolute;
             content:"";
-            width:24px;
-            height:24px;
+            position:absolute;
+            width:22px;
+            height:22px;
             left:3px;
             bottom:3px;
             background:white;
@@ -231,7 +227,7 @@
         }
 
         input:checked + .slider:before{
-            transform:translateX(28px);
+            transform:translateX(27px);
         }
 
         /* Buttons */
@@ -244,29 +240,29 @@
         }
 
         .post-btn{
-            background:linear-gradient(to right,#2563eb,#7c3aed);
-            color:white;
             border:none;
-            padding:14px 36px;
+            padding:14px 35px;
             border-radius:999px;
+            cursor:pointer;
+            color:white;
             font-size:15px;
             font-weight:bold;
-            cursor:pointer;
+            background:linear-gradient(to right,#2563eb,#7c3aed);
             transition:.3s;
         }
 
         .post-btn:hover{
-            transform:scale(1.05);
-            box-shadow:0 0 35px rgba(59,130,246,.45);
+            transform:translateY(-2px);
+            box-shadow:0 0 25px rgba(37,99,235,.35);
         }
 
         .cancel-btn{
             text-decoration:none;
+            padding:14px 35px;
+            border-radius:999px;
             background:white;
             color:#2563eb;
             border:1px solid #2563eb;
-            padding:14px 36px;
-            border-radius:999px;
             font-weight:bold;
             transition:.3s;
         }
@@ -279,7 +275,7 @@
         @media(max-width:768px){
 
             .forum-main{
-                margin:25px;
+                width:95%;
                 padding:25px;
             }
 
@@ -305,18 +301,14 @@
 
 <body>
 
-    <!-- Background Decorations -->
-
     <div class="bg-circle circle1"></div>
     <div class="bg-circle circle2"></div>
 
-    <!-- Header -->
-
     <header>
 
-        <h1>HackXperience Forum</h1>
+        <h1>Someone to Talk To</h1>
 
-        <p>A safe place to share, support, and connect.</p>
+        <p>A judgement-free space to talk, any time.</p>
 
         <nav class="top-nav">
 
@@ -330,20 +322,16 @@
 
     </header>
 
-    <!-- Main -->
-
     <main class="forum-main">
 
         <a href="forum.html" class="back-link">
             ← Back to Forum
         </a>
 
-        <h2>Write a New Post</h2>
+        <h2>Write a Post</h2>
 
         <p class="forum-subtitle">
-            No formatting. No pressure. Just write what's on your mind.
-            Share your thoughts with the community or simply express yourself
-            in a safe and supportive space.
+            No formatting, no filters — just get it out. Share it with the community, or keep it just for you.
         </p>
 
         <form id="post-form" class="post-form">
@@ -351,15 +339,10 @@
             <label for="category">Category</label>
 
             <select id="category" required>
-
                 <option value="general">General Support</option>
-
                 <option value="letters">Letters Never Sent</option>
-
                 <option value="vent">Just Venting</option>
-
                 <option value="advice">Asking for Advice</option>
-
             </select>
 
             <label for="title">Title (Optional)</label>
@@ -382,23 +365,15 @@
             <div class="anon-toggle">
 
                 <label class="switch">
-
                     <input type="checkbox" id="anonymous" checked>
-
                     <span class="slider"></span>
-
                 </label>
 
                 <div class="anon-text">
-
                     <strong>Post Anonymously</strong>
-
                     <p>
-                        Your identity will not be shown publicly.
-                        Anonymous activity may still be reviewed by authorised
-                        moderators when necessary to help keep the community safe.
+                        Your identity will not be shown publicly. Anonymous activity may still be reviewed by authorised moderators when necessary to protect community safety.
                     </p>
-
                 </div>
 
             </div>
