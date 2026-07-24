@@ -1,8 +1,10 @@
 module.exports = async function (context, req) {
     const userMessage = req.body.message;
-    const endpoint = process.env.AZURE_OPENAI_ENDPOINT;
-    const apiKey = process.env.AZURE_OPENAI_API_KEY;
-    const agentId = process.env.AGENT_ID;
+    
+    // Using your exact variable names from the Azure Portal
+    const endpoint = process.env.Endpoint;
+    const apiKey = process.env.API;
+    const agentId = process.env.AIChatbot; // Change to process.env.ForumMod if you want the other agent!
 
     try {
         const response = await fetch(`${endpoint}/openai/assistants/${agentId}/threads/messages`, {
