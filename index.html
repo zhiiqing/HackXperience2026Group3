@@ -1,863 +1,1016 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
 
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
-    >
+    />
 
-    <title>TrueSelf | Safe & Anonymous Support Community</title>
+    <meta
+        name="description"
+        content="TrueSelf is a supportive mental wellness platform where users can express their feelings, connect with a community and find suitable support resources."
+    />
 
+    <title>TrueSelf | Mental Wellness Support</title>
+
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
     <style>
+        * {
+            scroll-behavior: smooth;
+        }
+
         body {
+            font-family: "Inter", sans-serif;
+        }
+
+        .hero-background {
             background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(59, 130, 246, 0.16),
+                    transparent 35%
+                ),
+                radial-gradient(
+                    circle at top right,
+                    rgba(168, 85, 247, 0.15),
+                    transparent 35%
+                ),
                 linear-gradient(
-                    135deg,
-                    #eef2ff,
-                    #dbeafe,
-                    #f5f3ff
+                    180deg,
+                    #f8fbff 0%,
+                    #ffffff 100%
                 );
         }
 
-        .floating {
-            animation:
-                float 4s ease-in-out infinite;
+        .support-card {
+            transition:
+                transform 0.25s ease,
+                box-shadow 0.25s ease,
+                border-color 0.25s ease;
         }
 
-        @keyframes float {
-            0%,
-            100% {
-                transform:
-                    translateY(0);
-            }
-
-            50% {
-                transform:
-                    translateY(-12px);
-            }
+        .support-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(31, 41, 55, 0.1);
         }
 
-        .glow:hover {
-            box-shadow:
-                0 0 35px rgba(59, 130, 246, 0.35);
+        .mood-button {
+            transition:
+                transform 0.2s ease,
+                background-color 0.2s ease,
+                border-color 0.2s ease;
         }
 
-        a:focus-visible,
-        button:focus-visible {
-            outline:
-                3px solid #f59e0b;
-
-            outline-offset:
-                3px;
+        .mood-button:hover {
+            transform: translateY(-2px);
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation:
-                    none !important;
-
-                transition:
-                    none !important;
-
-                scroll-behavior:
-                    auto !important;
-            }
+        .mood-button.selected {
+            border-color: #2563eb;
+            background-color: #eff6ff;
         }
     </style>
 </head>
 
-<body class="min-h-screen text-gray-800">
+<body class="bg-white text-gray-800">
 
-    <!-- Navigation -->
+    <!-- Navigation Bar -->
     <nav
-        aria-label="Main navigation"
-        class="sticky top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm"
+        class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200"
     >
         <div
-            class="max-w-6xl mx-auto px-5 py-4 flex flex-wrap items-center justify-between gap-4"
+            class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between"
         >
-
             <!-- Logo -->
             <a
                 href="index.html"
-                class="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                class="flex items-center gap-2"
+                aria-label="TrueSelf Home"
             >
-                TrueSelf
+                <div
+                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center text-xl shadow-sm"
+                >
+                    ♡
+                </div>
+
+                <span
+                    class="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                >
+                    TrueSelf
+                </span>
             </a>
 
-            <!-- Navigation links -->
-            <div
-                class="flex flex-wrap items-center justify-end gap-2 md:gap-3"
-            >
+            <!-- Desktop Navigation -->
+            <div class="hidden lg:flex items-center gap-1">
                 <a
                     href="index.html"
-                    class="text-blue-600 bg-blue-50 font-semibold px-3 py-2 rounded-lg"
+                    class="text-blue-600 bg-blue-50 font-semibold px-4 py-2 rounded-xl"
                 >
                     Home
                 </a>
 
                 <a
                     href="forum.html"
-                    class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-semibold px-3 py-2 rounded-lg transition"
+                    class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-semibold px-4 py-2 rounded-xl transition"
                 >
-                    Community
+                    Forum
                 </a>
 
                 <a
-                    href="tier.html"
-                    class="px-5 py-2 bg-rose-500 text-white rounded-full font-semibold shadow hover:bg-rose-600 transition"
-                >
-                    Get Help Now
-                </a>
-
-                <!-- Logged-out buttons -->
-                <a
-                    id="login-link"
-                    href="login.html"
-                    class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition"
-                >
-                    Login
-                </a>
-
-                <a
-                    id="signup-link"
-                    href="signup.html"
-                    class="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold shadow hover:scale-105 transition"
-                >
-                    Sign Up
-                </a>
-
-                <!-- Logged-in buttons -->
-                <a
-                    id="chat-link"
                     href="chat.html"
-                    class="hidden px-5 py-2 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition"
+                    class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-semibold px-4 py-2 rounded-xl transition"
                 >
                     Support Chat
                 </a>
 
-                <button
-                    id="logout-button"
-                    type="button"
-                    class="hidden px-5 py-2 bg-gray-800 text-white rounded-full font-semibold hover:bg-gray-900 transition"
+                <a
+                    href="tier.html"
+                    class="text-gray-600 hover:text-purple-600 hover:bg-purple-50 font-semibold px-4 py-2 rounded-xl transition"
                 >
-                    Log Out
-                </button>
+                    Find Support
+                </a>
             </div>
-        </div>
-    </nav>
 
-    <!-- Background decoration -->
-    <div
-        class="fixed top-24 left-10 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl pointer-events-none"
-    ></div>
-
-    <div
-        class="fixed bottom-10 right-10 w-80 h-80 bg-purple-300 opacity-20 rounded-full blur-3xl pointer-events-none"
-    ></div>
-
-    <!-- Main content -->
-    <main class="relative max-w-6xl mx-auto px-6 py-10">
-
-        <!-- Seek Help Now Banner -->
-        <section
-            class="mb-8 bg-amber-50 border-l-4 border-amber-400 p-4 rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4"
-        >
-            <div class="flex items-center gap-3">
-                <span class="text-2xl">🆘</span>
-                <p class="text-amber-900 font-medium text-sm md:text-base">
-                    Need urgent support right now? You are not alone and help is available.
-                </p>
-            </div>
-            <a
-                href="tier.html"
-                class="whitespace-nowrap px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-full text-sm transition"
-            >
-                Seek Help Now &rarr;
-            </a>
-        </section>
-
-        <!-- Hero Section -->
-        <section
-            class="bg-white/85 backdrop-blur-lg shadow-2xl rounded-3xl p-8 md:p-12 text-center"
-        >
-
-            <!-- Logo icon -->
-            <div class="floating mb-7">
+            <!-- Desktop Authentication Buttons -->
+            <div class="hidden lg:flex items-center gap-3">
                 <div
-                    class="mx-auto w-24 h-24 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-5xl text-white shadow-xl"
+                    id="guestNavigation"
+                    class="flex items-center gap-3"
                 >
-                    ♡
+                    <a
+                        href="login.html"
+                        class="text-gray-700 hover:text-blue-600 font-semibold px-4 py-2"
+                    >
+                        Login
+                    </a>
+
+                    <a
+                        href="signup.html"
+                        class="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-5 py-2.5 rounded-xl hover:shadow-lg hover:scale-[1.02] transition"
+                    >
+                        Sign Up
+                    </a>
+                </div>
+
+                <div
+                    id="userNavigation"
+                    class="hidden items-center gap-3"
+                >
+                    <span
+                        id="welcomeUser"
+                        class="text-sm font-semibold text-gray-600"
+                    ></span>
+
+                    <button
+                        type="button"
+                        onclick="logoutUser()"
+                        class="border border-gray-300 text-gray-700 hover:border-red-300 hover:bg-red-50 hover:text-red-600 font-semibold px-4 py-2.5 rounded-xl transition"
+                    >
+                        Log Out
+                    </button>
                 </div>
             </div>
 
-            <p
-                class="inline-block bg-indigo-50 text-indigo-700 font-semibold px-4 py-2 rounded-full text-sm mb-5"
+            <!-- Mobile Menu Button -->
+            <button
+                id="mobileMenuButton"
+                type="button"
+                class="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl border border-gray-200 text-gray-700"
+                aria-label="Open navigation menu"
+                aria-expanded="false"
             >
-                Mental-wellness support community
-            </p>
-
-            <h1
-                class="text-4xl md:text-6xl font-extrabold text-gray-800 mb-5"
-            >
-                A safer space to be your
-
-                <span
-                    class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                <svg
+                    id="menuIcon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width="2"
                 >
-                    TrueSelf
-                </span>
-            </h1>
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M4 6h16M4 12h16M4 18h16"
+                    />
+                </svg>
+            </button>
+        </div>
 
-            <p
-                class="text-gray-600 text-lg leading-8 max-w-2xl mx-auto"
-            >
-                Express what you are feeling anonymously, explore specialized Support Spaces,
-                and state exactly what you need—whether it is advice, encouragement, or just someone to listen.
-            </p>
-
-            <!-- Main buttons -->
-            <div
-                class="flex flex-wrap justify-center gap-4 mt-9"
-            >
+        <!-- Mobile Navigation -->
+        <div
+            id="mobileMenu"
+            class="hidden lg:hidden border-t border-gray-200 bg-white"
+        >
+            <div class="max-w-6xl mx-auto px-5 py-5 space-y-2">
                 <a
-                    href="#"
-                    onclick="startChat(event)"
-                    class="glow bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:scale-105 transition"
+                    href="index.html"
+                    class="block bg-blue-50 text-blue-600 font-semibold px-4 py-3 rounded-xl"
                 >
-                    Start Support Chat
+                    Home
                 </a>
 
                 <a
                     href="forum.html"
-                    class="bg-white border-2 border-indigo-200 text-indigo-700 px-8 py-4 rounded-full text-lg font-semibold hover:bg-indigo-50 transition"
+                    class="block text-gray-700 hover:bg-gray-50 font-semibold px-4 py-3 rounded-xl"
                 >
-                    Explore Support Spaces
+                    Forum
+                </a>
+
+                <a
+                    href="chat.html"
+                    class="block text-gray-700 hover:bg-gray-50 font-semibold px-4 py-3 rounded-xl"
+                >
+                    Support Chat
                 </a>
 
                 <a
                     href="tier.html"
-                    class="bg-rose-50 border-2 border-rose-200 text-rose-700 px-8 py-4 rounded-full text-lg font-semibold hover:bg-rose-100 transition"
+                    class="block text-gray-700 hover:bg-gray-50 font-semibold px-4 py-3 rounded-xl"
                 >
-                    Find Help Now
-                </a>
-            </div>
-
-            <p
-                id="login-status"
-                class="mt-6 text-sm text-gray-500"
-            >
-                Sign in to access the support chat
-            </p>
-
-        </section>
-
-        <!-- Mood Check-in -->
-        <section class="bg-white/85 backdrop-blur-md rounded-3xl shadow-lg p-6 md:p-8 mt-10 text-center">
-            <h2 class="text-xl font-bold text-gray-800">How are you feeling today?</h2>
-            <div class="flex flex-wrap justify-center gap-3 mt-4">
-                <button class="px-5 py-2 rounded-full border border-gray-200 hover:border-blue-500 hover:bg-blue-50 font-medium transition">😊 Good</button>
-                <button class="px-5 py-2 rounded-full border border-gray-200 hover:border-blue-500 hover:bg-blue-50 font-medium transition">😐 Okay</button>
-                <button class="px-5 py-2 rounded-full border border-gray-200 hover:border-blue-500 hover:bg-blue-50 font-medium transition">😔 Low</button>
-                <button class="px-5 py-2 rounded-full border border-gray-200 hover:border-blue-500 hover:bg-blue-50 font-medium transition">😰 Stressed</button>
-            </div>
-        </section>
-
-        <!-- Support Spaces Grid -->
-        <section class="mt-10">
-            <div class="flex justify-between items-center mb-6">
-                <div>
-                    <h2 class="text-2xl font-bold text-gray-800">Explore Support Spaces</h2>
-                    <p class="text-gray-600 text-sm">Find topics and community threads tailored to what you are experiencing.</p>
-                </div>
-                <a href="forum.html" class="text-blue-600 font-semibold text-sm hover:underline">View All &rarr;</a>
-            </div>
-
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <a href="forum.html?category=general" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
-                    <span class="text-3xl block mb-2">💬</span>
-                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">General Support</h3>
-                    <p class="text-xs text-gray-500 mt-1">Anything on your mind</p>
+                    Find Support
                 </a>
 
-                <a href="forum.html?category=venting" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
-                    <span class="text-3xl block mb-2">🌧️</span>
-                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Just Venting</h3>
-                    <p class="text-xs text-gray-500 mt-1">Express without advice</p>
-                </a>
+                <div
+                    id="mobileGuestNavigation"
+                    class="pt-3 grid grid-cols-2 gap-3"
+                >
+                    <a
+                        href="login.html"
+                        class="text-center border border-gray-300 text-gray-700 font-semibold px-4 py-3 rounded-xl"
+                    >
+                        Login
+                    </a>
 
-                <a href="forum.html?category=letters" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
-                    <span class="text-3xl block mb-2">💌</span>
-                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Letters Never Sent</h3>
-                    <p class="text-xs text-gray-500 mt-1">Unspoken words</p>
-                </a>
-
-                <a href="forum.html?category=advice" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
-                    <span class="text-3xl block mb-2">🙋</span>
-                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Asking for Advice</h3>
-                    <p class="text-xs text-gray-500 mt-1">Community guidance</p>
-                </a>
-
-                <a href="forum.html?category=student" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
-                    <span class="text-3xl block mb-2">📚</span>
-                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Student Stress</h3>
-                    <p class="text-xs text-gray-500 mt-1">Exams & burnout</p>
-                </a>
-
-                <a href="forum.html?category=relationships" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
-                    <span class="text-3xl block mb-2">🫂</span>
-                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Relationships</h3>
-                    <p class="text-xs text-gray-500 mt-1">Friends & feeling alone</p>
-                </a>
-
-                <a href="forum.html?category=wins" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
-                    <span class="text-3xl block mb-2">🌱</span>
-                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Small Wins</h3>
-                    <p class="text-xs text-gray-500 mt-1">Celebrate progress</p>
-                </a>
-
-                <a href="forum.html?category=coping" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
-                    <span class="text-3xl block mb-2">🧘</span>
-                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">What Helped Me</h3>
-                    <p class="text-xs text-gray-500 mt-1">Safe coping strategies</p>
-                </a>
-            </div>
-        </section>
-
-        <!-- Live Preview Feed Section -->
-        <section class="mt-12">
-            <!-- Pinned Moderator Banner -->
-            <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 mb-6 text-sm text-indigo-900 flex items-start gap-3">
-                <span class="text-lg">📌</span>
-                <div>
-                    <strong>Moderator Note:</strong> Welcome to TrueSelf. This is a respectful, anonymous space. Please check the intent tag on each post before replying to respect what the author needs.
-                </div>
-            </div>
-
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">Community Preview</h2>
-                <div class="flex gap-2 text-sm">
-                    <select class="bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-gray-700 font-medium">
-                        <option>Newest</option>
-                        <option>Most Supported</option>
-                        <option>Unanswered</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Preview Card 1 -->
-            <div class="bg-white/90 rounded-2xl p-6 shadow-md mb-4 border border-gray-100">
-                <div class="flex justify-between items-start gap-2 mb-2">
-                    <div>
-                        <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">📚 Student Stress</span>
-                        <span class="text-xs text-gray-400 ml-2">• Anonymous • 10 minutes ago</span>
-                    </div>
-                    <span class="text-xs font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">CW: Academic Burnout</span>
+                    <a
+                        href="signup.html"
+                        class="text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-4 py-3 rounded-xl"
+                    >
+                        Sign Up
+                    </a>
                 </div>
 
-                <!-- Intent Tag -->
-                <div class="inline-block bg-purple-50 text-purple-700 text-xs font-semibold px-3 py-1 rounded-full my-2 border border-purple-100">
-                    🎯 What I need: Encouragement only
-                </div>
-
-                <p class="text-gray-800 mt-2 leading-relaxed">
-                    “I have three assignments due and I feel completely stuck and overwhelmed. Just trying to take it one step at a time tonight...”
-                </p>
-
-                <div class="flex items-center gap-4 mt-5 pt-4 border-t border-gray-100 text-sm text-gray-500">
-                    <button class="hover:text-rose-500 font-medium flex items-center gap-1 transition">
-                        ♡ Send Support (14)
-                    </button>
-                    <button class="hover:text-blue-600 font-medium flex items-center gap-1 transition">
-                        💬 4 Replies
-                    </button>
-                    <button class="hover:text-indigo-600 font-medium flex items-center gap-1 transition">
-                        🔖 Save
-                    </button>
-                    <button class="ml-auto text-gray-400 hover:text-rose-500 text-xs transition">
-                        Report
+                <div
+                    id="mobileUserNavigation"
+                    class="hidden pt-3"
+                >
+                    <button
+                        type="button"
+                        onclick="logoutUser()"
+                        class="w-full border border-red-200 bg-red-50 text-red-600 font-semibold px-4 py-3 rounded-xl"
+                    >
+                        Log Out
                     </button>
                 </div>
             </div>
+        </div>
+    </nav>
 
-            <!-- Preview Card 2 -->
-            <div class="bg-white/90 rounded-2xl p-6 shadow-md mb-4 border border-gray-100">
-                <div class="flex justify-between items-start gap-2 mb-2">
-                    <div>
-                        <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">🌱 Small Wins</span>
-                        <span class="text-xs text-gray-400 ml-2">• Anonymous • 1 hour ago</span>
-                    </div>
-                </div>
+    <main>
 
-                <!-- Intent Tag -->
-                <div class="inline-block bg-emerald-50 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full my-2 border border-emerald-100">
-                    🎯 What I need: Hear similar experiences
-                </div>
-
-                <p class="text-gray-800 mt-2 leading-relaxed">
-                    “Finally went for a 15-minute walk outside today after staying indoors for almost a week. It felt tough to leave the room, but I made it.”
-                </p>
-
-                <div class="flex items-center gap-4 mt-5 pt-4 border-t border-gray-100 text-sm text-gray-500">
-                    <button class="hover:text-rose-500 font-medium flex items-center gap-1 transition">
-                        ♡ Send Support (28)
-                    </button>
-                    <button class="hover:text-blue-600 font-medium flex items-center gap-1 transition">
-                        💬 8 Replies
-                    </button>
-                    <button class="hover:text-indigo-600 font-medium flex items-center gap-1 transition">
-                        🔖 Save
-                    </button>
-                    <button class="ml-auto text-gray-400 hover:text-rose-500 text-xs transition">
-                        Report
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Feature cards -->
+        <!-- Hero Section -->
         <section
-            aria-label="TrueSelf features"
-            class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10"
+            class="hero-background min-h-screen flex items-center pt-28 pb-16 overflow-hidden"
         >
-
-            <!-- Chat card -->
-            <a
-                href="#"
-                onclick="startChat(event)"
-                class="bg-white/90 rounded-3xl p-7 shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
+            <div
+                class="max-w-6xl mx-auto px-5 grid lg:grid-cols-2 gap-14 items-center"
             >
-                <div
-                    class="w-14 h-14 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center text-3xl mb-5"
-                >
-                    💬
+                <!-- Hero Text -->
+                <div>
+                    <div
+                        class="inline-flex items-center gap-2 bg-white border border-blue-100 text-blue-700 font-semibold text-sm px-4 py-2 rounded-full shadow-sm mb-6"
+                    >
+                        <span>♡</span>
+                        A supportive space for your mental wellness
+                    </div>
+
+                    <h1
+                        class="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.08] tracking-tight text-gray-900"
+                    >
+                        You do not have to
+                        <span
+                            class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                        >
+                            face it alone.
+                        </span>
+                    </h1>
+
+                    <p
+                        class="mt-7 max-w-xl text-lg sm:text-xl leading-8 text-gray-600"
+                    >
+                        TrueSelf gives you a supportive space to express your
+                        feelings, connect with the community and explore suitable
+                        support options at your own pace.
+                    </p>
+
+                    <div
+                        class="mt-9 flex flex-col sm:flex-row gap-4"
+                    >
+                        <a
+                            id="mainChatButton"
+                            href="login.html"
+                            class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-bold px-7 py-4 rounded-2xl shadow-lg hover:shadow-xl hover:scale-[1.02] transition"
+                        >
+                            <span>💬</span>
+                            Start Support Chat
+                        </a>
+
+                        <a
+                            href="forum.html"
+                            class="inline-flex items-center justify-center gap-2 bg-white border border-gray-300 text-gray-800 font-bold px-7 py-4 rounded-2xl hover:border-blue-300 hover:bg-blue-50 transition"
+                        >
+                            <span>🫂</span>
+                            Visit Community
+                        </a>
+                    </div>
+
+                    <p
+                        id="chatLoginMessage"
+                        class="mt-4 text-sm text-gray-500"
+                    >
+                        Sign in to access the private support chat.
+                    </p>
                 </div>
 
-                <h2
-                    class="text-xl font-bold text-gray-800"
-                >
-                    Guided Support Chat
-                </h2>
+                <!-- Hero Support Panel -->
+                <div class="relative">
+                    <div
+                        class="absolute -top-12 -left-12 w-44 h-44 bg-blue-200/50 rounded-full blur-3xl"
+                    ></div>
 
-                <p
-                    class="text-gray-600 mt-3 leading-7"
-                >
-                    A private rule-based prototype for reflection,
-                    grounding exercises and small next steps.
-                </p>
+                    <div
+                        class="absolute -bottom-12 -right-12 w-44 h-44 bg-purple-200/50 rounded-full blur-3xl"
+                    ></div>
 
-                <p
-                    class="text-blue-600 font-semibold mt-5"
-                >
-                    Open support chat →
-                </p>
-            </a>
+                    <div
+                        class="relative bg-white/95 border border-white rounded-3xl shadow-2xl p-7 sm:p-9"
+                    >
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p
+                                    class="text-sm font-bold uppercase tracking-wider text-blue-600"
+                                >
+                                    Daily Check-In
+                                </p>
 
-            <!-- Forum card -->
-            <a
-                href="forum.html"
-                class="bg-white/90 rounded-3xl p-7 shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
-            >
-                <div
-                    class="w-14 h-14 bg-purple-100 text-purple-700 rounded-2xl flex items-center justify-center text-3xl mb-5"
-                >
-                    🤝
+                                <h2
+                                    class="mt-2 text-2xl sm:text-3xl font-extrabold text-gray-900"
+                                >
+                                    How are you feeling today?
+                                </h2>
+                            </div>
+
+                            <div
+                                class="w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-2xl"
+                            >
+                                ♡
+                            </div>
+                        </div>
+
+                        <div
+                            id="moodOptions"
+                            class="grid grid-cols-2 gap-3 mt-7"
+                        >
+                            <button
+                                type="button"
+                                class="mood-button border border-gray-200 rounded-2xl p-4 text-left hover:border-green-300 hover:bg-green-50"
+                                data-mood="Good"
+                            >
+                                <span class="block text-3xl">😊</span>
+                                <span class="block mt-2 font-bold text-gray-800">
+                                    Good
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="mood-button border border-gray-200 rounded-2xl p-4 text-left hover:border-blue-300 hover:bg-blue-50"
+                                data-mood="Okay"
+                            >
+                                <span class="block text-3xl">😐</span>
+                                <span class="block mt-2 font-bold text-gray-800">
+                                    Okay
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="mood-button border border-gray-200 rounded-2xl p-4 text-left hover:border-yellow-300 hover:bg-yellow-50"
+                                data-mood="Stressed"
+                            >
+                                <span class="block text-3xl">😰</span>
+                                <span class="block mt-2 font-bold text-gray-800">
+                                    Stressed
+                                </span>
+                            </button>
+
+                            <button
+                                type="button"
+                                class="mood-button border border-gray-200 rounded-2xl p-4 text-left hover:border-purple-300 hover:bg-purple-50"
+                                data-mood="Low"
+                            >
+                                <span class="block text-3xl">😔</span>
+                                <span class="block mt-2 font-bold text-gray-800">
+                                    Feeling Low
+                                </span>
+                            </button>
+                        </div>
+
+                        <div
+                            id="moodResponse"
+                            class="hidden mt-5 border border-blue-100 bg-blue-50 text-blue-800 rounded-2xl p-4 text-sm leading-6"
+                            aria-live="polite"
+                        ></div>
+
+                        <p
+                            class="mt-6 text-xs leading-5 text-gray-500"
+                        >
+                            This check-in is optional and is only intended to
+                            guide you towards a suitable area of the prototype.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Options -->
+        <section
+            id="supportOptions"
+            class="py-24 bg-white"
+        >
+            <div class="max-w-6xl mx-auto px-5">
+                <div class="max-w-3xl mx-auto text-center">
+                    <p
+                        class="text-sm font-bold uppercase tracking-[0.2em] text-blue-600"
+                    >
+                        Choose Your Space
+                    </p>
+
+                    <h2
+                        class="mt-4 text-4xl sm:text-5xl font-extrabold text-gray-900"
+                    >
+                        Support that meets you where you are
+                    </h2>
+
+                    <p
+                        class="mt-5 text-lg leading-8 text-gray-600"
+                    >
+                        You can talk privately, share with the community or
+                        explore different levels of support.
+                    </p>
                 </div>
 
-                <h2
-                    class="text-xl font-bold text-gray-800"
+                <div
+                    class="grid md:grid-cols-3 gap-7 mt-14"
                 >
-                    Support Spaces
-                </h2>
+                    <!-- Support Chat -->
+                    <a
+                        id="chatCard"
+                        href="login.html"
+                        class="support-card group border border-blue-100 bg-gradient-to-b from-blue-50 to-white rounded-3xl p-7"
+                    >
+                        <div
+                            class="w-14 h-14 bg-blue-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md"
+                        >
+                            💬
+                        </div>
 
-                <p
-                    class="text-gray-600 mt-3 leading-7"
-                >
-                    Share your experiences using your username or
-                    anonymously across targeted categories.
-                </p>
+                        <h3
+                            class="mt-6 text-2xl font-extrabold text-gray-900"
+                        >
+                            Guided Support Chat
+                        </h3>
 
-                <p
-                    class="text-purple-600 font-semibold mt-5"
-                >
-                    Visit community →
-                </p>
-            </a>
+                        <p
+                            class="mt-3 text-gray-600 leading-7"
+                        >
+                            Express what you are feeling in a private prototype
+                            space and receive gentle guided responses.
+                        </p>
 
-            <!-- Support card -->
-            <a
-                href="tier.html"
-                class="bg-white/90 rounded-3xl p-7 shadow-lg hover:-translate-y-1 hover:shadow-xl transition"
+                        <span
+                            class="inline-flex items-center gap-2 mt-6 font-bold text-blue-600 group-hover:gap-3 transition-all"
+                        >
+                            Start chatting
+                            <span aria-hidden="true">→</span>
+                        </span>
+                    </a>
+
+                    <!-- Community Forum -->
+                    <a
+                        href="forum.html"
+                        class="support-card group border border-purple-100 bg-gradient-to-b from-purple-50 to-white rounded-3xl p-7"
+                    >
+                        <div
+                            class="w-14 h-14 bg-purple-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md"
+                        >
+                            🫂
+                        </div>
+
+                        <h3
+                            class="mt-6 text-2xl font-extrabold text-gray-900"
+                        >
+                            Community Forum
+                        </h3>
+
+                        <p
+                            class="mt-3 text-gray-600 leading-7"
+                        >
+                            Share experiences anonymously, find people who
+                            understand and offer encouragement to others.
+                        </p>
+
+                        <span
+                            class="inline-flex items-center gap-2 mt-6 font-bold text-purple-600 group-hover:gap-3 transition-all"
+                        >
+                            Explore the forum
+                            <span aria-hidden="true">→</span>
+                        </span>
+                    </a>
+
+                    <!-- Support Tiers -->
+                    <a
+                        href="tier.html"
+                        class="support-card group border border-emerald-100 bg-gradient-to-b from-emerald-50 to-white rounded-3xl p-7"
+                    >
+                        <div
+                            class="w-14 h-14 bg-emerald-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-md"
+                        >
+                            ♡
+                        </div>
+
+                        <h3
+                            class="mt-6 text-2xl font-extrabold text-gray-900"
+                        >
+                            Find Suitable Support
+                        </h3>
+
+                        <p
+                            class="mt-3 text-gray-600 leading-7"
+                        >
+                            Compare trainee, volunteer and professional support
+                            options based on your needs and budget.
+                        </p>
+
+                        <span
+                            class="inline-flex items-center gap-2 mt-6 font-bold text-emerald-600 group-hover:gap-3 transition-all"
+                        >
+                            View support tiers
+                            <span aria-hidden="true">→</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Why TrueSelf -->
+        <section class="py-24 bg-gray-50">
+            <div
+                class="max-w-6xl mx-auto px-5 grid lg:grid-cols-2 gap-14 items-center"
+            >
+                <div>
+                    <p
+                        class="text-sm font-bold uppercase tracking-[0.2em] text-purple-600"
+                    >
+                        Our Approach
+                    </p>
+
+                    <h2
+                        class="mt-4 text-4xl sm:text-5xl font-extrabold leading-tight text-gray-900"
+                    >
+                        A gentler first step towards getting support
+                    </h2>
+
+                    <p
+                        class="mt-6 text-lg leading-8 text-gray-600"
+                    >
+                        Starting a conversation about mental wellbeing can feel
+                        difficult. TrueSelf provides several ways to begin,
+                        depending on what feels most comfortable for you.
+                    </p>
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-5">
+                    <div
+                        class="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm"
+                    >
+                        <div class="text-3xl">🕊️</div>
+
+                        <h3 class="mt-4 text-lg font-extrabold text-gray-900">
+                            Express Yourself
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-6 text-gray-600">
+                            Share what is on your mind without needing to explain
+                            everything perfectly.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm"
+                    >
+                        <div class="text-3xl">🔒</div>
+
+                        <h3 class="mt-4 text-lg font-extrabold text-gray-900">
+                            Privacy Focused
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-6 text-gray-600">
+                            Use private chat and anonymous community features
+                            within the prototype.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm"
+                    >
+                        <div class="text-3xl">🤝</div>
+
+                        <h3 class="mt-4 text-lg font-extrabold text-gray-900">
+                            Community Support
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-6 text-gray-600">
+                            Connect with people who may understand similar
+                            feelings and experiences.
+                        </p>
+                    </div>
+
+                    <div
+                        class="bg-white border border-gray-200 rounded-3xl p-6 shadow-sm"
+                    >
+                        <div class="text-3xl">🌱</div>
+
+                        <h3 class="mt-4 text-lg font-extrabold text-gray-900">
+                            Support at Your Pace
+                        </h3>
+
+                        <p class="mt-2 text-sm leading-6 text-gray-600">
+                            Begin with a small check-in and move towards more
+                            suitable support when you feel ready.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety Section -->
+        <section class="py-20 bg-gray-900 text-white">
+            <div
+                class="max-w-5xl mx-auto px-5 text-center"
             >
                 <div
-                    class="w-14 h-14 bg-rose-100 text-rose-700 rounded-2xl flex items-center justify-center text-3xl mb-5"
+                    class="w-16 h-16 mx-auto rounded-2xl bg-white/10 flex items-center justify-center text-3xl"
                 >
                     ♡
                 </div>
 
                 <h2
-                    class="text-xl font-bold text-gray-800"
+                    class="mt-6 text-3xl sm:text-4xl font-extrabold"
                 >
-                    Help and Support
+                    Your safety matters
                 </h2>
 
                 <p
-                    class="text-gray-600 mt-3 leading-7"
+                    class="mt-5 max-w-3xl mx-auto text-gray-300 leading-8"
                 >
-                    Find country-specific emergency services, crisis
-                    helplines and other available support options.
+                    TrueSelf is a student prototype and does not replace
+                    professional counselling, medical treatment or emergency
+                    services. In an immediate emergency, contact your local
+                    emergency service or go to the nearest emergency department.
                 </p>
 
-                <p
-                    class="text-rose-600 font-semibold mt-5"
+                <div
+                    class="mt-8 flex flex-col sm:flex-row justify-center gap-4"
                 >
-                    View support options →
-                </p>
-            </a>
+                    <a
+                        href="tier.html"
+                        class="bg-white text-gray-900 font-bold px-7 py-3.5 rounded-xl hover:bg-gray-100 transition"
+                    >
+                        View Support Options
+                    </a>
 
+                    <a
+                        href="forum.html"
+                        class="border border-white/30 text-white font-bold px-7 py-3.5 rounded-xl hover:bg-white/10 transition"
+                    >
+                        Visit Community Forum
+                    </a>
+                </div>
+            </div>
         </section>
 
-        <!-- How it works -->
+        <!-- Final Call to Action -->
         <section
-            class="bg-white/85 backdrop-blur-md rounded-3xl shadow-lg p-8 md:p-10 mt-10"
+            class="py-24 bg-gradient-to-r from-blue-600 to-purple-600 text-white"
         >
-            <div class="text-center">
-
-                <p
-                    class="text-indigo-600 font-semibold"
-                >
-                    HOW IT WORKS
-                </p>
-
-                <h2
-                    class="text-3xl font-bold mt-2"
-                >
-                    Choose the support that fits you
-                </h2>
-
-            </div>
-
             <div
-                class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"
+                class="max-w-4xl mx-auto px-5 text-center"
             >
-
-                <div
-                    class="bg-blue-50 rounded-2xl p-6"
+                <h2
+                    class="text-4xl sm:text-5xl font-extrabold leading-tight"
                 >
-                    <span
-                        class="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold mb-4"
-                    >
-                        1
-                    </span>
+                    Take one small step today
+                </h2>
 
-                    <h3 class="font-bold text-lg">
-                        Select a Support Space
-                    </h3>
-
-                    <p class="text-gray-600 mt-2 leading-6">
-                        Post in tailored spaces like Student Stress, Small Wins, or Just Venting.
-                    </p>
-                </div>
-
-                <div
-                    class="bg-purple-50 rounded-2xl p-6"
+                <p
+                    class="mt-5 text-lg leading-8 text-blue-50"
                 >
-                    <span
-                        class="w-10 h-10 rounded-full bg-purple-600 text-white flex items-center justify-center font-bold mb-4"
-                    >
-                        2
-                    </span>
+                    You can begin by checking in with yourself, sharing with the
+                    community or starting a guided conversation.
+                </p>
 
-                    <h3 class="font-bold text-lg">
-                        State what you need
-                    </h3>
-
-                    <p class="text-gray-600 mt-2 leading-6">
-                        Specify if you want advice, encouragement, or simply someone to listen without giving advice.
-                    </p>
-                </div>
-
-                <div
-                    class="bg-rose-50 rounded-2xl p-6"
+                <a
+                    id="bottomChatButton"
+                    href="login.html"
+                    class="inline-flex items-center justify-center gap-2 mt-8 bg-white text-blue-700 font-extrabold px-8 py-4 rounded-2xl shadow-lg hover:scale-[1.02] transition"
                 >
-                    <span
-                        class="w-10 h-10 rounded-full bg-rose-600 text-white flex items-center justify-center font-bold mb-4"
-                    >
-                        3
-                    </span>
-
-                    <h3 class="font-bold text-lg">
-                        Find urgent help
-                    </h3>
-
-                    <p class="text-gray-600 mt-2 leading-6">
-                        Access country-specific emergency and crisis
-                        resources without signing in.
-                    </p>
-                </div>
-
+                    Start Your Check-In
+                    <span aria-hidden="true">→</span>
+                </a>
             </div>
         </section>
-
-        <!-- Prototype notice -->
-        <section
-            class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mt-10"
-        >
-            <h2
-                class="font-bold text-amber-900"
-            >
-                Prototype notice
-            </h2>
-
-            <p
-                class="text-amber-800 text-sm leading-6 mt-1"
-            >
-                TrueSelf is currently a frontend hackathon prototype.
-                The support chat is rule-based and does not use a live
-                AI service. TrueSelf is not an emergency service,
-                therapist or medical provider.
-            </p>
-        </section>
-
     </main>
 
     <!-- Footer -->
-    <footer
-        class="relative bg-gray-900 text-gray-300 mt-12"
-    >
+    <footer class="bg-white border-t border-gray-200">
         <div
-            class="max-w-6xl mx-auto px-6 py-10"
+            class="max-w-6xl mx-auto px-5 py-10 flex flex-col md:flex-row items-center justify-between gap-6"
         >
-            <div
-                class="grid sm:grid-cols-2 md:grid-cols-3 gap-8"
-            >
-                <div>
-                    <h2
-                        class="text-white font-bold text-lg"
-                    >
-                        TrueSelf
-                    </h2>
+            <div class="text-center md:text-left">
+                <a
+                    href="index.html"
+                    class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+                >
+                    TrueSelf
+                </a>
 
-                    <p
-                        class="text-sm leading-6 mt-3"
-                    >
-                        A hackathon prototype for guided reflection,
-                        community support and help-resource discovery.
-                    </p>
-                </div>
-
-                <div>
-                    <h3
-                        class="text-white font-semibold"
-                    >
-                        Platform
-                    </h3>
-
-                    <div
-                        class="grid gap-2 mt-3 text-sm"
-                    >
-                        <a
-                            href="index.html"
-                            class="hover:text-white"
-                        >
-                            Home
-                        </a>
-
-                        <a
-                            href="forum.html"
-                            class="hover:text-white"
-                        >
-                            Community Forum
-                        </a>
-
-                        <a
-                            href="#"
-                            onclick="startChat(event)"
-                            class="hover:text-white"
-                        >
-                            Support Chat
-                        </a>
-                    </div>
-                </div>
-
-                <div>
-                    <h3
-                        class="text-white font-semibold"
-                    >
-                        Get Support
-                    </h3>
-
-                    <div
-                        class="grid gap-2 mt-3 text-sm"
-                    >
-                        <a
-                            href="tier.html"
-                            class="text-rose-300 hover:text-rose-200 font-semibold"
-                        >
-                            Get Help Now
-                        </a>
-
-                        <a
-                            href="login.html"
-                            class="hover:text-white"
-                        >
-                            Login
-                        </a>
-
-                        <a
-                            href="signup.html"
-                            class="hover:text-white"
-                        >
-                            Create Account
-                        </a>
-                    </div>
-                </div>
+                <p class="mt-2 text-sm text-gray-500">
+                    A mental wellness support prototype.
+                </p>
             </div>
 
             <div
-                class="border-t border-gray-700 mt-8 pt-6 text-xs text-center text-gray-400"
+                class="flex flex-wrap justify-center gap-5 text-sm font-semibold text-gray-600"
             >
-                TrueSelf is a prototype and is not an emergency,
-                counselling or medical service.
+                <a
+                    href="index.html"
+                    class="hover:text-blue-600"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="forum.html"
+                    class="hover:text-blue-600"
+                >
+                    Forum
+                </a>
+
+                <a
+                    href="chat.html"
+                    class="hover:text-blue-600"
+                >
+                    Support Chat
+                </a>
+
+                <a
+                    href="tier.html"
+                    class="hover:text-blue-600"
+                >
+                    Find Support
+                </a>
             </div>
+        </div>
+
+        <div
+            class="border-t border-gray-200 text-center text-xs text-gray-500 px-5 py-5"
+        >
+            Prototype support only — not a replacement for professional or
+            emergency care.
         </div>
     </footer>
 
     <script>
-        const loginLink =
-            document.getElementById(
-                "login-link"
+        /*
+         * Mobile navigation
+         */
+        const mobileMenuButton =
+            document.getElementById("mobileMenuButton");
+
+        const mobileMenu =
+            document.getElementById("mobileMenu");
+
+        mobileMenuButton.addEventListener("click", function () {
+            const menuIsHidden =
+                mobileMenu.classList.contains("hidden");
+
+            mobileMenu.classList.toggle("hidden");
+
+            mobileMenuButton.setAttribute(
+                "aria-expanded",
+                menuIsHidden ? "true" : "false"
             );
+        });
 
-        const signupLink =
-            document.getElementById(
-                "signup-link"
-            );
+        /*
+         * Check whether the user is logged in.
+         *
+         * This checks several common localStorage names so it can work
+         * with your existing login page.
+         */
+        function getLoggedInUser() {
+            const storageKeys = [
+                "currentUser",
+                "loggedInUser",
+                "user"
+            ];
 
-        const chatLink =
-            document.getElementById(
-                "chat-link"
-            );
+            for (let i = 0; i < storageKeys.length; i++) {
+                const storedValue =
+                    localStorage.getItem(storageKeys[i]);
 
-        const logoutButton =
-            document.getElementById(
-                "logout-button"
-            );
-
-        const loginStatus =
-            document.getElementById(
-                "login-status"
-            );
-
-        function isLoggedIn() {
-            return (
-                localStorage.getItem(
-                    "loggedIn"
-                ) === "true"
-            );
-        }
-
-        function updateNavigation() {
-            if (isLoggedIn()) {
-                loginLink.classList.add(
-                    "hidden"
-                );
-
-                signupLink.classList.add(
-                    "hidden"
-                );
-
-                chatLink.classList.remove(
-                    "hidden"
-                );
-
-                logoutButton.classList.remove(
-                    "hidden"
-                );
-
-                const userEmail =
-                    localStorage.getItem(
-                        "userEmail"
-                    );
-
-                if (userEmail) {
-                    loginStatus.textContent =
-                        "Signed in as " +
-                        userEmail;
-                }
-                else {
-                    loginStatus.textContent =
-                        "You are signed in";
+                if (storedValue) {
+                    try {
+                        return JSON.parse(storedValue);
+                    } catch (error) {
+                        return storedValue;
+                    }
                 }
             }
-            else {
-                loginLink.classList.remove(
-                    "hidden"
-                );
 
-                signupLink.classList.remove(
-                    "hidden"
-                );
+            if (localStorage.getItem("isLoggedIn") === "true") {
+                return {
+                    name: localStorage.getItem("userName") || "User"
+                };
+            }
 
-                chatLink.classList.add(
-                    "hidden"
-                );
+            return null;
+        }
 
-                logoutButton.classList.add(
-                    "hidden"
-                );
+        /*
+         * Update navigation and chat links.
+         */
+        function updateLoginDisplay() {
+            const user = getLoggedInUser();
 
-                loginStatus.textContent =
-                    "Sign in to access the support chat";
+            const guestNavigation =
+                document.getElementById("guestNavigation");
+
+            const userNavigation =
+                document.getElementById("userNavigation");
+
+            const mobileGuestNavigation =
+                document.getElementById("mobileGuestNavigation");
+
+            const mobileUserNavigation =
+                document.getElementById("mobileUserNavigation");
+
+            const welcomeUser =
+                document.getElementById("welcomeUser");
+
+            const mainChatButton =
+                document.getElementById("mainChatButton");
+
+            const bottomChatButton =
+                document.getElementById("bottomChatButton");
+
+            const chatCard =
+                document.getElementById("chatCard");
+
+            const chatLoginMessage =
+                document.getElementById("chatLoginMessage");
+
+            if (user) {
+                guestNavigation.classList.add("hidden");
+
+                userNavigation.classList.remove("hidden");
+                userNavigation.classList.add("flex");
+
+                mobileGuestNavigation.classList.add("hidden");
+                mobileUserNavigation.classList.remove("hidden");
+
+                let userName = "User";
+
+                if (typeof user === "object" && user !== null) {
+                    userName =
+                        user.fullName ||
+                        user.name ||
+                        user.username ||
+                        "User";
+                } else if (typeof user === "string") {
+                    userName = user;
+                }
+
+                welcomeUser.textContent =
+                    "Hi, " + userName;
+
+                mainChatButton.href = "chat.html";
+                bottomChatButton.href = "chat.html";
+                chatCard.href = "chat.html";
+
+                chatLoginMessage.textContent =
+                    "Your support chat is ready when you are.";
+            } else {
+                guestNavigation.classList.remove("hidden");
+
+                userNavigation.classList.add("hidden");
+                userNavigation.classList.remove("flex");
+
+                mobileGuestNavigation.classList.remove("hidden");
+                mobileUserNavigation.classList.add("hidden");
+
+                mainChatButton.href = "login.html";
+                bottomChatButton.href = "login.html";
+                chatCard.href = "login.html";
+
+                chatLoginMessage.textContent =
+                    "Sign in to access the private support chat.";
             }
         }
 
-        function startChat(event) {
-            event.preventDefault();
+        /*
+         * Log the user out and return to the homepage.
+         */
+        function logoutUser() {
+            const storageKeys = [
+                "currentUser",
+                "loggedInUser",
+                "user",
+                "isLoggedIn",
+                "userName"
+            ];
 
-            if (isLoggedIn()) {
-                window.location.href =
-                    "chat.html";
-            }
-            else {
+            storageKeys.forEach(function (key) {
+                localStorage.removeItem(key);
+            });
+
+            window.location.href = "index.html";
+        }
+
+        /*
+         * Mood check-in interaction.
+         */
+        const moodButtons =
+            document.querySelectorAll(".mood-button");
+
+        const moodResponse =
+            document.getElementById("moodResponse");
+
+        const moodMessages = {
+            Good:
+                "It is good to hear that you are feeling okay today. You can share a small win or encourage someone in the community forum.",
+
+            Okay:
+                "Feeling just okay is completely valid. You can take your time, check out the forum or begin a guided support chat.",
+
+            Stressed:
+                "It sounds like you may have a lot on your mind. Try taking one slow breath, then use the support chat to break things into smaller steps.",
+
+            Low:
+                "Thank you for checking in honestly. You deserve support, and you do not need to handle everything alone. Consider visiting the chat or support options."
+        };
+
+        moodButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+                moodButtons.forEach(function (item) {
+                    item.classList.remove("selected");
+                });
+
+                button.classList.add("selected");
+
+                const selectedMood =
+                    button.getAttribute("data-mood");
+
+                moodResponse.textContent =
+                    moodMessages[selectedMood];
+
+                moodResponse.classList.remove("hidden");
+
                 localStorage.setItem(
-                    "redirectAfterLogin",
-                    "chat.html"
+                    "latestMood",
+                    selectedMood
                 );
+            });
+        });
 
-                window.location.href =
-                    "login.html";
-            }
-        }
-
-        logoutButton.addEventListener(
-            "click",
-            function () {
-                localStorage.removeItem(
-                    "loggedIn"
-                );
-
-                localStorage.removeItem(
-                    "userEmail"
-                );
-
-                localStorage.removeItem(
-                    "redirectAfterLogin"
-                );
-
-                updateNavigation();
-            }
-        );
-
-        updateNavigation();
+        /*
+         * Run when the page loads.
+         */
+        updateLoginDisplay();
     </script>
-
 </body>
 </html>
