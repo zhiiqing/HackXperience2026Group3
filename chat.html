@@ -1,77 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HackXperience AI Assistant</title>
-<script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HackXperience AI Assistant</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f9f9fb;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Top Header */
+        header {
+            background-color: #7c3aed;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .back-btn:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        .header-right {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        /* Chat Body Area */
+        .chat-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .avatar {
+            background-color: #5b21b6;
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .message-bubble {
+            background-color: #ffffff;
+            border: 1px solid #e5e7eb;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: 15px;
+            color: #1f2937;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+            max-width: 600px;
+            line-height: 1.5;
+        }
+
+        .message-bubble code {
+            background-color: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 14px;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+        }
+
+        /* Bottom Input Area */
+        .footer-input-container {
+            background-color: #ffffff;
+            padding: 16px 24px;
+            border-top: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .message-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 24px;
+            font-size: 15px;
+            outline: none;
+            transition: border-color 0.2s;
+            color: #374151;
+        }
+
+        .message-input::placeholder {
+            color: #9ca3af;
+        }
+
+        .message-input:focus {
+            border-color: #7c3aed;
+        }
+
+        .send-btn {
+            background-color: #5b21b6;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 24px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: #4c1d95;
+        }
+    </style>
 </head>
-<body class="h-screen flex flex-col bg-gray-50">
+<body>
 
-<!-- Header -->
-<header class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white shadow-lg p-4 flex items-center justify-between">
-    <div class="flex items-center gap-4">
-        <a href="index.html" class="bg-white/20 hover:bg-white/30 transition px-4 py-2 rounded-full">← Back</a>
-        <h1 class="text-xl font-bold">HackXperience AI Assistant</h1>
-    </div>
-    <div class="text-2xl">🤖</div>
-</header>
+    <!-- Header -->
+    <header>
+        <div class="header-left">
+            <button class="back-btn">
+                &larr; Back
+            </button>
+            <h1>HackXperience AI Assistant</h1>
+        </div>
+        <div class="header-right">
+            🤖
+        </div>
+    </header>
 
-<!-- Chat Window -->
-<main id="chat-window" class="flex-1 overflow-y-auto p-6 space-y-4 max-w-4xl mx-auto w-full">
-    <div class="flex items-start gap-3">
-        <div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">AI</div>
-        <div class="bg-white rounded-2xl shadow p-4 max-w-xl text-gray-700">
-            Hello! 👋 I'm your AI assistant powered by `gpt-5.6-sol`. Ask me anything!
+    <!-- Chat Messages Container -->
+    <div class="chat-container">
+        <div class="message-row">
+            <div class="avatar">AI</div>
+            <div class="message-bubble">
+                Hello! 👋 I'm your AI assistant powered by <code>gpt-5.6-sol</code>. Ask me anything!
+            </div>
         </div>
     </div>
-</main>
 
-<!-- Footer Input -->
-<footer class="bg-white border-t p-4 shadow-lg">
-    <div class="max-w-4xl mx-auto flex gap-3">
-        <input id="user-input" type="text" placeholder="Type your message..." class="flex-1 border rounded-full px-6 py-3 outline-none focus:ring-2 focus:ring-indigo-500">
-        <button onclick="sendMessage()" class="bg-indigo-600 text-white px-6 py-3 rounded-full hover:bg-indigo-700 transition">Send</button>
+    <!-- Bottom Input Section -->
+    <div class="footer-input-container">
+        <div class="input-wrapper">
+            <input type="text" class="message-input" placeholder="Type your message...">
+        </div>
+        <button class="send-btn">Send</button>
     </div>
-</footer>
 
-<script>
-const chatWindow = document.getElementById("chat-window");
-const input = document.getElementById("user-input");
-
-input.addEventListener("keypress", (e) => { if (e.key === "Enter") sendMessage(); });
-
-async function sendMessage() {
-    const text = input.value.trim();
-    if (!text) return;
-    input.value = "";
-
-    // Append User Bubble
-    chatWindow.innerHTML += `<div class="flex justify-end"><div class="bg-indigo-600 text-white rounded-2xl p-4 max-w-xl shadow">${text}</div></div>`;
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-
-    // Loading Bubble
-    const loadId = "load-" + Date.now();
-    chatWindow.innerHTML += `<div id="${loadId}" class="flex items-start gap-3"><div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">AI</div><div class="bg-white rounded-2xl shadow p-4 text-gray-500">Thinking...</div></div>`;
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-
-    try {
-        const res = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text })
-        });
-        const data = await res.json();
-        document.getElementById(loadId).remove();
-
-        // Append AI Reply
-        chatWindow.innerHTML += `<div class="flex items-start gap-3"><div class="w-10 h-10 rounded-full bg-indigo-600 text-white flex items-center justify-center font-bold">AI</div><div class="bg-white rounded-2xl shadow p-4 max-w-xl text-gray-700 whitespace-pre-wrap">${data.reply}</div></div>`;
-    } catch (err) {
-        document.getElementById(loadId).remove();
-        chatWindow.innerHTML += `<div class="text-red-500 p-2">Error connecting to assistant server.</div>`;
-    }
-    chatWindow.scrollTop = chatWindow.scrollHeight;
-}
-</script>
 </body>
 </html>
