@@ -1,333 +1,76 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-
-    <title>TrueSelf</title>
-
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        body {
-            background:
-                linear-gradient(
-                    135deg,
-                    #eef2ff,
-                    #dbeafe,
-                    #f5f3ff
-                );
-        }
-
-        .floating {
-            animation:
-                float 4s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%,
-            100% {
-                transform:
-                    translateY(0);
-            }
-
-            50% {
-                transform:
-                    translateY(-15px);
-            }
-        }
-
-        .glow:hover {
-            box-shadow:
-                0 0 35px rgba(59, 130, 246, 0.45);
-        }
-    </style>
-</head>
-
-<body class="min-h-screen px-6 py-28 flex items-center justify-center">
-
-    <!-- Top navigation -->
-    <nav
-        class="absolute top-6 right-6 left-6 flex flex-wrap justify-end gap-3 z-50"
-    >
-        <!-- Shown when logged out -->
-        <a
-            id="login-link"
-            href="login.html"
-            class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition"
-        >
-            Login
-        </a>
-
-        <a
-            id="signup-link"
-            href="signup.html"
-            class="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-semibold shadow hover:scale-105 transition"
-        >
-            Sign Up
-        </a>
-
-        <!-- Main navigation -->
-        <a
-            href="forum.html"
-            class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition"
-        >
-            Forum
-        </a>
-
-        <a
-            href="tier.html"
-            class="px-5 py-2 bg-rose-500 text-white rounded-full text-sm font-semibold shadow hover:bg-rose-600 transition"
-        >
-            Seek Help Now
-        </a>
-
-        <!-- Shown only after login -->
-        <a
-            id="chat-link"
-            href="chat.html"
-            class="hidden px-5 py-2 bg-white text-indigo-600 border border-indigo-600 rounded-full text-sm font-semibold shadow hover:bg-indigo-600 hover:text-white transition"
-        >
-            Support Chat
-        </a>
-
-        <button
-            id="logout-button"
-            type="button"
-            class="hidden px-5 py-2 bg-gray-800 text-white rounded-full text-sm font-semibold shadow hover:bg-gray-900 transition"
-        >
-            Log Out
-        </button>
-    </nav>
-
-    <!-- Background decorations -->
+<nav
+    class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200"
+>
     <div
-        class="fixed top-20 left-20 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl pointer-events-none"
-    ></div>
-
-    <div
-        class="fixed bottom-20 right-20 w-80 h-80 bg-purple-300 opacity-20 rounded-full blur-3xl pointer-events-none"
-    ></div>
-
-    <!-- Hero card -->
-    <main
-        class="relative bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl max-w-3xl w-full p-8 md:p-12 text-center"
+        class="max-w-6xl mx-auto px-5 py-4 flex flex-wrap items-center justify-between gap-4"
     >
-        <!-- Icon -->
-        <div class="floating mb-8">
-
-            <div
-                class="mx-auto w-28 h-28 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-6xl shadow-xl"
-            >
-                ♡
-            </div>
-
-        </div>
-
-        <h1
-            class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4"
+        <a
+            href="index.html"
+            class="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
         >
-            Welcome to
+            TrueSelf
+        </a>
 
-            <span
-                class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-            >
-                TrueSelf
-            </span>
-        </h1>
-
-        <p
-            class="text-gray-600 text-lg leading-8 max-w-xl mx-auto"
-        >
-            TrueSelf provides a supportive space to express your
-            feelings, connect with the community and find suitable
-            help resources. You can use the guided support chat,
-            share through the forum or view urgent support options.
-        </p>
-
-        <!-- Features -->
-        <section
-            class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 mb-10"
-        >
+        <div class="flex flex-wrap items-center gap-3">
             <a
-                href="#"
-                onclick="startChat(event)"
-                class="bg-blue-50 rounded-2xl p-5 hover:shadow-md transition"
+                href="index.html"
+                class="text-gray-600 hover:text-blue-600 font-semibold px-3 py-2"
             >
-                <div class="text-4xl mb-3">
-                    💬
-                </div>
-
-                <h3 class="font-bold text-gray-700">
-                    Guided Support Chat
-                </h3>
-
-                <p class="text-gray-500 text-sm mt-2">
-                    Share your thoughts in a private prototype space.
-                </p>
+                Home
             </a>
 
             <a
                 href="forum.html"
-                class="bg-purple-50 rounded-2xl p-5 hover:shadow-md transition"
+                class="text-gray-600 hover:text-blue-600 font-semibold px-3 py-2"
             >
-                <div class="text-4xl mb-3">
-                    🤝
-                </div>
-
-                <h3 class="font-bold text-gray-700">
-                    Community Forum
-                </h3>
-
-                <p class="text-gray-500 text-sm mt-2">
-                    Share experiences and support other users.
-                </p>
+                Community
             </a>
 
             <a
                 href="tier.html"
-                class="bg-indigo-50 rounded-2xl p-5 hover:shadow-md transition"
+                class="text-gray-600 hover:text-blue-600 font-semibold px-3 py-2"
             >
-                <div class="text-4xl mb-3">
-                    ♡
-                </div>
-
-                <h3 class="font-bold text-gray-700">
-                    Help Resources
-                </h3>
-
-                <p class="text-gray-500 text-sm mt-2">
-                    Find crisis and emergency support by country.
-                </p>
+                Find Support
             </a>
-        </section>
 
-        <!-- Start button -->
-        <a
-            id="start-chat-button"
-            href="#"
-            onclick="startChat(event)"
-            class="glow inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105"
-        >
-            Start Chatting
-            💬
-        </a>
+            <a
+                id="login-link"
+                href="login.html"
+                class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition"
+            >
+                Login
+            </a>
 
-        <p
-            id="login-status"
-            class="mt-6 text-sm text-gray-500"
-        >
-            Sign in to access the support chat
-        </p>
+            <a
+                id="signup-link"
+                href="signup.html"
+                class="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full font-semibold hover:scale-105 transition"
+            >
+                Sign Up
+            </a>
 
-        <p class="mt-3 text-xs text-gray-400">
-            Prototype support only — not a replacement for professional
-            or emergency care
-        </p>
-    </main>
+            <a
+                id="chat-link"
+                href="chat.html"
+                class="hidden px-5 py-2 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition"
+            >
+                Support Chat
+            </a>
 
-    <script>
-        const loginLink =
-            document.getElementById("login-link");
+            <button
+                id="logout-button"
+                type="button"
+                class="hidden px-5 py-2 bg-gray-800 text-white rounded-full font-semibold hover:bg-gray-900 transition"
+            >
+                Log Out
+            </button>
 
-        const signupLink =
-            document.getElementById("signup-link");
-
-        const chatLink =
-            document.getElementById("chat-link");
-
-        const logoutButton =
-            document.getElementById("logout-button");
-
-        const loginStatus =
-            document.getElementById("login-status");
-
-        function userIsLoggedIn() {
-            return (
-                localStorage.getItem("loggedIn") ===
-                "true"
-            );
-        }
-
-        function updateNavigation() {
-            if (userIsLoggedIn()) {
-                loginLink.classList.add("hidden");
-                signupLink.classList.add("hidden");
-
-                chatLink.classList.remove("hidden");
-                logoutButton.classList.remove("hidden");
-
-                const userEmail =
-                    localStorage.getItem("userEmail");
-
-                if (userEmail) {
-                    loginStatus.textContent =
-                        "Signed in as " + userEmail;
-                }
-                else {
-                    loginStatus.textContent =
-                        "You are signed in";
-                }
-            }
-            else {
-                loginLink.classList.remove("hidden");
-                signupLink.classList.remove("hidden");
-
-                chatLink.classList.add("hidden");
-                logoutButton.classList.add("hidden");
-
-                loginStatus.textContent =
-                    "Sign in to access the support chat";
-            }
-        }
-
-        function startChat(event) {
-            event.preventDefault();
-
-            if (userIsLoggedIn()) {
-                window.location.href =
-                    "chat.html";
-            }
-            else {
-                /*
-                    Remember that the user wanted to open
-                    the chat after signing in.
-                */
-                localStorage.setItem(
-                    "redirectAfterLogin",
-                    "chat.html"
-                );
-
-                window.location.href =
-                    "login.html";
-            }
-        }
-
-        logoutButton.addEventListener(
-            "click",
-            function () {
-                localStorage.removeItem(
-                    "loggedIn"
-                );
-
-                localStorage.removeItem(
-                    "userEmail"
-                );
-
-                localStorage.removeItem(
-                    "redirectAfterLogin"
-                );
-
-                updateNavigation();
-            }
-        );
-
-        updateNavigation();
-    </script>
-
-</body>
-</html>
+            <a
+                href="resources.html"
+                class="px-5 py-2 bg-rose-500 text-white rounded-full font-semibold hover:bg-rose-600 transition"
+            >
+                Urgent Help
+            </a>
+        </div>
+    </div>
+</nav>
