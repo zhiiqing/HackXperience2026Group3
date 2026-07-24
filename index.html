@@ -2,141 +2,332 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>TrueSelf</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        body{
-            background: linear-gradient(135deg,#eef2ff,#dbeafe,#f5f3ff);
-            overflow:hidden;
+        body {
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #dbeafe,
+                    #f5f3ff
+                );
         }
 
-        .floating{
-            animation: float 4s ease-in-out infinite;
+        .floating {
+            animation:
+                float 4s ease-in-out infinite;
         }
 
-        @keyframes float{
-            0%,100%{
-                transform:translateY(0px);
+        @keyframes float {
+            0%,
+            100% {
+                transform:
+                    translateY(0);
             }
-            50%{
-                transform:translateY(-15px);
+
+            50% {
+                transform:
+                    translateY(-15px);
             }
         }
 
-        .glow:hover{
-            box-shadow:0 0 35px rgba(59,130,246,.45);
+        .glow:hover {
+            box-shadow:
+                0 0 35px rgba(59, 130, 246, 0.45);
         }
     </style>
-
 </head>
 
-<body class="min-h-screen flex items-center justify-center px-6">
+<body class="min-h-screen px-6 py-28 flex items-center justify-center">
 
-    <!-- Top Right Navigation -->
-    <div class="absolute top-6 right-6 flex gap-3 z-50">
-
-        <!-- Login Button -->
-        <a href="login.html"
-           class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition">
-
+    <!-- Top navigation -->
+    <nav
+        class="absolute top-6 right-6 left-6 flex flex-wrap justify-end gap-3 z-50"
+    >
+        <!-- Shown when logged out -->
+        <a
+            id="login-link"
+            href="login.html"
+            class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition"
+        >
             Login
-
         </a>
 
-        <!-- Sign Up Button -->
-        <a href="signup.html"
-           class="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-semibold shadow hover:scale-105 transition">
-
+        <a
+            id="signup-link"
+            href="signup.html"
+            class="px-5 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-semibold shadow hover:scale-105 transition"
+        >
             Sign Up
-
         </a>
 
-        <!-- Forum Button -->
-        <a href="forum.html" 
-           class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition">
-            
+        <!-- Main navigation -->
+        <a
+            href="forum.html"
+            class="px-5 py-2 bg-white text-blue-600 border border-blue-600 rounded-full text-sm font-semibold shadow hover:bg-blue-600 hover:text-white transition"
+        >
             Forum
-            
         </a>
 
-    </div>
+        <a
+            href="tier.html"
+            class="px-5 py-2 bg-rose-500 text-white rounded-full text-sm font-semibold shadow hover:bg-rose-600 transition"
+        >
+            Seek Help Now
+        </a>
 
-    <!-- Background Decorations -->
-    <div class="absolute top-20 left-20 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-20 right-20 w-80 h-80 bg-purple-300 opacity-20 rounded-full blur-3xl"></div>
+        <!-- Shown only after login -->
+        <a
+            id="chat-link"
+            href="chat.html"
+            class="hidden px-5 py-2 bg-white text-indigo-600 border border-indigo-600 rounded-full text-sm font-semibold shadow hover:bg-indigo-600 hover:text-white transition"
+        >
+            Support Chat
+        </a>
 
-    <!-- Hero Card -->
-    <div class="relative bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl max-w-3xl w-full p-12 text-center">
+        <button
+            id="logout-button"
+            type="button"
+            class="hidden px-5 py-2 bg-gray-800 text-white rounded-full text-sm font-semibold shadow hover:bg-gray-900 transition"
+        >
+            Log Out
+        </button>
+    </nav>
 
-        <!-- AI Icon -->
+    <!-- Background decorations -->
+    <div
+        class="fixed top-20 left-20 w-72 h-72 bg-blue-300 opacity-20 rounded-full blur-3xl pointer-events-none"
+    ></div>
+
+    <div
+        class="fixed bottom-20 right-20 w-80 h-80 bg-purple-300 opacity-20 rounded-full blur-3xl pointer-events-none"
+    ></div>
+
+    <!-- Hero card -->
+    <main
+        class="relative bg-white/80 backdrop-blur-lg shadow-2xl rounded-3xl max-w-3xl w-full p-8 md:p-12 text-center"
+    >
+        <!-- Icon -->
         <div class="floating mb-8">
-            <div class="mx-auto w-28 h-28 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-6xl shadow-xl">
-                🤖
+
+            <div
+                class="mx-auto w-28 h-28 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-6xl shadow-xl"
+            >
+                ♡
             </div>
+
         </div>
 
-        <h1 class="text-5xl font-extrabold text-gray-800 mb-4">
+        <h1
+            class="text-4xl md:text-5xl font-extrabold text-gray-800 mb-4"
+        >
             Welcome to
-            <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+
+            <span
+                class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            >
                 TrueSelf
             </span>
         </h1>
 
-        <p class="text-gray-600 text-lg leading-8 max-w-xl mx-auto">
-            TrueSelf is an intelligent AI companion designed to provide a safe,
-            supportive environment for you to share your feelings,
-            process your emotions through journaling, and track your daily moods. 
-            
-            Beyond AI support, it connects you with professional help starting at just $5, 
-            making mental wellness accessible and affordable.
+        <p
+            class="text-gray-600 text-lg leading-8 max-w-xl mx-auto"
+        >
+            TrueSelf provides a supportive space to express your
+            feelings, connect with the community and find suitable
+            help resources. You can use the guided support chat,
+            share through the forum or view urgent support options.
         </p>
 
         <!-- Features -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 mb-10">
+        <section
+            class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 mb-10"
+        >
+            <a
+                href="#"
+                onclick="startChat(event)"
+                class="bg-blue-50 rounded-2xl p-5 hover:shadow-md transition"
+            >
+                <div class="text-4xl mb-3">
+                    💬
+                </div>
 
-            <div class="bg-blue-50 rounded-2xl p-5">
-                <div class="text-4xl mb-3">💬</div>
-                <h3 class="font-bold text-gray-700">AI Chat</h3>
+                <h3 class="font-bold text-gray-700">
+                    Guided Support Chat
+                </h3>
+
                 <p class="text-gray-500 text-sm mt-2">
-                    Ask questions anytime.
+                    Share your thoughts in a private prototype space.
                 </p>
-            </div>
+            </a>
 
-            <div class="bg-purple-50 rounded-2xl p-5">
-                <div class="text-4xl mb-3">⚡</div>
-                <h3 class="font-bold text-gray-700">Fast Responses</h3>
+            <a
+                href="forum.html"
+                class="bg-purple-50 rounded-2xl p-5 hover:shadow-md transition"
+            >
+                <div class="text-4xl mb-3">
+                    🤝
+                </div>
+
+                <h3 class="font-bold text-gray-700">
+                    Community Forum
+                </h3>
+
                 <p class="text-gray-500 text-sm mt-2">
-                    Get instant AI-powered answers.
+                    Share experiences and support other users.
                 </p>
-            </div>
+            </a>
 
-            <div class="bg-indigo-50 rounded-2xl p-5">
-                <div class="text-4xl mb-3">🧠</div>
-                <h3 class="font-bold text-gray-700">Smart Assistant</h3>
+            <a
+                href="tier.html"
+                class="bg-indigo-50 rounded-2xl p-5 hover:shadow-md transition"
+            >
+                <div class="text-4xl mb-3">
+                    ♡
+                </div>
+
+                <h3 class="font-bold text-gray-700">
+                    Help Resources
+                </h3>
+
                 <p class="text-gray-500 text-sm mt-2">
-                    Helpful, reliable, and always available.
+                    Find crisis and emergency support by country.
                 </p>
-            </div>
+            </a>
+        </section>
 
-        </div>
-
-        <!-- Start Chatting Button -->
-        <a href="signup.html"
-           class="glow inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105">
-
+        <!-- Start button -->
+        <a
+            id="start-chat-button"
+            href="#"
+            onclick="startChat(event)"
+            class="glow inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-10 py-4 rounded-full text-lg font-semibold transition duration-300 transform hover:scale-105"
+        >
             Start Chatting
             💬
-
         </a>
 
-        <p class="mt-8 text-sm text-gray-500">
-            Powered by AI • Available 24/7
+        <p
+            id="login-status"
+            class="mt-6 text-sm text-gray-500"
+        >
+            Sign in to access the support chat
         </p>
 
-    </div>
+        <p class="mt-3 text-xs text-gray-400">
+            Prototype support only — not a replacement for professional
+            or emergency care
+        </p>
+    </main>
+
+    <script>
+        const loginLink =
+            document.getElementById("login-link");
+
+        const signupLink =
+            document.getElementById("signup-link");
+
+        const chatLink =
+            document.getElementById("chat-link");
+
+        const logoutButton =
+            document.getElementById("logout-button");
+
+        const loginStatus =
+            document.getElementById("login-status");
+
+        function userIsLoggedIn() {
+            return (
+                localStorage.getItem("loggedIn") ===
+                "true"
+            );
+        }
+
+        function updateNavigation() {
+            if (userIsLoggedIn()) {
+                loginLink.classList.add("hidden");
+                signupLink.classList.add("hidden");
+
+                chatLink.classList.remove("hidden");
+                logoutButton.classList.remove("hidden");
+
+                const userEmail =
+                    localStorage.getItem("userEmail");
+
+                if (userEmail) {
+                    loginStatus.textContent =
+                        "Signed in as " + userEmail;
+                }
+                else {
+                    loginStatus.textContent =
+                        "You are signed in";
+                }
+            }
+            else {
+                loginLink.classList.remove("hidden");
+                signupLink.classList.remove("hidden");
+
+                chatLink.classList.add("hidden");
+                logoutButton.classList.add("hidden");
+
+                loginStatus.textContent =
+                    "Sign in to access the support chat";
+            }
+        }
+
+        function startChat(event) {
+            event.preventDefault();
+
+            if (userIsLoggedIn()) {
+                window.location.href =
+                    "chat.html";
+            }
+            else {
+                /*
+                    Remember that the user wanted to open
+                    the chat after signing in.
+                */
+                localStorage.setItem(
+                    "redirectAfterLogin",
+                    "chat.html"
+                );
+
+                window.location.href =
+                    "login.html";
+            }
+        }
+
+        logoutButton.addEventListener(
+            "click",
+            function () {
+                localStorage.removeItem(
+                    "loggedIn"
+                );
+
+                localStorage.removeItem(
+                    "userEmail"
+                );
+
+                localStorage.removeItem(
+                    "redirectAfterLogin"
+                );
+
+                updateNavigation();
+            }
+        );
+
+        updateNavigation();
+    </script>
 
 </body>
 </html>
