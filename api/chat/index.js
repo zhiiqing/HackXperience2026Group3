@@ -8,85 +8,45 @@ module.exports = async function (context, req) {
 
     const endpoint = process.env.Endpoint; 
     const apiKey = process.env.API;
-    const agentId = process.env.AIChatbot; 
 
     try {
-        const apiVersion = "2024-05-01-preview";
+        // Use standard Chat Completions endpoint (instant and stable)
+        const chatUrl = `${endpoint.replace(/\/$/, "")}/openai/deployments/gpt-4o/chat/completions?api-version=2024-02-01`;
 
-        // 1. Trigger the Foundry agent thread and run
-        const runRes = await fetch(`${endpoint}/openai/threads/runs?api-version=${apiVersion}`, {
+        const response = await fetch(chatUrl, {
             method: 'POST',
             headers: { 
                 'api-key': apiKey, 
                 'Content-Type': 'application/json' 
             },
             body: JSON.stringify({
-                assistant_id: agentId,
-                thread: {
-                    messages: [
-                        { role: "user", content: userMessage }
-                    ]
-                }
+                messages: [
+                    { role: "system", content: "You are HackXperience AI, a helpful assistant for mental wellness and project guidance." },
+                    { role: "user", content: userMessage }
+                ],
+                temperature: 0.7
             })
         });
 
-        const rawText = await runRes.text();
-        if (!rawText) throw new Error("Azure returned an empty response during run creation.");
-        const runData = JSON.parse(rawText);
+        const rawText = await response.text();
+        if (!rawText) throw new Error("Azure returned an empty response.");
         
-        if (!runData.id || !runData.thread_id) {
-            throw new Error(runData.error ? runData.error.message : "Failed to start agent thread.");
+        const data = JSON.parse(rawText);
+
+        if (data.error) {
+            throw new Error(data.error.message);
         }
 
-        const threadId = runData.thread_id;
-        const runId = runData.id;
-
-        // 2. Poll until the agent completes your request
-        let status = runData.status;
-        let attempts = 0;
-        
-        while (status !== "completed" && attempts < 15) {
-            await new Promise(resolve => setTimeout(resolve, 1000));
-            attempts++;
-
-            const statusRes = await fetch(`${endpoint}/openai/threads/${threadId}/runs/${runId}?api-version=${apiVersion}`, {
-                method: 'GET',
-                headers: { 'api-key': apiKey }
-            });
-            const statusText = await statusRes.text();
-            if (!statusText) continue;
-            
-            const statusData = JSON.parse(statusText);
-            status = statusData.status;
-
-            if (status === "failed" || status === "cancelled" || status === "expired") {
-                throw new Error("Agent run failed with status: " + status);
-            }
-        }
-
-        if (status !== "completed") {
-            throw new Error("Agent response timed out.");
-        }
-
-        // 3. Fetch messages from the completed thread
-        const messagesRes = await fetch(`${endpoint}/openai/threads/${threadId}/messages?api-version=${apiVersion}`, {
-            method: 'GET',
-            headers: { 'api-key': apiKey }
-        });
-        const messagesText = await messagesRes.text();
-        if (!messagesText) throw new Error("Failed to retrieve messages from thread.");
-        
-        const messagesData = JSON.parse(messagesText);
-        const assistantMessage = messagesData.data.find(m => m.role === "assistant");
-        
-        const replyText = assistantMessage ? assistantMessage.content[0].text.value : "No response generated.";
+        const replyText = data.choices && data.choices[0] && data.choices[0].message 
+            ? data.choices[0].message.content 
+            : "No response generated.";
 
         context.res = { body: { reply: replyText } };
 
     } catch (error) {
         context.res = { 
             status: 500, 
-            body: { reply: "Agent Connection Error: " + error.message } 
+            body: { reply: "Connection Error: " + error.message } 
         };
     }
 };
