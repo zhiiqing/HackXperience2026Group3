@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>New Post — Someone to Talk To</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="forum.css" />
+</head>
+<body>
+  <header>
+    <h1>Someone to Talk To</h1>
+    <p>A judgement-free space to talk, any time.</p>
+    <nav class="top-nav">
+      <a href="chat.html">Chat</a>
+      <a href="forum.html">Forum</a>
+      <a href="create-post.html" class="active">New Post</a>
+    </nav>
+  </header>
+
+  <main class="forum-main">
+    <a href="forum.html" class="back-link">&larr; Back to forum</a>
+    <h2>Write a Post</h2>
+    <p class="forum-subtitle">
+      No formatting, no filters — just get it out. Share it with the community, or keep it just for you.
+    </p>
+
+    <form id="post-form" class="post-form">
+      <label for="category">Category</label>
+      <select id="category" required>
+        <option value="general">General support</option>
+        <option value="letters">Letters Never Sent</option>
+        <option value="vent">Just venting</option>
+        <option value="advice">Asking for advice</option>
+      </select>
+
+      <label for="title">Title (optional)</label>
+      <input type="text" id="title" placeholder="Give it a title..." maxlength="80" />
+
+      <label for="body">Your post</label>
+      <textarea
+        id="body"
+        rows="8"
+        placeholder="Write what's on your mind..."
+        required
+      ></textarea>
+
+      <div class="anon-toggle">
+        <label class="switch">
+          <input type="checkbox" id="anonymous" checked />
+          <span class="slider"></span>
+        </label>
+        <div class="anon-text">
+          <strong>Post anonymously</strong>
+          <p>
+            Your identity will not be shown publicly. Anonymous activity may
+            still be reviewed by authorised moderators when necessary to
+            protect community safety.
+          </p>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a href="forum.html" class="cancel-btn">Cancel</a>
+        <button type="submit">Post</button>
+      </div>
+    </form>
+  </main>
+
+  <script src="forum.js"></script>
+</body>
+</html>
