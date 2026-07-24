@@ -121,13 +121,29 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
             max-width: 600px;
             line-height: 1.5;
-            white-space: pre-line;
         }
 
         .message-row.user .message-bubble {
             background-color: #7c3aed;
             color: #ffffff;
             border-color: #7c3aed;
+            white-space: pre-line;
+        }
+
+        .message-bubble p {
+            margin-bottom: 8px;
+        }
+
+        .message-bubble p:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-bubble ul {
+            margin: 8px 0 8px 20px;
+        }
+
+        .message-bubble li {
+            margin-bottom: 4px;
         }
 
         .message-bubble code {
@@ -229,41 +245,6 @@
         const messageInput = document.getElementById('messageInput');
         const sendBtn = document.getElementById('sendBtn');
 
-        const supportMessage = 
-            `I’m really sorry you’re feeling that way — that sounds really tough. I’m here for you. 
-            
-            Try one of these:
-            • 5-4-3-2-1 grounding: name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.
-            • Slow breathing: inhale for 4, hold 4, exhale 4 (or try 4–6–8). Repeat 4 times.
-            • Move a little: stand, stretch, or step outside for a minute of fresh air.
-            • Write one sentence about what’s hardest right now — just getting it out can help.
-            • Reach out: text or call someone you trust and say, “I’m having a rough time — can we talk?”
-    
-            If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988. 
-            You don’t have to handle this alone.`;
-
-        const stressMessage = 
-            `I’m sorry — stress is really hard. I can help right now. 
-            
-            If you want something fast, try one of these (pick one and I can guide you through it):
-            • Box/4-4-6 breathing (2 minutes)
-            Sit or stand comfortably.
-            Inhale slowly for 4 seconds. Hold for 4 seconds. Exhale for 6–8 seconds.
-            Repeat for 6–10 breaths.
-            • 5-4-3-2-1 grounding (1–2 minutes)
-            Name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.
-            • Quick reset (3–5 minutes)
-            Stand, stretch, and walk for one minute.
-            Splash water on your face or get a glass of water.
-            Do a single progressive muscle tension-release: tense shoulders for 5s, then release.
-            If you want a short plan to reduce stress for the rest of today:
-            • Pick 1–3 must-do tasks and delay or delegate the rest.
-            • Use a 25-minute focused timer (Pomodoro), then take a 5–10 minute break.
-            • Do one soothing activity tonight (short walk, warm shower, 20 minutes reading).
-            • Sleep: try a wind-down routine (no screens 30–60 minutes before bed).
-            Longer-term ideas (if helpful): regular exercise, 10 minutes daily mindfulness or breathing, clearer boundaries (saying “I can’t do that right now”), talking with someone you trust, and professional help if stress is persistent. If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988. 
-            You don’t have to handle this alone.`;
-
         function handleSendMessage() {
             const text = messageInput.value.trim();
             if (!text) return;
@@ -280,24 +261,54 @@
             messageInput.value = '';
             chatContainer.scrollTop = chatContainer.scrollHeight;
 
-            // Check input match
             const normalizedInput = text.toLowerCase().replace(/['‘’]/g, "'").trim();
             
             setTimeout(() => {
                 const aiRow = document.createElement('div');
                 aiRow.className = 'message-row';
+                const aiBubble = document.createElement('div');
+                aiBubble.className = 'message-bubble';
                 
-                let responseText = `I received your message: "${text}". How else can I help you today?`;
                 if (normalizedInput === 'i am sad' || normalizedInput === 'i’m sad') {
-                    responseText = supportMessage;
+                    aiBubble.innerHTML = `
+                        <p>I’m really sorry you’re feeling that way — that sounds really tough. I’m here for you.</p>
+                        <p>Try one of these:</p>
+                        <ul>
+                            <li><strong>5-4-3-2-1 grounding:</strong> name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.</li>
+                            <li><strong>Slow breathing:</strong> inhale for 4, hold 4, exhale 4 (or try 4–6–8). Repeat 4 times.</li>
+                            <li><strong>Move a little:</strong> stand, stretch, or step outside for a minute of fresh air.</li>
+                            <li><strong>Write one sentence:</strong> about what’s hardest right now — just getting it out can help.</li>
+                            <li><strong>Reach out:</strong> text or call someone you trust and say, “I’m having a rough time — can we talk?”</li>
+                        </ul>
+                        <p>If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988.</p>
+                        <p>You don’t have to handle this alone.</p>
+                    `;
                 } else if (normalizedInput === 'i am stress' || normalizedInput === 'i am stressed' || normalizedInput === 'i’m stressed') {
-                    responseText = stressMessage;
+                    aiBubble.innerHTML = `
+                        <p>I’m sorry — stress is really hard. I can help right now.</p>
+                        <p>If you want something fast, try one of these (pick one and I can guide you through it):</p>
+                        <ul>
+                            <li><strong>Box/4-4-6 breathing (2 minutes):</strong> Sit or stand comfortably. Inhale slowly for 4 seconds. Hold for 4 seconds. Exhale for 6–8 seconds. Repeat for 6–10 breaths.</li>
+                            <li><strong>5-4-3-2-1 grounding (1–2 minutes):</strong> Name 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, 1 you can taste.</li>
+                            <li><strong>Quick reset (3–5 minutes):</strong> Stand, stretch, and walk for one minute. Splash water on your face or get a glass of water. Do a single progressive muscle tension-release: tense shoulders for 5s, then release.</li>
+                        </ul>
+                        <p>If you want a short plan to reduce stress for the rest of today:</p>
+                        <ul>
+                            <li>Pick 1–3 must-do tasks and delay or delegate the rest.</li>
+                            <li>Use a 25-minute focused timer (Pomodoro), then take a 5–10 minute break.</li>
+                            <li>Do one soothing activity tonight (short walk, warm shower, 20 minutes reading).</li>
+                            <li>Sleep: try a wind-down routine (no screens 30–60 minutes before bed).</li>
+                        </ul>
+                        <p>Longer-term ideas (if helpful): regular exercise, 10 minutes daily mindfulness or breathing, clearer boundaries (saying “I can’t do that right now”), talking with someone you trust, and professional help if stress is persistent.</p>
+                        <p>If you feel like you might harm yourself or are in immediate danger, please get help right away — call 911 or, if you’re in the U.S., the Suicide & Crisis Lifeline at 988.</p>
+                        <p>You don’t have to handle this alone.</p>
+                    `;
+                } else {
+                    aiBubble.textContent = `I received your message: "${text}". How else can I help you today?`;
                 }
 
-                aiRow.innerHTML = `
-                    <div class="avatar">AI</div>
-                    <div class="message-bubble">${escapeHtml(responseText)}</div>
-                `;
+                aiRow.innerHTML = `<div class="avatar">AI</div>`;
+                aiRow.appendChild(aiBubble);
                 chatContainer.appendChild(aiRow);
                 chatContainer.scrollTop = chatContainer.scrollHeight;
             }, 500);
