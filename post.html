@@ -1,357 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>New Post — Someone to Talk To</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Post | HackXperience</title>
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      font-family:Arial, Helvetica, sans-serif;
-    }
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, Helvetica, sans-serif;
+        }
 
-    body{
-      background:linear-gradient(135deg,#fef7fb,#f6f7ff);
-      color:#444;
-      min-height:100vh;
-    }
+        body{
+            background:linear-gradient(135deg,#eef2ff,#dbeafe,#f5f3ff);
+            min-height:100vh;
+            color:#374151;
+            overflow-x:hidden;
+        }
 
-    /* Header */
-    header{
-      background:linear-gradient(135deg,#ff9ecb,#b8c6ff);
-      color:white;
-      text-align:center;
-      padding:35px 20px;
-      box-shadow:0 4px 15px rgba(0,0,0,.15);
-    }
+        /* Background Blur Circles */
 
-    header h1{
-      font-size:2.2rem;
-      margin-bottom:8px;
-    }
+        .bg-circle{
+            position:fixed;
+            border-radius:50%;
+            filter:blur(100px);
+            opacity:.25;
+            z-index:-1;
+        }
 
-    header p{
-      opacity:.95;
-      margin-bottom:20px;
-    }
+        .circle1{
+            width:320px;
+            height:320px;
+            background:#93c5fd;
+            top:60px;
+            left:60px;
+        }
 
-    .top-nav{
-      display:flex;
-      justify-content:center;
-      gap:15px;
-      flex-wrap:wrap;
-    }
+        .circle2{
+            width:380px;
+            height:380px;
+            background:#c4b5fd;
+            right:60px;
+            bottom:60px;
+        }
 
-    .top-nav a{
-      text-decoration:none;
-      color:white;
-      padding:10px 22px;
-      border-radius:30px;
-      transition:.3s;
-      font-weight:bold;
-    }
+        /* Header */
 
-    .top-nav a:hover,
-    .top-nav a.active{
-      background:white;
-      color:#ff6ca8;
-    }
+        header{
+            background:rgba(255,255,255,.65);
+            backdrop-filter:blur(15px);
+            padding:25px;
+            text-align:center;
+            border-bottom:1px solid rgba(255,255,255,.5);
+            box-shadow:0 5px 20px rgba(0,0,0,.05);
+        }
 
-    /* Main */
+        header h1{
+            font-size:2.2rem;
+            color:#1e3a8a;
+            margin-bottom:8px;
+        }
 
-    .forum-main{
-      max-width:850px;
-      margin:40px auto;
-      background:white;
-      padding:35px;
-      border-radius:20px;
-      box-shadow:0 10px 30px rgba(0,0,0,.1);
-    }
+        header p{
+            color:#6b7280;
+            margin-bottom:20px;
+        }
 
-    .back-link{
-      text-decoration:none;
-      color:#888;
-      font-weight:bold;
-      display:inline-block;
-      margin-bottom:20px;
-    }
+        /* Navigation */
 
-    .back-link:hover{
-      color:#ff6ca8;
-    }
+        .top-nav{
+            display:flex;
+            justify-content:center;
+            gap:15px;
+            flex-wrap:wrap;
+        }
 
-    h2{
-      color:#ff6ca8;
-      margin-bottom:10px;
-      font-size:2rem;
-    }
+        .top-nav a{
+            text-decoration:none;
+            color:#374151;
+            padding:10px 24px;
+            border-radius:999px;
+            background:rgba(255,255,255,.75);
+            transition:.3s;
+            font-weight:600;
+        }
 
-    .forum-subtitle{
-      color:#666;
-      margin-bottom:30px;
-      line-height:1.6;
-    }
+        .top-nav a:hover{
+            background:#2563eb;
+            color:white;
+        }
 
-    /* Form */
+        .top-nav .active{
+            background:linear-gradient(to right,#2563eb,#7c3aed);
+            color:white;
+        }
 
-    .post-form{
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-    }
+        /* Main Card */
 
-    label{
-      font-weight:bold;
-      color:#555;
-      margin-bottom:-8px;
-    }
+        .forum-main{
+            max-width:850px;
+            margin:50px auto;
+            background:rgba(255,255,255,.75);
+            backdrop-filter:blur(20px);
+            border-radius:30px;
+            padding:40px;
+            box-shadow:0 20px 40px rgba(0,0,0,.12);
+        }
 
-    select,
-    input,
-    textarea{
-      width:100%;
-      padding:14px;
-      border:2px solid #eee;
-      border-radius:12px;
-      font-size:15px;
-      transition:.3s;
-      resize:vertical;
-    }
+        .back-link{
+            text-decoration:none;
+            color:#2563eb;
+            font-weight:bold;
+        }
 
-    select:focus,
-    input:focus,
-    textarea:focus{
-      outline:none;
-      border-color:#ff9ecb;
-      box-shadow:0 0 10px rgba(255,108,168,.25);
-    }
+        .back-link:hover{
+            text-decoration:underline;
+        }
 
-    textarea{
-      min-height:220px;
-    }
+        h2{
+            margin-top:20px;
+            font-size:2rem;
+            color:#1f2937;
+        }
 
-    /* Anonymous Box */
+        .forum-subtitle{
+            margin:15px 0 30px;
+            color:#6b7280;
+            line-height:1.7;
+        }
 
-    .anon-toggle{
-      display:flex;
-      align-items:flex-start;
-      gap:18px;
-      background:#fff5fa;
-      border:1px solid #ffd5e7;
-      border-radius:15px;
-      padding:18px;
-    }
+        /* Form */
 
-    .anon-text strong{
-      color:#ff6ca8;
-      display:block;
-      margin-bottom:5px;
-    }
+        .post-form{
+            display:flex;
+            flex-direction:column;
+            gap:18px;
+        }
 
-    .anon-text p{
-      color:#666;
-      line-height:1.5;
-      font-size:14px;
-    }
+        label{
+            font-weight:bold;
+            color:#374151;
+        }
 
-    /* Toggle Switch */
+        select,
+        input,
+        textarea{
+            width:100%;
+            padding:15px;
+            border-radius:15px;
+            border:1px solid #dbeafe;
+            font-size:15px;
+            transition:.3s;
+            background:white;
+        }
 
-    .switch{
-      position:relative;
-      display:inline-block;
-      width:55px;
-      height:28px;
-    }
+        textarea{
+            resize:vertical;
+            min-height:220px;
+        }
 
-    .switch input{
-      display:none;
-    }
+        select:focus,
+        input:focus,
+        textarea:focus{
+            outline:none;
+            border-color:#2563eb;
+            box-shadow:0 0 15px rgba(37,99,235,.2);
+        }
 
-    .slider{
-      position:absolute;
-      inset:0;
-      background:#ccc;
-      border-radius:40px;
-      cursor:pointer;
-      transition:.3s;
-    }
+        /* Anonymous */
 
-    .slider:before{
-      content:"";
-      position:absolute;
-      width:22px;
-      height:22px;
-      left:3px;
-      bottom:3px;
-      background:white;
-      border-radius:50%;
-      transition:.3s;
-    }
+        .anon-toggle{
+            display:flex;
+            align-items:flex-start;
+            gap:18px;
+            background:#eef2ff;
+            padding:20px;
+            border-radius:18px;
+        }
 
-    input:checked + .slider{
-      background:#ff6ca8;
-    }
+        .anon-text strong{
+            color:#1e3a8a;
+            display:block;
+            margin-bottom:6px;
+        }
 
-    input:checked + .slider:before{
-      transform:translateX(27px);
-    }
+        .anon-text p{
+            color:#6b7280;
+            line-height:1.6;
+            font-size:14px;
+        }
 
-    /* Buttons */
+        /* Toggle */
 
-    .form-actions{
-      display:flex;
-      justify-content:flex-end;
-      gap:15px;
-      margin-top:10px;
-    }
+        .switch{
+            position:relative;
+            display:inline-block;
+            width:58px;
+            height:30px;
+        }
 
-    .cancel-btn,
-    .post-btn{
-      text-decoration:none;
-      padding:13px 28px;
-      border-radius:30px;
-      font-weight:bold;
-      transition:.3s;
-      border:none;
-      cursor:pointer;
-      font-size:15px;
-    }
+        .switch input{
+            display:none;
+        }
 
-    /* Post button on LEFT */
+        .slider{
+            position:absolute;
+            inset:0;
+            background:#cbd5e1;
+            border-radius:30px;
+            cursor:pointer;
+            transition:.3s;
+        }
 
-    .post-btn{
-      background:linear-gradient(135deg,#ff77b7,#ff4f95);
-      color:white;
-      box-shadow:0 8px 20px rgba(255,79,149,.3);
-    }
+        .slider:before{
+            position:absolute;
+            content:"";
+            width:24px;
+            height:24px;
+            left:3px;
+            bottom:3px;
+            background:white;
+            border-radius:50%;
+            transition:.3s;
+        }
 
-    .post-btn:hover{
-      transform:translateY(-2px);
-      box-shadow:0 12px 25px rgba(255,79,149,.4);
-    }
+        input:checked + .slider{
+            background:linear-gradient(to right,#2563eb,#7c3aed);
+        }
 
-    /* Cancel button on RIGHT */
+        input:checked + .slider:before{
+            transform:translateX(28px);
+        }
 
-    .cancel-btn{
-      background:#ececec;
-      color:#555;
-    }
+        /* Buttons */
 
-    .cancel-btn:hover{
-      background:#ddd;
-    }
+        .form-actions{
+            display:flex;
+            justify-content:flex-end;
+            gap:15px;
+            margin-top:10px;
+        }
 
-    @media(max-width:700px){
+        .post-btn{
+            background:linear-gradient(to right,#2563eb,#7c3aed);
+            color:white;
+            border:none;
+            padding:14px 36px;
+            border-radius:999px;
+            font-size:15px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:.3s;
+        }
 
-      .forum-main{
-        margin:20px;
-        padding:25px;
-      }
+        .post-btn:hover{
+            transform:scale(1.05);
+            box-shadow:0 0 35px rgba(59,130,246,.45);
+        }
 
-      .form-actions{
-        flex-direction:column;
-      }
+        .cancel-btn{
+            text-decoration:none;
+            background:white;
+            color:#2563eb;
+            border:1px solid #2563eb;
+            padding:14px 36px;
+            border-radius:999px;
+            font-weight:bold;
+            transition:.3s;
+        }
 
-      .post-btn,
-      .cancel-btn{
-        width:100%;
-        text-align:center;
-      }
+        .cancel-btn:hover{
+            background:#2563eb;
+            color:white;
+        }
 
-    }
+        @media(max-width:768px){
 
-  </style>
+            .forum-main{
+                margin:25px;
+                padding:25px;
+            }
+
+            .anon-toggle{
+                flex-direction:column;
+            }
+
+            .form-actions{
+                flex-direction:column;
+            }
+
+            .post-btn,
+            .cancel-btn{
+                width:100%;
+                text-align:center;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-<header>
-  <h1>Someone to Talk To</h1>
-  <p>A judgement-free space to talk, any time.</p>
+    <!-- Background Decorations -->
 
-  <nav class="top-nav">
-    <a href="chat.html">Chat</a>
-    <a href="forum.html">Forum</a>
-    <a href="create-post.html" class="active">New Post</a>
-  </nav>
-</header>
+    <div class="bg-circle circle1"></div>
+    <div class="bg-circle circle2"></div>
 
-<main class="forum-main">
+    <!-- Header -->
 
-  <a href="forum.html" class="back-link">&larr; Back to forum</a>
+    <header>
 
-  <h2>Write a Post</h2>
+        <h1>HackXperience Forum</h1>
 
-  <p class="forum-subtitle">
-    No formatting, no filters — just get it out. Share it with the community,
-    or keep it just for you.
-  </p>
+        <p>A safe place to share, support, and connect.</p>
 
-  <form id="post-form" class="post-form">
+        <nav class="top-nav">
 
-    <label for="category">Category</label>
+            <a href="chat.html">Chat</a>
 
-    <select id="category" required>
-      <option value="general">General Support</option>
-      <option value="letters">Letters Never Sent</option>
-      <option value="vent">Just Venting</option>
-      <option value="advice">Asking for Advice</option>
-    </select>
+            <a href="forum.html">Forum</a>
 
-    <label for="title">Title (Optional)</label>
+            <a href="create-post.html" class="active">New Post</a>
 
-    <input
-      type="text"
-      id="title"
-      maxlength="80"
-      placeholder="Give your post a title..."
-    />
+        </nav>
 
-    <label for="body">Your Post</label>
+    </header>
 
-    <textarea
-      id="body"
-      placeholder="Write what's on your mind..."
-      required
-    ></textarea>
+    <!-- Main -->
 
-    <div class="anon-toggle">
+    <main class="forum-main">
 
-      <label class="switch">
-        <input type="checkbox" id="anonymous" checked>
-        <span class="slider"></span>
-      </label>
+        <a href="forum.html" class="back-link">
+            ← Back to Forum
+        </a>
 
-      <div class="anon-text">
-        <strong>Post Anonymously</strong>
+        <h2>Write a New Post</h2>
 
-        <p>
-          Your identity will not be shown publicly. Anonymous activity may
-          still be reviewed by authorised moderators when necessary to
-          protect community safety.
+        <p class="forum-subtitle">
+            No formatting. No pressure. Just write what's on your mind.
+            Share your thoughts with the community or simply express yourself
+            in a safe and supportive space.
         </p>
-      </div>
 
-    </div>
+        <form id="post-form" class="post-form">
 
-    <div class="form-actions">
+            <label for="category">Category</label>
 
-      <!-- Post button on left -->
-      <button type="submit" class="post-btn">Post</button>
+            <select id="category" required>
 
-      <!-- Cancel button on right -->
-      <a href="forum.html" class="cancel-btn">Cancel</a>
+                <option value="general">General Support</option>
 
-    </div>
+                <option value="letters">Letters Never Sent</option>
 
-  </form>
+                <option value="vent">Just Venting</option>
 
-</main>
+                <option value="advice">Asking for Advice</option>
 
-<script src="forum.js"></script>
+            </select>
+
+            <label for="title">Title (Optional)</label>
+
+            <input
+                type="text"
+                id="title"
+                maxlength="80"
+                placeholder="Give your post a title..."
+            >
+
+            <label for="body">Your Post</label>
+
+            <textarea
+                id="body"
+                placeholder="Write what's on your mind..."
+                required
+            ></textarea>
+
+            <div class="anon-toggle">
+
+                <label class="switch">
+
+                    <input type="checkbox" id="anonymous" checked>
+
+                    <span class="slider"></span>
+
+                </label>
+
+                <div class="anon-text">
+
+                    <strong>Post Anonymously</strong>
+
+                    <p>
+                        Your identity will not be shown publicly.
+                        Anonymous activity may still be reviewed by authorised
+                        moderators when necessary to help keep the community safe.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+
+                <button type="submit" class="post-btn">
+                    Post
+                </button>
+
+                <a href="forum.html" class="cancel-btn">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </main>
+
+    <script src="forum.js"></script>
 
 </body>
 </html>
