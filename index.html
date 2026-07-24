@@ -9,7 +9,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>TrueSelf | Home</title>
+    <title>TrueSelf | Safe & Anonymous Support Community</title>
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -164,28 +164,44 @@
     ></div>
 
     <!-- Main content -->
-    <main class="relative max-w-6xl mx-auto px-6 py-14">
+    <main class="relative max-w-6xl mx-auto px-6 py-10">
 
-        <!-- Hero section -->
+        <!-- Seek Help Now Banner -->
+        <section
+            class="mb-8 bg-amber-50 border-l-4 border-amber-400 p-4 rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4"
+        >
+            <div class="flex items-center gap-3">
+                <span class="text-2xl">🆘</span>
+                <p class="text-amber-900 font-medium text-sm md:text-base">
+                    Need urgent support right now? You are not alone and help is available.
+                </p>
+            </div>
+            <a
+                href="tier.html"
+                class="whitespace-nowrap px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-semibold rounded-full text-sm transition"
+            >
+                Seek Help Now &rarr;
+            </a>
+        </section>
+
+        <!-- Hero Section -->
         <section
             class="bg-white/85 backdrop-blur-lg shadow-2xl rounded-3xl p-8 md:p-12 text-center"
         >
 
             <!-- Logo icon -->
             <div class="floating mb-7">
-
                 <div
                     class="mx-auto w-24 h-24 rounded-full bg-gradient-to-r from-blue-600 to-purple-600 flex items-center justify-center text-5xl text-white shadow-xl"
                 >
                     ♡
                 </div>
-
             </div>
 
             <p
                 class="inline-block bg-indigo-50 text-indigo-700 font-semibold px-4 py-2 rounded-full text-sm mb-5"
             >
-                Mental-wellness support prototype
+                Mental-wellness support community
             </p>
 
             <h1
@@ -203,9 +219,8 @@
             <p
                 class="text-gray-600 text-lg leading-8 max-w-2xl mx-auto"
             >
-                Express what you are feeling, use guided reflection,
-                connect with a supportive community and find suitable
-                human or crisis-support resources.
+                Express what you are feeling anonymously, explore specialized Support Spaces,
+                and state exactly what you need—whether it is advice, encouragement, or just someone to listen.
             </p>
 
             <!-- Main buttons -->
@@ -224,7 +239,7 @@
                     href="forum.html"
                     class="bg-white border-2 border-indigo-200 text-indigo-700 px-8 py-4 rounded-full text-lg font-semibold hover:bg-indigo-50 transition"
                 >
-                    Visit Community
+                    Explore Support Spaces
                 </a>
 
                 <a
@@ -242,6 +257,169 @@
                 Sign in to access the support chat
             </p>
 
+        </section>
+
+        <!-- Mood Check-in -->
+        <section class="bg-white/85 backdrop-blur-md rounded-3xl shadow-lg p-6 md:p-8 mt-10 text-center">
+            <h2 class="text-xl font-bold text-gray-800">How are you feeling today?</h2>
+            <div class="flex flex-wrap justify-center gap-3 mt-4">
+                <button class="px-5 py-2 rounded-full border border-gray-200 hover:border-blue-500 hover:bg-blue-50 font-medium transition">😊 Good</button>
+                <button class="px-5 py-2 rounded-full border border-gray-200 hover:border-blue-500 hover:bg-blue-50 font-medium transition">😐 Okay</button>
+                <button class="px-5 py-2 rounded-full border border-gray-200 hover:border-blue-500 hover:bg-blue-50 font-medium transition">😔 Low</button>
+                <button class="px-5 py-2 rounded-full border border-gray-200 hover:border-blue-500 hover:bg-blue-50 font-medium transition">😰 Stressed</button>
+            </div>
+        </section>
+
+        <!-- Support Spaces Grid -->
+        <section class="mt-10">
+            <div class="flex justify-between items-center mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-800">Explore Support Spaces</h2>
+                    <p class="text-gray-600 text-sm">Find topics and community threads tailored to what you are experiencing.</p>
+                </div>
+                <a href="forum.html" class="text-blue-600 font-semibold text-sm hover:underline">View All &rarr;</a>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <a href="forum.html?category=general" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
+                    <span class="text-3xl block mb-2">💬</span>
+                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">General Support</h3>
+                    <p class="text-xs text-gray-500 mt-1">Anything on your mind</p>
+                </a>
+
+                <a href="forum.html?category=venting" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
+                    <span class="text-3xl block mb-2">🌧️</span>
+                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Just Venting</h3>
+                    <p class="text-xs text-gray-500 mt-1">Express without advice</p>
+                </a>
+
+                <a href="forum.html?category=letters" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
+                    <span class="text-3xl block mb-2">💌</span>
+                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Letters Never Sent</h3>
+                    <p class="text-xs text-gray-500 mt-1">Unspoken words</p>
+                </a>
+
+                <a href="forum.html?category=advice" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
+                    <span class="text-3xl block mb-2">🙋</span>
+                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Asking for Advice</h3>
+                    <p class="text-xs text-gray-500 mt-1">Community guidance</p>
+                </a>
+
+                <a href="forum.html?category=student" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
+                    <span class="text-3xl block mb-2">📚</span>
+                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Student Stress</h3>
+                    <p class="text-xs text-gray-500 mt-1">Exams & burnout</p>
+                </a>
+
+                <a href="forum.html?category=relationships" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
+                    <span class="text-3xl block mb-2">🫂</span>
+                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Relationships</h3>
+                    <p class="text-xs text-gray-500 mt-1">Friends & feeling alone</p>
+                </a>
+
+                <a href="forum.html?category=wins" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
+                    <span class="text-3xl block mb-2">🌱</span>
+                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">Small Wins</h3>
+                    <p class="text-xs text-gray-500 mt-1">Celebrate progress</p>
+                </a>
+
+                <a href="forum.html?category=coping" class="bg-white/90 p-4 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md hover:border-indigo-300 transition text-center group">
+                    <span class="text-3xl block mb-2">🧘</span>
+                    <h3 class="font-bold text-gray-800 group-hover:text-indigo-600">What Helped Me</h3>
+                    <p class="text-xs text-gray-500 mt-1">Safe coping strategies</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Live Preview Feed Section -->
+        <section class="mt-12">
+            <!-- Pinned Moderator Banner -->
+            <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 mb-6 text-sm text-indigo-900 flex items-start gap-3">
+                <span class="text-lg">📌</span>
+                <div>
+                    <strong>Moderator Note:</strong> Welcome to TrueSelf. This is a respectful, anonymous space. Please check the intent tag on each post before replying to respect what the author needs.
+                </div>
+            </div>
+
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-gray-800">Community Preview</h2>
+                <div class="flex gap-2 text-sm">
+                    <select class="bg-white border border-gray-200 rounded-lg px-3 py-1.5 text-gray-700 font-medium">
+                        <option>Newest</option>
+                        <option>Most Supported</option>
+                        <option>Unanswered</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Preview Card 1 -->
+            <div class="bg-white/90 rounded-2xl p-6 shadow-md mb-4 border border-gray-100">
+                <div class="flex justify-between items-start gap-2 mb-2">
+                    <div>
+                        <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">📚 Student Stress</span>
+                        <span class="text-xs text-gray-400 ml-2">• Anonymous • 10 minutes ago</span>
+                    </div>
+                    <span class="text-xs font-semibold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">CW: Academic Burnout</span>
+                </div>
+
+                <!-- Intent Tag -->
+                <div class="inline-block bg-purple-50 text-purple-700 text-xs font-semibold px-3 py-1 rounded-full my-2 border border-purple-100">
+                    🎯 What I need: Encouragement only
+                </div>
+
+                <p class="text-gray-800 mt-2 leading-relaxed">
+                    “I have three assignments due and I feel completely stuck and overwhelmed. Just trying to take it one step at a time tonight...”
+                </p>
+
+                <div class="flex items-center gap-4 mt-5 pt-4 border-t border-gray-100 text-sm text-gray-500">
+                    <button class="hover:text-rose-500 font-medium flex items-center gap-1 transition">
+                        ♡ Send Support (14)
+                    </button>
+                    <button class="hover:text-blue-600 font-medium flex items-center gap-1 transition">
+                        💬 4 Replies
+                    </button>
+                    <button class="hover:text-indigo-600 font-medium flex items-center gap-1 transition">
+                        🔖 Save
+                    </button>
+                    <button class="ml-auto text-gray-400 hover:text-rose-500 text-xs transition">
+                        Report
+                    </button>
+                </div>
+            </div>
+
+            <!-- Preview Card 2 -->
+            <div class="bg-white/90 rounded-2xl p-6 shadow-md mb-4 border border-gray-100">
+                <div class="flex justify-between items-start gap-2 mb-2">
+                    <div>
+                        <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-2.5 py-1 rounded-full">🌱 Small Wins</span>
+                        <span class="text-xs text-gray-400 ml-2">• Anonymous • 1 hour ago</span>
+                    </div>
+                </div>
+
+                <!-- Intent Tag -->
+                <div class="inline-block bg-emerald-50 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full my-2 border border-emerald-100">
+                    🎯 What I need: Hear similar experiences
+                </div>
+
+                <p class="text-gray-800 mt-2 leading-relaxed">
+                    “Finally went for a 15-minute walk outside today after staying indoors for almost a week. It felt tough to leave the room, but I made it.”
+                </p>
+
+                <div class="flex items-center gap-4 mt-5 pt-4 border-t border-gray-100 text-sm text-gray-500">
+                    <button class="hover:text-rose-500 font-medium flex items-center gap-1 transition">
+                        ♡ Send Support (28)
+                    </button>
+                    <button class="hover:text-blue-600 font-medium flex items-center gap-1 transition">
+                        💬 8 Replies
+                    </button>
+                    <button class="hover:text-indigo-600 font-medium flex items-center gap-1 transition">
+                        🔖 Save
+                    </button>
+                    <button class="ml-auto text-gray-400 hover:text-rose-500 text-xs transition">
+                        Report
+                    </button>
+                </div>
+            </div>
         </section>
 
         <!-- Feature cards -->
@@ -296,14 +474,14 @@
                 <h2
                     class="text-xl font-bold text-gray-800"
                 >
-                    Community Forum
+                    Support Spaces
                 </h2>
 
                 <p
                     class="text-gray-600 mt-3 leading-7"
                 >
                     Share your experiences using your username or
-                    anonymously and offer supportive responses.
+                    anonymously across targeted categories.
                 </p>
 
                 <p
@@ -380,12 +558,11 @@
                     </span>
 
                     <h3 class="font-bold text-lg">
-                        Express yourself
+                        Select a Support Space
                     </h3>
 
                     <p class="text-gray-600 mt-2 leading-6">
-                        Use the guided chat or create a community post
-                        about what is on your mind.
+                        Post in tailored spaces like Student Stress, Small Wins, or Just Venting.
                     </p>
                 </div>
 
@@ -399,12 +576,11 @@
                     </span>
 
                     <h3 class="font-bold text-lg">
-                        Choose your next step
+                        State what you need
                     </h3>
 
                     <p class="text-gray-600 mt-2 leading-6">
-                        Reflect privately, receive community support
-                        or explore available human-support options.
+                        Specify if you want advice, encouragement, or simply someone to listen without giving advice.
                     </p>
                 </div>
 
