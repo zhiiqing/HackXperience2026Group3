@@ -27,7 +27,7 @@
             <div class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
                 Exercise & Stretch Session
             </div>
-            <div class="w-24"></div> <!-- Spacer for alignment -->
+            <div class="w-24"></div>
         </div>
     </header>
 
@@ -37,13 +37,14 @@
         <div class="glass w-full rounded-3xl shadow-xl p-8 border border-white/80 text-center">
             
             <h1 class="text-3xl font-bold text-gray-800 mb-2">Gentle Seated Yoga for Beginners</h1>
-            <p class="text-gray-500 text-sm mb-8">Move at your own pace, stretch deeply, and release tension throughout your body.</p>
+            <p class="text-gray-500 text-sm mb-6">Move at your own pace, stretch deeply, and release tension throughout your body.</p>
 
             <!-- Embedded YouTube Video Container -->
-            <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg mb-8 bg-black">
+            <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg mb-6 bg-black">
                 <iframe 
+                    id="youtubePlayer"
                     class="w-full h-full"
-                    src="https://www.youtube.com/embed/nQwKKCqkJxg" 
+                    src="https://www.youtube.com/embed/nQwKKCqkJxg?enablejsapi=1" 
                     title="Gentle Seated Yoga For Beginners & All Levels | 30 Minute Practice" 
                     frameborder="0" 
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -51,16 +52,72 @@
                 </iframe>
             </div>
 
+            <!-- Start & Stop Control Buttons -->
+            <div class="flex items-center justify-center gap-4 mb-8">
+                <button id="startBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2">
+                    ▶ Start Video
+                </button>
+                <button id="stopBtn" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2">
+                    ⏸ Pause Video
+                </button>
+            </div>
+
             <!-- Session Details -->
             <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 flex flex-col items-center">
                 <span class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">Full Body Stretch</span>
                 <div class="text-2xl font-black text-gray-800 tracking-wider mb-1">30-Minute Practice</div>
-                <p class="text-sm text-gray-500">Take your time, breathe deeply, and enjoy your physical wellness journey.</p>
+                <p id="videoStatus" class="text-sm text-gray-500">Click start to begin your practice session.</p>
             </div>
 
         </div>
 
     </main>
+
+    <!-- YouTube IFrame Player API Script -->
+    <script>
+        let player;
+
+        // Load YouTube IFrame API script dynamically
+        const tag = document.createElement('script');
+        tag.src = "https://www.youtube.com/iframe_api";
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('youtubePlayer', {
+                events: {
+                    'onStateChange': onPlayerStateChange
+                }
+            });
+        }
+
+        // Button Event Listeners
+        document.getElementById('startBtn').addEventListener('click', () => {
+            if (player && typeof player.playVideo === 'function') {
+                player.playVideo();
+            }
+        });
+
+        document.getElementById('stopBtn').addEventListener('click', () => {
+            if (player && typeof player.pauseVideo === 'function') {
+                player.pauseVideo();
+            }
+        });
+
+        function onPlayerStateChange(event) {
+            const statusEl = document.getElementById('videoStatus');
+            if (event.data === YT.PlayerState.PLAYING) {
+                statusEl.textContent = "Practice session in progress...";
+                statusEl.className = "text-sm text-blue-600 font-semibold animate-pulse";
+            } else if (event.data === YT.PlayerState.PAUSED) {
+                statusEl.textContent = "Session paused. Take your time.";
+                statusEl.className = "text-sm text-amber-600 font-semibold";
+            } else if (event.data === YT.PlayerState.ENDED) {
+                statusEl.textContent = "Session complete! Wonderful job taking care of your body.";
+                statusEl.className = "text-sm text-purple-600 font-bold";
+            }
+        }
+    </script>
 
 </body>
 </html>
