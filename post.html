@@ -4,69 +4,354 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>New Post — Someone to Talk To</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="stylesheet" href="forum.css" />
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    body{
+      background:linear-gradient(135deg,#fef7fb,#f6f7ff);
+      color:#444;
+      min-height:100vh;
+    }
+
+    /* Header */
+    header{
+      background:linear-gradient(135deg,#ff9ecb,#b8c6ff);
+      color:white;
+      text-align:center;
+      padding:35px 20px;
+      box-shadow:0 4px 15px rgba(0,0,0,.15);
+    }
+
+    header h1{
+      font-size:2.2rem;
+      margin-bottom:8px;
+    }
+
+    header p{
+      opacity:.95;
+      margin-bottom:20px;
+    }
+
+    .top-nav{
+      display:flex;
+      justify-content:center;
+      gap:15px;
+      flex-wrap:wrap;
+    }
+
+    .top-nav a{
+      text-decoration:none;
+      color:white;
+      padding:10px 22px;
+      border-radius:30px;
+      transition:.3s;
+      font-weight:bold;
+    }
+
+    .top-nav a:hover,
+    .top-nav a.active{
+      background:white;
+      color:#ff6ca8;
+    }
+
+    /* Main */
+
+    .forum-main{
+      max-width:850px;
+      margin:40px auto;
+      background:white;
+      padding:35px;
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+    }
+
+    .back-link{
+      text-decoration:none;
+      color:#888;
+      font-weight:bold;
+      display:inline-block;
+      margin-bottom:20px;
+    }
+
+    .back-link:hover{
+      color:#ff6ca8;
+    }
+
+    h2{
+      color:#ff6ca8;
+      margin-bottom:10px;
+      font-size:2rem;
+    }
+
+    .forum-subtitle{
+      color:#666;
+      margin-bottom:30px;
+      line-height:1.6;
+    }
+
+    /* Form */
+
+    .post-form{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    label{
+      font-weight:bold;
+      color:#555;
+      margin-bottom:-8px;
+    }
+
+    select,
+    input,
+    textarea{
+      width:100%;
+      padding:14px;
+      border:2px solid #eee;
+      border-radius:12px;
+      font-size:15px;
+      transition:.3s;
+      resize:vertical;
+    }
+
+    select:focus,
+    input:focus,
+    textarea:focus{
+      outline:none;
+      border-color:#ff9ecb;
+      box-shadow:0 0 10px rgba(255,108,168,.25);
+    }
+
+    textarea{
+      min-height:220px;
+    }
+
+    /* Anonymous Box */
+
+    .anon-toggle{
+      display:flex;
+      align-items:flex-start;
+      gap:18px;
+      background:#fff5fa;
+      border:1px solid #ffd5e7;
+      border-radius:15px;
+      padding:18px;
+    }
+
+    .anon-text strong{
+      color:#ff6ca8;
+      display:block;
+      margin-bottom:5px;
+    }
+
+    .anon-text p{
+      color:#666;
+      line-height:1.5;
+      font-size:14px;
+    }
+
+    /* Toggle Switch */
+
+    .switch{
+      position:relative;
+      display:inline-block;
+      width:55px;
+      height:28px;
+    }
+
+    .switch input{
+      display:none;
+    }
+
+    .slider{
+      position:absolute;
+      inset:0;
+      background:#ccc;
+      border-radius:40px;
+      cursor:pointer;
+      transition:.3s;
+    }
+
+    .slider:before{
+      content:"";
+      position:absolute;
+      width:22px;
+      height:22px;
+      left:3px;
+      bottom:3px;
+      background:white;
+      border-radius:50%;
+      transition:.3s;
+    }
+
+    input:checked + .slider{
+      background:#ff6ca8;
+    }
+
+    input:checked + .slider:before{
+      transform:translateX(27px);
+    }
+
+    /* Buttons */
+
+    .form-actions{
+      display:flex;
+      justify-content:flex-end;
+      gap:15px;
+      margin-top:10px;
+    }
+
+    .cancel-btn,
+    .post-btn{
+      text-decoration:none;
+      padding:13px 28px;
+      border-radius:30px;
+      font-weight:bold;
+      transition:.3s;
+      border:none;
+      cursor:pointer;
+      font-size:15px;
+    }
+
+    /* Post button on LEFT */
+
+    .post-btn{
+      background:linear-gradient(135deg,#ff77b7,#ff4f95);
+      color:white;
+      box-shadow:0 8px 20px rgba(255,79,149,.3);
+    }
+
+    .post-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 12px 25px rgba(255,79,149,.4);
+    }
+
+    /* Cancel button on RIGHT */
+
+    .cancel-btn{
+      background:#ececec;
+      color:#555;
+    }
+
+    .cancel-btn:hover{
+      background:#ddd;
+    }
+
+    @media(max-width:700px){
+
+      .forum-main{
+        margin:20px;
+        padding:25px;
+      }
+
+      .form-actions{
+        flex-direction:column;
+      }
+
+      .post-btn,
+      .cancel-btn{
+        width:100%;
+        text-align:center;
+      }
+
+    }
+
+  </style>
 </head>
+
 <body>
-  <header>
-    <h1>Someone to Talk To</h1>
-    <p>A judgement-free space to talk, any time.</p>
-    <nav class="top-nav">
-      <a href="chat.html">Chat</a>
-      <a href="forum.html">Forum</a>
-      <a href="create-post.html" class="active">New Post</a>
-    </nav>
-  </header>
 
-  <main class="forum-main">
-    <a href="forum.html" class="back-link">&larr; Back to forum</a>
-    <h2>Write a Post</h2>
-    <p class="forum-subtitle">
-      No formatting, no filters — just get it out. Share it with the community, or keep it just for you.
-    </p>
+<header>
+  <h1>Someone to Talk To</h1>
+  <p>A judgement-free space to talk, any time.</p>
 
-    <form id="post-form" class="post-form">
-      <label for="category">Category</label>
-      <select id="category" required>
-        <option value="general">General support</option>
-        <option value="letters">Letters Never Sent</option>
-        <option value="vent">Just venting</option>
-        <option value="advice">Asking for advice</option>
-      </select>
+  <nav class="top-nav">
+    <a href="chat.html">Chat</a>
+    <a href="forum.html">Forum</a>
+    <a href="create-post.html" class="active">New Post</a>
+  </nav>
+</header>
 
-      <label for="title">Title (optional)</label>
-      <input type="text" id="title" placeholder="Give it a title..." maxlength="80" />
+<main class="forum-main">
 
-      <label for="body">Your post</label>
-      <textarea
-        id="body"
-        rows="8"
-        placeholder="Write what's on your mind..."
-        required
-      ></textarea>
+  <a href="forum.html" class="back-link">&larr; Back to forum</a>
 
-      <div class="anon-toggle">
-        <label class="switch">
-          <input type="checkbox" id="anonymous" checked />
-          <span class="slider"></span>
-        </label>
-        <div class="anon-text">
-          <strong>Post anonymously</strong>
-          <p>
-            Your identity will not be shown publicly. Anonymous activity may
-            still be reviewed by authorised moderators when necessary to
-            protect community safety.
-          </p>
-        </div>
+  <h2>Write a Post</h2>
+
+  <p class="forum-subtitle">
+    No formatting, no filters — just get it out. Share it with the community,
+    or keep it just for you.
+  </p>
+
+  <form id="post-form" class="post-form">
+
+    <label for="category">Category</label>
+
+    <select id="category" required>
+      <option value="general">General Support</option>
+      <option value="letters">Letters Never Sent</option>
+      <option value="vent">Just Venting</option>
+      <option value="advice">Asking for Advice</option>
+    </select>
+
+    <label for="title">Title (Optional)</label>
+
+    <input
+      type="text"
+      id="title"
+      maxlength="80"
+      placeholder="Give your post a title..."
+    />
+
+    <label for="body">Your Post</label>
+
+    <textarea
+      id="body"
+      placeholder="Write what's on your mind..."
+      required
+    ></textarea>
+
+    <div class="anon-toggle">
+
+      <label class="switch">
+        <input type="checkbox" id="anonymous" checked>
+        <span class="slider"></span>
+      </label>
+
+      <div class="anon-text">
+        <strong>Post Anonymously</strong>
+
+        <p>
+          Your identity will not be shown publicly. Anonymous activity may
+          still be reviewed by authorised moderators when necessary to
+          protect community safety.
+        </p>
       </div>
 
-      <div class="form-actions">
-        <a href="forum.html" class="cancel-btn">Cancel</a>
-        <button type="submit">Post</button>
-      </div>
-    </form>
-  </main>
+    </div>
 
-  <script src="forum.js"></script>
+    <div class="form-actions">
+
+      <!-- Post button on left -->
+      <button type="submit" class="post-btn">Post</button>
+
+      <!-- Cancel button on right -->
+      <a href="forum.html" class="cancel-btn">Cancel</a>
+
+    </div>
+
+  </form>
+
+</main>
+
+<script src="forum.js"></script>
+
 </body>
 </html>
