@@ -49,11 +49,21 @@
             Create Account
         </h1>
 
-        <p class="text-center text-gray-500 mt-2 mb-8">
+        <p class="text-center text-gray-500 mt-2 mb-6">
             Join TrueSelf today. (For users 16 and older)
         </p>
 
-        <form>
+        <!-- Toggle Bar (Login / Sign Up) -->
+        <div class="flex bg-gray-200 p-1 rounded-full mb-6">
+            <a href="login.html" class="w-1/2 py-2 text-center text-sm font-semibold text-gray-600 rounded-full transition">
+                Login
+            </a>
+            <a href="signup.html" class="w-1/2 py-2 text-center text-sm font-semibold text-blue-600 bg-white rounded-full shadow transition">
+                Sign Up
+            </a>
+        </div>
+
+        <form id="signupForm">
 
             <!-- Full Name -->
             <div class="mb-5">
@@ -64,7 +74,8 @@
                 <input
                     type="text"
                     placeholder="Enter your full name"
-                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
             </div>
 
             <!-- Email -->
@@ -75,8 +86,16 @@
 
                 <input
                     type="email"
+                    id="emailInput"
                     placeholder="example@email.com"
-                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
+                
+                <!-- Existing Account Prompt Container -->
+                <div id="existingAccountPrompt" class="hidden mt-2 p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl flex items-center justify-between">
+                    <span>You have an existing account.</span>
+                    <a href="login.html" class="font-bold underline text-blue-600 hover:text-blue-800">Login here</a>
+                </div>
             </div>
 
             <!-- Date of Birth -->
@@ -87,6 +106,7 @@
 
                 <input
                     type="date"
+                    required
                     class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
                 <span class="text-xs text-gray-500 mt-1 block">You must be at least 16 years old to register.</span>
             </div>
@@ -100,6 +120,7 @@
                 <input
                     type="file"
                     accept=".pdf,.jpg,.jpeg,.png"
+                    required
                     class="w-full border rounded-xl p-2.5 bg-white text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100">
                 <span class="text-xs text-gray-500 mt-1 block">Upload a valid ID proving your age (Accepted: JPG, PNG, PDF).</span>
             </div>
@@ -113,7 +134,8 @@
                 <input
                     type="password"
                     placeholder="Create a password"
-                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
             </div>
 
             <!-- Confirm Password -->
@@ -125,13 +147,15 @@
                 <input
                     type="password"
                     placeholder="Confirm your password"
-                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none">
+                    required
+                    class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
             </div>
 
             <!-- Checkbox -->
             <div class="flex items-center mb-6">
                 <input
                     type="checkbox"
+                    required
                     class="mr-2">
 
                 <span class="text-sm text-gray-600">
@@ -176,6 +200,19 @@
         </div>
 
     </div>
+
+    <script>
+        const emailInput = document.getElementById('emailInput');
+        const promptBox = document.getElementById('existingAccountPrompt');
+
+        emailInput.addEventListener('input', () => {
+            if (emailInput.value.trim().toLowerCase() === 'test@gmail.com') {
+                promptBox.classList.remove('hidden');
+            } else {
+                promptBox.classList.add('hidden');
+            }
+        });
+    </script>
 
 </body>
 </html>
