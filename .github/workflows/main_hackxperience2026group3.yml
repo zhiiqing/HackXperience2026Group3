@@ -37,7 +37,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: node-app
-          path: .
+          path: . # This is fine, but we will handle the path in the deploy step
 
   deploy:
     runs-on: ubuntu-latest
