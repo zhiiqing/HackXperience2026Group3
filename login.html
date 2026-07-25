@@ -292,15 +292,8 @@
                     return;
                 }
 
-                // Check specific emails
-                if (email === "new@gmail.com") {
-                    loginMessage.textContent =
-                        "No such account. Please sign up.";
-                    loginMessage.classList.remove("hidden");
-                    return;
-                }
-
-                if (email !== "test@gmail.com") {
+                // Check specific emails (allowing both test@gmail.com and create@gmail.com)
+                if (email !== "test@gmail.com" && email !== "create@gmail.com") {
                     loginMessage.textContent =
                         "No such account. Please sign up.";
                     loginMessage.classList.remove("hidden");
