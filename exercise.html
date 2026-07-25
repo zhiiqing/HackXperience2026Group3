@@ -2,121 +2,165 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>TrueSelf - Exercise & Yoga Session</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         body {
-            background: linear-gradient(135deg, #eef2ff, #dbeafe, #f5f3ff);
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #dbeafe,
+                    #f5f3ff
+                );
+
             min-height: 100vh;
         }
+
         .glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
+            background:
+                rgba(255, 255, 255, 0.85);
+
+            backdrop-filter:
+                blur(15px);
         }
     </style>
 </head>
+
 <body class="flex flex-col min-h-screen">
 
     <!-- Top Navigation Bar -->
-    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="dashboard.html" class="px-4 py-2 rounded-full bg-blue-50 text-blue-600 font-medium transition flex items-center gap-2">
+    <header
+        class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50"
+    >
+        <div
+            class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+        >
+            <a
+                href="dashboard.html"
+                class="px-4 py-2 rounded-full bg-blue-50 text-blue-600 font-medium transition flex items-center gap-2 hover:bg-blue-100"
+            >
                 &larr; Back to Dashboard
             </a>
-            <div class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+
+            <div
+                class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            >
                 Exercise & Stretch Session
             </div>
+
             <div class="w-24"></div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-1 max-w-4xl w-full mx-auto px-6 py-10 flex flex-col items-center justify-center">
+    <main
+        class="flex-1 max-w-4xl w-full mx-auto px-6 py-10 flex flex-col items-center justify-center"
+    >
+        <div
+            class="glass w-full rounded-3xl shadow-xl p-8 border border-white/80 text-center"
+        >
+            <h1
+                class="text-3xl font-bold text-gray-800 mb-2"
+            >
+                Gentle Seated Yoga for Beginners
+            </h1>
 
-        <div class="glass w-full rounded-3xl shadow-xl p-8 border border-white/80 text-center">
-            
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">Gentle Seated Yoga for Beginners</h1>
-            <p class="text-gray-500 text-sm mb-6">Move at your own pace, stretch deeply, and release tension throughout your body.</p>
+            <p
+                class="text-gray-500 text-sm mb-6"
+            >
+                Move at your own pace, stretch deeply, and release tension throughout your body.
+            </p>
 
-            <!-- Embedded YouTube Video Container -->
-            <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg mb-6 bg-black">
-                <iframe 
-                    id="youtubePlayer"
-                    class="w-full h-full"
-                    src="https://www.youtube.com/embed/nQwKKCqkJxg?enablejsapi=1" 
-                    title="Gentle Seated Yoga For Beginners & All Levels | 30 Minute Practice" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
+            <!-- Screenshot / Thumbnail -->
+            <div
+                class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg mb-6 bg-black"
+            >
+                <img
+                    src="https://img.youtube.com/vi/nQwKKCqkJxg/maxresdefault.jpg"
+                    alt="Gentle Seated Yoga session preview"
+                    class="w-full h-full object-cover"
+                >
+
+                <!-- Play Overlay -->
+                <div
+                    class="absolute inset-0 bg-black/20 flex items-center justify-center"
+                >
+                    <div
+                        class="w-20 h-20 rounded-full bg-white/90 flex items-center justify-center shadow-xl"
+                    >
+                        <span class="text-3xl text-blue-600 ml-1">▶</span>
+                    </div>
+                </div>
             </div>
 
-            <!-- Start & Stop Control Buttons -->
-            <div class="flex items-center justify-center gap-4 mb-8">
-                <button id="startBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2">
-                    ▶ Start Video
-                </button>
-                <button id="stopBtn" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2">
-                    ⏸ Pause Video
+            <!-- Action Buttons -->
+            <div
+                class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
+            >
+                <a
+                    href="https://www.youtube.com/watch?v=nQwKKCqkJxg"
+                    target="_blank"
+                    class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2"
+                >
+                    ▶ Watch Full Session
+                </a>
+
+                <button
+                    id="doneBtn"
+                    class="bg-purple-600 hover:bg-purple-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2"
+                >
+                    ✓ Mark as Done
                 </button>
             </div>
 
             <!-- Session Details -->
-            <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 flex flex-col items-center">
-                <span class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">Full Body Stretch</span>
-                <div class="text-2xl font-black text-gray-800 tracking-wider mb-1">30-Minute Practice</div>
-                <p id="videoStatus" class="text-sm text-gray-500">Click start to begin your practice session.</p>
+            <div
+                class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 flex flex-col items-center"
+            >
+                <span
+                    class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2"
+                >
+                    Full Body Stretch
+                </span>
+
+                <div
+                    class="text-2xl font-black text-gray-800 tracking-wider mb-1"
+                >
+                    30-Minute Practice
+                </div>
+
+                <p
+                    id="sessionStatus"
+                    class="text-sm text-gray-500"
+                >
+                    Preview the session and open the full practice when you are ready.
+                </p>
             </div>
-
         </div>
-
     </main>
 
-    <!-- YouTube IFrame Player API Script -->
     <script>
-        let player;
+        const doneBtn =
+            document.getElementById("doneBtn");
 
-        // Load YouTube IFrame API script dynamically
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        const sessionStatus =
+            document.getElementById("sessionStatus");
 
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtubePlayer', {
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
-            });
-        }
+        doneBtn.addEventListener("click", function () {
+            sessionStatus.textContent =
+                "Session marked as completed. Great job taking time to care for your body today.";
 
-        // Button Event Listeners
-        document.getElementById('startBtn').addEventListener('click', () => {
-            if (player && typeof player.playVideo === 'function') {
-                player.playVideo();
-            }
+            sessionStatus.className =
+                "text-sm text-purple-600 font-bold";
         });
-
-        document.getElementById('stopBtn').addEventListener('click', () => {
-            if (player && typeof player.pauseVideo === 'function') {
-                player.pauseVideo();
-            }
-        });
-
-        function onPlayerStateChange(event) {
-            const statusEl = document.getElementById('videoStatus');
-            if (event.data === YT.PlayerState.PLAYING) {
-                statusEl.textContent = "Practice session in progress...";
-                statusEl.className = "text-sm text-blue-600 font-semibold animate-pulse";
-            } else if (event.data === YT.PlayerState.PAUSED) {
-                statusEl.textContent = "Session paused. Take your time.";
-                statusEl.className = "text-sm text-amber-600 font-semibold";
-            } else if (event.data === YT.PlayerState.ENDED) {
-                statusEl.textContent = "Session complete! Wonderful job taking care of your body.";
-                statusEl.className = "text-sm text-purple-600 font-bold";
-            }
-        }
     </script>
 
 </body>
