@@ -34,13 +34,561 @@
 
 <body class="bg-white text-gray-800">
 
-    <!-- Navigation Bar (matches index.html) -->
     <nav class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200">
         <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
             <a href="index.html" class="flex items-center gap-2" aria-label="TrueSelf Home">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center text-xl shadow-sm">♡</div>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 text-white flex items-center justify-center text-xl shadow-sm">&#9825;</div>
                 <span class="text-2xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">TrueSelf</span>
             </a>
 
             <div class="hidden lg:flex items-center gap-1">
-                <a href="index.html" class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-semibold px-4 py-2 rounded-xl
+                <a href="index.html" class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-semibold px-4 py-2 rounded-xl transition">Home</a>
+                <a href="forum.html" class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-semibold px-4 py-2 rounded-xl transition">Forum</a>
+                <a href="chat.html" class="text-gray-600 hover:text-blue-600 hover:bg-blue-50 font-semibold px-4 py-2 rounded-xl transition">Support Chat</a>
+                <a href="mood.html" class="text-blue-600 bg-blue-50 font-semibold px-4 py-2 rounded-xl">Mood Map</a>
+                <a href="tier.html" class="text-gray-600 hover:text-purple-600 hover:bg-purple-50 font-semibold px-4 py-2 rounded-xl transition">Find Support</a>
+            </div>
+
+            <div class="hidden lg:flex items-center gap-3">
+                <div id="guestNavigation" class="flex items-center gap-3">
+                    <a href="login.html" class="text-gray-700 hover:text-blue-600 font-semibold px-4 py-2">Login</a>
+                    <a href="signup.html" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-5 py-2.5 rounded-xl hover:shadow-lg hover:scale-[1.02] transition">Sign Up</a>
+                </div>
+                <div id="userNavigation" class="hidden items-center gap-3">
+                    <span id="welcomeUser" class="text-sm font-semibold text-gray-600"></span>
+                    <button type="button" onclick="logoutUser()" class="border border-gray-300 text-gray-700 hover:border-red-300 hover:bg-red-50 hover:text-red-600 font-semibold px-4 py-2.5 rounded-xl transition">Log Out</button>
+                </div>
+            </div>
+
+            <button id="mobileMenuButton" type="button" class="lg:hidden w-11 h-11 flex items-center justify-center rounded-xl border border-gray-200 text-gray-700" aria-label="Open navigation menu" aria-expanded="false">
+                <svg id="menuIcon" xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="mobileMenu" class="hidden lg:hidden border-t border-gray-200 bg-white">
+            <div class="max-w-6xl mx-auto px-5 py-5 space-y-2">
+                <a href="index.html" class="block text-gray-700 hover:bg-gray-50 font-semibold px-4 py-3 rounded-xl">Home</a>
+                <a href="forum.html" class="block text-gray-700 hover:bg-gray-50 font-semibold px-4 py-3 rounded-xl">Forum</a>
+                <a href="chat.html" class="block text-gray-700 hover:bg-gray-50 font-semibold px-4 py-3 rounded-xl">Support Chat</a>
+                <a href="mood.html" class="block bg-blue-50 text-blue-600 font-semibold px-4 py-3 rounded-xl">Mood Map</a>
+                <a href="tier.html" class="block text-gray-700 hover:bg-gray-50 font-semibold px-4 py-3 rounded-xl">Find Support</a>
+
+                <div id="mobileGuestNavigation" class="pt-3 grid grid-cols-2 gap-3">
+                    <a href="login.html" class="text-center border border-gray-300 text-gray-700 font-semibold px-4 py-3 rounded-xl">Login</a>
+                    <a href="signup.html" class="text-center bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold px-4 py-3 rounded-xl">Sign Up</a>
+                </div>
+                <div id="mobileUserNavigation" class="hidden pt-3">
+                    <button type="button" onclick="logoutUser()" class="w-full border border-red-200 bg-red-50 text-red-600 font-semibold px-4 py-3 rounded-xl">Log Out</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="hero-background min-h-screen pt-28 pb-20">
+        <div class="max-w-4xl mx-auto px-5">
+
+            <div class="text-center mb-10">
+                <p class="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">Daily Check-In</p>
+                <h1 class="mt-3 text-4xl sm:text-5xl font-extrabold text-gray-900">Mood Map</h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-xl mx-auto">
+                    Check in with yourself, build a streak, and watch your patterns take shape.
+                </p>
+            </div>
+
+            <div class="flex flex-col items-center mb-8">
+                <div id="streak-badge" class="inline-flex items-center gap-3 bg-white border border-orange-100 rounded-2xl shadow-sm px-6 py-3">
+                    <span class="text-3xl">&#128293;</span>
+                    <div class="text-left">
+                        <p id="streak-number" class="text-2xl font-extrabold text-gray-900">0 days</p>
+                        <p id="streak-subtext" class="text-xs text-gray-500">Check in today to start a streak</p>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 mt-2">Streaks count days you pick a mood - sleep, stress and energy alone don't count.</p>
+            </div>
+
+            <div class="relative bg-white/95 border border-white rounded-3xl shadow-2xl p-7 sm:p-9 mb-6">
+                <div class="flex items-start justify-between gap-4 mb-2">
+                    <h2 class="text-xl sm:text-2xl font-extrabold text-gray-900">How are you feeling today?</h2>
+                    <div class="w-12 h-12 shrink-0 rounded-2xl bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-2xl">&#9825;</div>
+                </div>
+                <p id="checkin-subtitle" class="text-sm text-gray-500 mb-6"></p>
+
+                <div id="moodOptions" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+
+                <div id="moodResponse" class="hidden mt-5 border border-blue-100 bg-blue-50 text-blue-800 rounded-2xl p-4 text-sm leading-6" aria-live="polite"></div>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-3xl shadow-sm p-7 sm:p-9 mb-6">
+                <h2 class="text-lg sm:text-xl font-extrabold text-gray-900 mb-1">How many hours did you sleep?</h2>
+                <p class="text-sm text-gray-500 mb-6">Pick the range that's closest.</p>
+                <div id="sleepOptions" class="grid grid-cols-2 sm:grid-cols-4 gap-3"></div>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-3xl shadow-sm p-7 sm:p-9 mb-6">
+                <h2 class="text-lg sm:text-xl font-extrabold text-gray-900 mb-1">What's your stress level today?</h2>
+                <p class="text-sm text-gray-500 mb-6">1 = very calm, 5 = very stressed.</p>
+                <div id="stressOptions" class="grid grid-cols-5 gap-2 sm:gap-3"></div>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-3xl shadow-sm p-7 sm:p-9 mb-8">
+                <h2 class="text-lg sm:text-xl font-extrabold text-gray-900 mb-1">What's your energy level today?</h2>
+                <p class="text-sm text-gray-500 mb-6">1 = completely drained, 5 = very energized.</p>
+                <div id="energyOptions" class="grid grid-cols-5 gap-2 sm:gap-3"></div>
+            </div>
+
+            <div class="bg-white border border-gray-200 rounded-3xl shadow-sm p-7 sm:p-9 mb-8">
+                <div class="flex items-center justify-between mb-5">
+                    <h2 class="text-xl font-extrabold text-gray-900" id="calendar-title">This Month</h2>
+                    <div class="flex gap-2">
+                        <button id="prev-month" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold">&lt;</button>
+                        <button id="next-month" class="w-9 h-9 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold">&gt;</button>
+                    </div>
+                </div>
+
+                <div id="weekday-labels" class="grid grid-cols-7 gap-2 mb-2 text-xs font-semibold text-gray-400 text-center"></div>
+                <div id="calendar-grid" class="grid grid-cols-7 gap-2"></div>
+
+                <p class="text-xs text-gray-400 mt-3">Each logged day shows your mood emoji, colored by mood. Hover a day to see sleep, stress and energy too.</p>
+
+                <div id="legend" class="flex flex-wrap gap-4 mt-6 pt-6 border-t border-gray-100 text-xs text-gray-500"></div>
+            </div>
+
+            <div class="border border-blue-100 bg-blue-50 text-blue-800 rounded-2xl p-5">
+                <p id="insight-text" class="text-sm leading-6"></p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-white border-t border-gray-200">
+        <div class="max-w-6xl mx-auto px-5 py-10 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="text-center md:text-left">
+                <a href="index.html" class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">TrueSelf</a>
+                <p class="mt-2 text-sm text-gray-500">A mental wellness support prototype.</p>
+            </div>
+            <div class="flex flex-wrap justify-center gap-5 text-sm font-semibold text-gray-600">
+                <a href="index.html" class="hover:text-blue-600">Home</a>
+                <a href="forum.html" class="hover:text-blue-600">Forum</a>
+                <a href="chat.html" class="hover:text-blue-600">Support Chat</a>
+                <a href="mood.html" class="hover:text-blue-600">Mood Map</a>
+                <a href="tier.html" class="hover:text-blue-600">Find Support</a>
+            </div>
+        </div>
+        <div class="border-t border-gray-200 text-center text-xs text-gray-500 px-5 py-5">
+            Prototype support only - not a replacement for professional or emergency care.
+        </div>
+    </footer>
+
+    <script>
+        var mobileMenuButton = document.getElementById("mobileMenuButton");
+        var mobileMenu = document.getElementById("mobileMenu");
+
+        mobileMenuButton.addEventListener("click", function () {
+            var menuIsHidden = mobileMenu.classList.contains("hidden");
+            mobileMenu.classList.toggle("hidden");
+            mobileMenuButton.setAttribute("aria-expanded", menuIsHidden ? "true" : "false");
+        });
+
+        function getLoggedInUser() {
+            var storageKeys = ["currentUser", "loggedInUser", "user"];
+            for (var i = 0; i < storageKeys.length; i++) {
+                var storedValue = localStorage.getItem(storageKeys[i]);
+                if (storedValue) {
+                    try { return JSON.parse(storedValue); }
+                    catch (error) { return storedValue; }
+                }
+            }
+            if (localStorage.getItem("isLoggedIn") === "true") {
+                return { name: localStorage.getItem("userName") || "User" };
+            }
+            return null;
+        }
+
+        function updateLoginDisplay() {
+            var user = getLoggedInUser();
+            var guestNavigation = document.getElementById("guestNavigation");
+            var userNavigation = document.getElementById("userNavigation");
+            var mobileGuestNavigation = document.getElementById("mobileGuestNavigation");
+            var mobileUserNavigation = document.getElementById("mobileUserNavigation");
+            var welcomeUser = document.getElementById("welcomeUser");
+
+            if (user) {
+                guestNavigation.classList.add("hidden");
+                userNavigation.classList.remove("hidden");
+                userNavigation.classList.add("flex");
+                mobileGuestNavigation.classList.add("hidden");
+                mobileUserNavigation.classList.remove("hidden");
+
+                var userName = "User";
+                if (typeof user === "object" && user !== null) {
+                    userName = user.fullName || user.name || user.username || "User";
+                } else if (typeof user === "string") {
+                    userName = user;
+                }
+                welcomeUser.textContent = "Hi, " + userName;
+            } else {
+                guestNavigation.classList.remove("hidden");
+                userNavigation.classList.add("hidden");
+                userNavigation.classList.remove("flex");
+                mobileGuestNavigation.classList.remove("hidden");
+                mobileUserNavigation.classList.add("hidden");
+            }
+        }
+
+        function logoutUser() {
+            var storageKeys = ["currentUser", "loggedInUser", "user", "isLoggedIn", "userName"];
+            storageKeys.forEach(function (key) { localStorage.removeItem(key); });
+            window.location.href = "index.html";
+        }
+
+        var STORAGE_KEY = "moodEntries";
+
+        var MOODS = [
+            { id: "Good",      emoji: "\uD83D\uDE0A", dot: "bg-emerald-400", border: "hover:border-green-300 hover:bg-green-50",
+              message: "It is good to hear that you are feeling okay today. You can share a small win or encourage someone in the community forum." },
+            { id: "Okay",      emoji: "\uD83D\uDE10", dot: "bg-blue-400",    border: "hover:border-blue-300 hover:bg-blue-50",
+              message: "Feeling just okay is completely valid. You can take your time, check out the forum or begin a guided support chat." },
+            { id: "Stressed",  emoji: "\uD83D\uDE30", dot: "bg-amber-400",   border: "hover:border-yellow-300 hover:bg-yellow-50",
+              message: "It sounds like you may have a lot on your mind. Try taking one slow breath, then use the support chat to break things into smaller steps." },
+            { id: "Low",       emoji: "\uD83D\uDE14", dot: "bg-purple-400",  border: "hover:border-purple-300 hover:bg-purple-50",
+              message: "Thank you for checking in honestly. You deserve support, and you do not need to handle everything alone. Consider visiting the chat or support options." }
+        ];
+        var MOOD_SCORE = { Good: 4, Okay: 3, Stressed: 2, Low: 1 };
+        var NOT_LOGGED_DOT = "bg-gray-200";
+        var moodById = {};
+        for (var mi = 0; mi < MOODS.length; mi++) { moodById[MOODS[mi].id] = MOODS[mi]; }
+
+        var SLEEP_RANGES = [
+            { id: "0-4",  label: "0-4 hrs" },
+            { id: "5-8",  label: "5-8 hrs" },
+            { id: "9-12", label: "9-12 hrs" },
+            { id: "12+",  label: "12+ hrs" }
+        ];
+
+        var STRESS_LEVELS = [
+            { value: 1, label: "Very calm",     color: "hover:border-emerald-300 hover:bg-emerald-50", selected: "border-emerald-500 bg-emerald-50" },
+            { value: 2, label: "Calm",          color: "hover:border-lime-300 hover:bg-lime-50",       selected: "border-lime-500 bg-lime-50" },
+            { value: 3, label: "Moderate",      color: "hover:border-amber-300 hover:bg-amber-50",     selected: "border-amber-500 bg-amber-50" },
+            { value: 4, label: "Stressed",      color: "hover:border-orange-300 hover:bg-orange-50",   selected: "border-orange-500 bg-orange-50" },
+            { value: 5, label: "Very stressed", color: "hover:border-rose-300 hover:bg-rose-50",       selected: "border-rose-500 bg-rose-50" }
+        ];
+
+        var ENERGY_LEVELS = [
+            { value: 1, label: "Drained",         color: "hover:border-gray-300 hover:bg-gray-50",   selected: "border-gray-500 bg-gray-100" },
+            { value: 2, label: "Low",             color: "hover:border-blue-300 hover:bg-blue-50",   selected: "border-blue-500 bg-blue-50" },
+            { value: 3, label: "Okay",            color: "hover:border-teal-300 hover:bg-teal-50",   selected: "border-teal-500 bg-teal-50" },
+            { value: 4, label: "Energized",       color: "hover:border-lime-300 hover:bg-lime-50",   selected: "border-lime-500 bg-lime-50" },
+            { value: 5, label: "Very energized",  color: "hover:border-yellow-400 hover:bg-yellow-50", selected: "border-yellow-500 bg-yellow-50" }
+        ];
+
+        var viewYear = new Date().getFullYear();
+        var viewMonth = new Date().getMonth();
+
+        function pad2(n) { n = String(n); return n.length < 2 ? "0" + n : n; }
+
+        function dateKey(d) {
+            return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+        }
+        function todayKey() { return dateKey(new Date()); }
+
+        function getEntries() {
+            var raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+            var migrated = false;
+            for (var key in raw) {
+                if (typeof raw[key] === "string") {
+                    raw[key] = { mood: raw[key] };
+                    migrated = true;
+                }
+            }
+            if (migrated) saveEntries(raw);
+            return raw;
+        }
+        function saveEntries(entries) {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+        }
+
+        function logField(field, value) {
+            var entries = getEntries();
+            if (!entries[todayKey()]) entries[todayKey()] = {};
+            entries[todayKey()][field] = value;
+            saveEntries(entries);
+            if (field === "mood") localStorage.setItem("latestMood", value);
+            renderAll();
+        }
+
+        function renderCheckin() {
+            var entries = getEntries();
+            var today = entries[todayKey()] || {};
+            var container = document.getElementById("moodOptions");
+            var subtitle = document.getElementById("checkin-subtitle");
+            var response = document.getElementById("moodResponse");
+
+            subtitle.textContent = today.mood
+                ? "You've already checked in today - tap another mood to update it."
+                : "This check-in only takes a second.";
+
+            var html = "";
+            for (var i = 0; i < MOODS.length; i++) {
+                var m = MOODS[i];
+                var label = m.id === "Low" ? "Feeling Low" : m.id;
+                var selectedClass = today.mood === m.id ? "selected" : "";
+                html += '<button type="button" data-mood="' + m.id + '" class="mood-button ' + m.border + ' ' + selectedClass + ' border border-gray-200 rounded-2xl p-4 text-left">';
+                html += '<span class="block text-3xl">' + m.emoji + '</span>';
+                html += '<span class="block mt-2 font-bold text-gray-800">' + label + '</span>';
+                html += '</button>';
+            }
+            container.innerHTML = html;
+
+            var moodBtns = container.querySelectorAll("[data-mood]");
+            for (var bi = 0; bi < moodBtns.length; bi++) {
+                (function (btn) {
+                    btn.addEventListener("click", function () { logField("mood", btn.getAttribute("data-mood")); });
+                })(moodBtns[bi]);
+            }
+
+            if (today.mood) {
+                response.textContent = moodById[today.mood].message;
+                response.classList.remove("hidden");
+            } else {
+                response.classList.add("hidden");
+            }
+        }
+
+        function renderSleep() {
+            var entries = getEntries();
+            var today = entries[todayKey()] || {};
+            var container = document.getElementById("sleepOptions");
+
+            var html = "";
+            for (var i = 0; i < SLEEP_RANGES.length; i++) {
+                var s = SLEEP_RANGES[i];
+                var cls = today.sleep === s.id ? "selected border-blue-500 bg-blue-50" : "border-gray-200 hover:border-blue-300 hover:bg-blue-50";
+                html += '<button type="button" data-sleep="' + s.id + '" class="option-button ' + cls + ' border rounded-2xl p-4 text-center">';
+                html += '<span class="block text-2xl">\uD83D\uDECC</span>';
+                html += '<span class="block mt-2 font-bold text-gray-800 text-sm">' + s.label + '</span>';
+                html += '</button>';
+            }
+            container.innerHTML = html;
+
+            var sleepBtns = container.querySelectorAll("[data-sleep]");
+            for (var bi2 = 0; bi2 < sleepBtns.length; bi2++) {
+                (function (btn) {
+                    btn.addEventListener("click", function () { logField("sleep", btn.getAttribute("data-sleep")); });
+                })(sleepBtns[bi2]);
+            }
+        }
+
+        function renderStress() {
+            var entries = getEntries();
+            var today = entries[todayKey()] || {};
+            var container = document.getElementById("stressOptions");
+
+            var html = "";
+            for (var i = 0; i < STRESS_LEVELS.length; i++) {
+                var s = STRESS_LEVELS[i];
+                var cls = today.stress === s.value ? "selected " + s.selected : "border-gray-200 " + s.color;
+                html += '<button type="button" data-stress="' + s.value + '" class="option-button ' + cls + ' border rounded-2xl p-3 text-center">';
+                html += '<span class="block text-lg font-extrabold text-gray-800">' + s.value + '</span>';
+                html += '<span class="block mt-1 text-[11px] font-semibold text-gray-500 leading-tight">' + s.label + '</span>';
+                html += '</button>';
+            }
+            container.innerHTML = html;
+
+            var stressBtns = container.querySelectorAll("[data-stress]");
+            for (var bi3 = 0; bi3 < stressBtns.length; bi3++) {
+                (function (btn) {
+                    btn.addEventListener("click", function () { logField("stress", Number(btn.getAttribute("data-stress"))); });
+                })(stressBtns[bi3]);
+            }
+        }
+
+        function renderEnergy() {
+            var entries = getEntries();
+            var today = entries[todayKey()] || {};
+            var container = document.getElementById("energyOptions");
+
+            var html = "";
+            for (var i = 0; i < ENERGY_LEVELS.length; i++) {
+                var s = ENERGY_LEVELS[i];
+                var cls = today.energy === s.value ? "selected " + s.selected : "border-gray-200 " + s.color;
+                html += '<button type="button" data-energy="' + s.value + '" class="option-button ' + cls + ' border rounded-2xl p-3 text-center">';
+                html += '<span class="block text-lg font-extrabold text-gray-800">' + s.value + '</span>';
+                html += '<span class="block mt-1 text-[11px] font-semibold text-gray-500 leading-tight">' + s.label + '</span>';
+                html += '</button>';
+            }
+            container.innerHTML = html;
+
+            var energyBtns = container.querySelectorAll("[data-energy]");
+            for (var bi4 = 0; bi4 < energyBtns.length; bi4++) {
+                (function (btn) {
+                    btn.addEventListener("click", function () { logField("energy", Number(btn.getAttribute("data-energy"))); });
+                })(energyBtns[bi4]);
+            }
+        }
+
+        function renderCalendar() {
+            var entries = getEntries();
+            var title = document.getElementById("calendar-title");
+            var weekdayLabels = document.getElementById("weekday-labels");
+            var grid = document.getElementById("calendar-grid");
+            var legend = document.getElementById("legend");
+
+            var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+            title.textContent = monthNames[viewMonth] + " " + viewYear;
+
+            var wd = "";
+            var labels = ["S","M","T","W","T","F","S"];
+            for (var li = 0; li < labels.length; li++) { wd += "<div>" + labels[li] + "</div>"; }
+            weekdayLabels.innerHTML = wd;
+
+            var firstDay = new Date(viewYear, viewMonth, 1).getDay();
+            var daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+            var cellsHtml = "";
+
+            for (var i = 0; i < firstDay; i++) { cellsHtml += "<div></div>"; }
+
+            for (var day = 1; day <= daysInMonth; day++) {
+                var key = viewYear + "-" + pad2(viewMonth + 1) + "-" + pad2(day);
+                var entry = entries[key];
+                var mood = entry ? moodById[entry.mood] : null;
+                var isToday = key === todayKey();
+                var dotClass = mood ? mood.dot : NOT_LOGGED_DOT;
+
+                var tooltipParts = [];
+                if (entry && entry.mood) tooltipParts.push(entry.mood);
+                if (entry && entry.sleep) tooltipParts.push("Slept " + entry.sleep + " hrs");
+                if (entry && entry.stress) tooltipParts.push("Stress " + entry.stress + "/5");
+                if (entry && entry.energy) tooltipParts.push("Energy " + entry.energy + "/5");
+                var tooltip = tooltipParts.length ? tooltipParts.join(" - ") : "Not logged";
+
+                var ringClass = isToday ? "ring-2 ring-blue-600" : "";
+                var inner;
+                if (mood) {
+                    inner = '<span class="text-xl sm:text-2xl leading-none">' + mood.emoji + '</span>' +
+                            '<span class="absolute bottom-0.5 right-1 text-[9px] font-bold text-white/80">' + day + '</span>';
+                } else {
+                    inner = '<span class="text-xs font-semibold text-gray-400">' + day + '</span>';
+                }
+
+                cellsHtml += '<div class="relative aspect-square rounded-xl ' + dotClass + ' ' + ringClass + ' flex items-center justify-center" title="' + tooltip + '">' + inner + '</div>';
+            }
+            grid.innerHTML = cellsHtml;
+
+            var legendHtml = "";
+            for (var gi = 0; gi < MOODS.length; gi++) {
+                var gm = MOODS[gi];
+                legendHtml += '<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full ' + gm.dot + ' inline-block"></span> ' + gm.id + '</span>';
+            }
+            legendHtml += '<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full ' + NOT_LOGGED_DOT + ' inline-block"></span> Not logged</span>';
+            legend.innerHTML = legendHtml;
+        }
+
+        function renderInsight() {
+            var entries = getEntries();
+            var insightEl = document.getElementById("insight-text");
+            var values = [];
+            for (var key2 in entries) {
+                if (entries[key2].mood) values.push([key2, entries[key2]]);
+            }
+
+            if (values.length < 5) {
+                insightEl.textContent = "Keep checking in daily - once you've logged a few more days, patterns in how you're feeling will start to show up here.";
+                return;
+            }
+
+            var byWeekday = [[], [], [], [], [], [], []];
+            for (var vi = 0; vi < values.length; vi++) {
+                var dateStr = values[vi][0];
+                var entry = values[vi][1];
+                var d = new Date(dateStr + "T00:00:00");
+                var score = MOOD_SCORE[entry.mood];
+                if (score) byWeekday[d.getDay()].push(score);
+            }
+
+            var weekdayNames = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+            var averages = [];
+            for (var wi = 0; wi < byWeekday.length; wi++) {
+                var scores = byWeekday[wi];
+                if (scores.length >= 2) {
+                    var sum = 0;
+                    for (var si = 0; si < scores.length; si++) { sum += scores[si]; }
+                    averages.push({ day: weekdayNames[wi], avg: sum / scores.length, count: scores.length });
+                }
+            }
+
+            if (averages.length < 2) {
+                insightEl.textContent = "You're building a solid mood history. Check in on a few more different days of the week and a weekly pattern may start to emerge.";
+                return;
+            }
+
+            var lowest = averages[0];
+            var highest = averages[0];
+            for (var ai = 1; ai < averages.length; ai++) {
+                if (averages[ai].avg < lowest.avg) lowest = averages[ai];
+                if (averages[ai].avg > highest.avg) highest = averages[ai];
+            }
+
+            if (highest.avg - lowest.avg >= 1) {
+                insightEl.innerHTML = "<strong>Pattern spotted:</strong> your mood tends to run lower on <strong>" + lowest.day + "s</strong> and higher on <strong>" + highest.day + "s</strong>. Worth noticing what's different about those days.";
+            } else {
+                insightEl.textContent = "Your mood has been fairly steady across the week so far - no strong pattern yet. Keep checking in daily.";
+            }
+        }
+
+        function renderStreak() {
+            var entries = getEntries();
+            var numberEl = document.getElementById("streak-number");
+            var subtextEl = document.getElementById("streak-subtext");
+
+            var todayEntry = entries[todayKey()];
+            var loggedToday = !!(todayEntry && todayEntry.mood);
+            var cursor = new Date();
+            if (!loggedToday) cursor.setDate(cursor.getDate() - 1);
+
+            var streak = 0;
+            var cursorEntry = entries[dateKey(cursor)];
+            while (cursorEntry && cursorEntry.mood) {
+                streak++;
+                cursor.setDate(cursor.getDate() - 1);
+                cursorEntry = entries[dateKey(cursor)];
+            }
+
+            numberEl.textContent = streak + (streak === 1 ? " day" : " days");
+
+            if (streak === 0) {
+                subtextEl.textContent = "Check in today to start a streak";
+            } else if (loggedToday) {
+                subtextEl.textContent = "You checked in today - streak continues!";
+            } else {
+                subtextEl.textContent = "Check in today to keep your streak alive";
+            }
+        }
+
+        function renderAll() {
+            renderCheckin();
+            renderSleep();
+            renderStress();
+            renderEnergy();
+            renderCalendar();
+            renderInsight();
+            renderStreak();
+        }
+
+        document.getElementById("prev-month").addEventListener("click", function () {
+            viewMonth--;
+            if (viewMonth < 0) { viewMonth = 11; viewYear--; }
+            renderCalendar();
+        });
+        document.getElementById("next-month").addEventListener("click", function () {
+            viewMonth++;
+            if (viewMonth > 11) { viewMonth = 0; viewYear++; }
+            renderCalendar();
+        });
+
+        updateLoginDisplay();
+        renderAll();
+    </script>
+</body>
+</html>
