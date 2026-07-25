@@ -312,20 +312,13 @@
                 );
 
                 /*
-                    Prototype login only.
-                    This is not secure real authentication.
+                    Grant login access and redirect to dashboard.html
                 */
                 localStorage.setItem("isLoggedIn", "true");
                 localStorage.setItem("userEmail", email);
 
-                const nextPage = localStorage.getItem("redirectAfterLogin") || "chat.html";
-                localStorage.removeItem( 
-                    "redirectAfterLogin"
-                );
-
-                window.location.href = nextPage;
+                window.location.href = "dashboard.html";
             }
-            
         );
 
         document
