@@ -16,6 +16,16 @@
         * { scroll-behavior: smooth; }
         body { font-family: "Inter", sans-serif; }
 
+        .calendar-emoji {
+            font-family:
+                "Apple Color Emoji",
+                "Segoe UI Emoji",
+                "Noto Color Emoji",
+                sans-serif;
+            font-size: clamp(1.35rem, 4vw, 2rem);
+            line-height: 1;
+        }
+
         .hero-background {
             background:
                 radial-gradient(circle at top left, rgba(59, 130, 246, 0.16), transparent 35%),
@@ -93,7 +103,7 @@
                 <p class="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">Daily Check-In</p>
                 <h1 class="mt-3 text-4xl sm:text-5xl font-extrabold text-gray-900">Mood Map</h1>
                 <p class="mt-4 text-lg text-gray-600 max-w-xl mx-auto">
-                    Check in with yourself, build a streak, and watch your patterns take shape.
+                    Check in with yourself, see your mood emoji on each day, and watch your patterns take shape.
                 </p>
             </div>
 
@@ -105,7 +115,7 @@
                         <p id="streak-subtext" class="text-xs text-gray-500">Check in today to start a streak</p>
                     </div>
                 </div>
-                <p class="text-xs text-gray-400 mt-2">Streaks count days you pick a mood - sleep, stress and energy alone don't count.</p>
+                <p class="text-xs text-gray-400 mt-2">The streak shows your latest run of consecutive days with a mood check-in. Sleep, stress and energy alone do not count.</p>
             </div>
 
             <div class="relative bg-white/95 border border-white rounded-3xl shadow-2xl p-7 sm:p-9 mb-6">
@@ -293,20 +303,328 @@
         }
         function todayKey() { return dateKey(new Date()); }
 
+        /*
+         * Convert older mood names into the four mood names used by this page.
+         */
+        function normalizeMoodValue(value) {
+            if (!value) return "";
+
+            var originalValue =
+                String(value).trim();
+
+            var mood =
+                originalValue.toLowerCase();
+
+            if (
+                mood === "good" ||
+                mood === "happy" ||
+                mood === "positive" ||
+                originalValue === "😊" ||
+                originalValue === "🙂"
+            ) {
+                return "Good";
+            }
+
+            if (
+                mood === "okay" ||
+                mood === "ok" ||
+                mood === "neutral" ||
+                mood === "fine" ||
+                originalValue === "😐"
+            ) {
+                return "Okay";
+            }
+
+            if (
+                mood === "stressed" ||
+                mood === "stress" ||
+                mood === "anxious" ||
+                mood === "overwhelmed" ||
+                originalValue === "😰" ||
+                originalValue === "😣"
+            ) {
+                return "Stressed";
+            }
+
+            if (
+                mood === "low" ||
+                mood === "feeling low" ||
+                mood === "sad" ||
+                mood === "down" ||
+                originalValue === "😔" ||
+                originalValue === "😢"
+            ) {
+                return "Low";
+            }
+
+            return originalValue;
+        }
+
+        /*
+         * Convert an old entry into the current object format.
+         */
+        function normalizeEntry(entry) {
+            if (typeof entry === "string") {
+                return {
+                    mood: normalizeMoodValue(entry)
+                };
+            }
+
+            if (!entry || typeof entry !== "object") {
+                return {};
+            }
+
+            return {
+                mood: normalizeMoodValue(entry.mood),
+                sleep: entry.sleep || "",
+                stress:
+                    entry.stress === undefined ||
+                    entry.stress === null ||
+                    entry.stress === ""
+                        ? ""
+                        : Number(entry.stress),
+                energy:
+                    entry.energy === undefined ||
+                    entry.energy === null ||
+                    entry.energy === ""
+                        ? ""
+                        : Number(entry.energy),
+                reflection:
+                    entry.reflection ||
+                    entry.notes ||
+                    ""
+            };
+        }
+
+        /*
+         * Load the current Mood Map data and automatically import check-ins
+         * saved by the older TrueSelf mood-map version.
+         */
         function getEntries() {
-            var raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
-            var migrated = false;
-            for (var key in raw) {
-                if (typeof raw[key] === "string") {
-                    raw[key] = { mood: raw[key] };
-                    migrated = true;
+            var entries = {};
+            var changed = false;
+
+            try {
+                var currentData =
+                    JSON.parse(
+                        localStorage.getItem(STORAGE_KEY) || "{}"
+                    );
+
+                if (Array.isArray(currentData)) {
+                    for (var i = 0; i < currentData.length; i++) {
+                        if (currentData[i] && currentData[i].date) {
+                            entries[currentData[i].date] =
+                                normalizeEntry(currentData[i]);
+                        }
+                    }
+
+                    changed = true;
+                } else if (
+                    currentData &&
+                    typeof currentData === "object"
+                ) {
+                    for (var key in currentData) {
+                        entries[key] =
+                            normalizeEntry(currentData[key]);
+                    }
+                }
+            } catch (error) {
+                console.error(
+                    "Could not read current mood entries:",
+                    error
+                );
+            }
+
+            /*
+             * Import check-ins from older TrueSelf versions.
+             */
+            var olderStorageKeys = [
+                "trueSelfMoodCheckIns",
+                "moodHistory",
+                "moodMapEntries",
+                "dailyMoodEntries"
+            ];
+
+            for (
+                var storageIndex = 0;
+                storageIndex < olderStorageKeys.length;
+                storageIndex++
+            ) {
+                try {
+                    var olderRaw =
+                        localStorage.getItem(
+                            olderStorageKeys[storageIndex]
+                        );
+
+                    if (!olderRaw) {
+                        continue;
+                    }
+
+                    var oldData =
+                        JSON.parse(olderRaw);
+
+                    if (Array.isArray(oldData)) {
+                        for (
+                            var j = 0;
+                            j < oldData.length;
+                            j++
+                        ) {
+                            var oldEntry =
+                                oldData[j];
+
+                            if (
+                                oldEntry &&
+                                oldEntry.date &&
+                                !entries[oldEntry.date]
+                            ) {
+                                entries[oldEntry.date] =
+                                    normalizeEntry(oldEntry);
+
+                                changed = true;
+                            }
+                        }
+                    } else if (
+                        oldData &&
+                        typeof oldData === "object"
+                    ) {
+                        for (var oldKey in oldData) {
+                            if (!entries[oldKey]) {
+                                entries[oldKey] =
+                                    normalizeEntry(
+                                        oldData[oldKey]
+                                    );
+
+                                changed = true;
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error(
+                        "Could not import mood data from " +
+                        olderStorageKeys[storageIndex] +
+                        ":",
+                        error
+                    );
                 }
             }
-            if (migrated) saveEntries(raw);
-            return raw;
+
+            if (changed) {
+                saveEntries(entries);
+            }
+
+            return entries;
         }
+
         function saveEntries(entries) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(entries)
+            );
+        }
+
+        /*
+         * Add 12 demo mood days for the prototype calendar.
+         *
+         * This only runs when there are no saved mood entries, so it will not
+         * overwrite a user's real check-ins.
+         */
+        function seedDemoMoodHistory() {
+            var entries = getEntries();
+            var hasMoodHistory = false;
+
+            for (var existingDate in entries) {
+                if (
+                    entries[existingDate] &&
+                    moodById[
+                        normalizeMoodValue(
+                            entries[existingDate].mood
+                        )
+                    ]
+                ) {
+                    hasMoodHistory = true;
+                    break;
+                }
+            }
+
+            if (hasMoodHistory) {
+                return;
+            }
+
+            var demoMoods = [
+                "Okay",
+                "Good",
+                "Stressed",
+                "Okay",
+                "Low",
+                "Okay",
+                "Good",
+                "Good",
+                "Stressed",
+                "Okay",
+                "Good",
+                "Okay"
+            ];
+
+            var demoSleep = [
+                "5-8",
+                "5-8",
+                "0-4",
+                "5-8",
+                "9-12",
+                "5-8",
+                "5-8",
+                "9-12",
+                "5-8",
+                "5-8",
+                "9-12",
+                "5-8"
+            ];
+
+            var demoStress = [
+                3, 2, 5, 3, 4, 3,
+                2, 1, 4, 3, 2, 2
+            ];
+
+            var demoEnergy = [
+                3, 4, 2, 3, 1, 3,
+                4, 5, 2, 3, 4, 3
+            ];
+
+            /*
+             * Create 12 consecutive days ending today.
+             * This makes the calendar visibly show one mood emoji per day
+             * and gives the prototype a 12-day streak.
+             */
+            for (var dayOffset = 11; dayOffset >= 0; dayOffset--) {
+                var demoDate = new Date();
+
+                demoDate.setHours(12, 0, 0, 0);
+                demoDate.setDate(
+                    demoDate.getDate() - dayOffset
+                );
+
+                var demoIndex =
+                    11 - dayOffset;
+
+                entries[dateKey(demoDate)] = {
+                    mood:
+                        demoMoods[demoIndex],
+
+                    sleep:
+                        demoSleep[demoIndex],
+
+                    stress:
+                        demoStress[demoIndex],
+
+                    energy:
+                        demoEnergy[demoIndex],
+
+                    demo:
+                        true
+                };
+            }
+
+            saveEntries(entries);
         }
 
         function logField(field, value) {
@@ -452,13 +770,21 @@
             for (var day = 1; day <= daysInMonth; day++) {
                 var key = viewYear + "-" + pad2(viewMonth + 1) + "-" + pad2(day);
                 var entry = entries[key];
-                var mood = entry ? moodById[entry.mood] : null;
+                var normalizedMood =
+                    entry
+                        ? normalizeMoodValue(entry.mood)
+                        : "";
+
+                var mood =
+                    normalizedMood
+                        ? moodById[normalizedMood]
+                        : null;
                 var isToday = key === todayKey();
                 var dotClass = mood ? mood.dot : NOT_LOGGED_DOT;
 
                 var tooltipParts = [];
-                if (entry && entry.mood) tooltipParts.push(entry.mood);
-                if (entry && entry.sleep) tooltipParts.push("Slept " + entry.sleep + " hrs");
+                if (mood) tooltipParts.push(mood.id);
+                if (entry && entry.sleep) tooltipParts.push("Sleep " + entry.sleep);
                 if (entry && entry.stress) tooltipParts.push("Stress " + entry.stress + "/5");
                 if (entry && entry.energy) tooltipParts.push("Energy " + entry.energy + "/5");
                 var tooltip = tooltipParts.length ? tooltipParts.join(" - ") : "Not logged";
@@ -466,23 +792,66 @@
                 var ringClass = isToday ? "ring-2 ring-blue-600" : "";
                 var inner;
                 if (mood) {
-                    inner = '<span class="text-xl sm:text-2xl leading-none">' + mood.emoji + '</span>' +
-                            '<span class="absolute bottom-0.5 right-1 text-[9px] font-bold text-white/80">' + day + '</span>';
+                    inner =
+                        '<span class="calendar-emoji" aria-hidden="true">' +
+                        mood.emoji +
+                        '</span>' +
+                        '<span class="absolute bottom-0.5 right-1 text-[9px] font-extrabold text-gray-800 bg-white/80 rounded-full px-1">' +
+                        day +
+                        '</span>';
                 } else {
-                    inner = '<span class="text-xs font-semibold text-gray-400">' + day + '</span>';
+                    inner =
+                        '<span class="text-xs font-semibold text-gray-400">' +
+                        day +
+                        '</span>';
                 }
 
-                cellsHtml += '<div class="relative aspect-square rounded-xl ' + dotClass + ' ' + ringClass + ' flex items-center justify-center" title="' + tooltip + '">' + inner + '</div>';
+                cellsHtml +=
+                    '<div class="relative aspect-square min-h-10 rounded-xl ' +
+                    dotClass +
+                    ' ' +
+                    ringClass +
+                    ' flex items-center justify-center overflow-hidden" ' +
+                    'title="' +
+                    tooltip +
+                    '" aria-label="' +
+                    (mood
+                        ? day + ": " + mood.id
+                        : day + ": no mood logged") +
+                    '">' +
+                    inner +
+                    '</div>';
             }
             grid.innerHTML = cellsHtml;
 
             var legendHtml = "";
-            for (var gi = 0; gi < MOODS.length; gi++) {
+
+            for (
+                var gi = 0;
+                gi < MOODS.length;
+                gi++
+            ) {
                 var gm = MOODS[gi];
-                legendHtml += '<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full ' + gm.dot + ' inline-block"></span> ' + gm.id + '</span>';
+
+                legendHtml +=
+                    '<span class="flex items-center gap-1.5">' +
+                    '<span class="calendar-emoji text-lg">' +
+                    gm.emoji +
+                    '</span>' +
+                    gm.id +
+                    '</span>';
             }
-            legendHtml += '<span class="flex items-center gap-1.5"><span class="w-3 h-3 rounded-full ' + NOT_LOGGED_DOT + ' inline-block"></span> Not logged</span>';
-            legend.innerHTML = legendHtml;
+
+            legendHtml +=
+                '<span class="flex items-center gap-1.5">' +
+                '<span class="w-3 h-3 rounded-full ' +
+                NOT_LOGGED_DOT +
+                ' inline-block"></span>' +
+                'Not logged' +
+                '</span>';
+
+            legend.innerHTML =
+                legendHtml;
         }
 
         function renderInsight() {
@@ -539,30 +908,113 @@
 
         function renderStreak() {
             var entries = getEntries();
-            var numberEl = document.getElementById("streak-number");
-            var subtextEl = document.getElementById("streak-subtext");
+            var numberEl =
+                document.getElementById("streak-number");
+            var subtextEl =
+                document.getElementById("streak-subtext");
 
-            var todayEntry = entries[todayKey()];
-            var loggedToday = !!(todayEntry && todayEntry.mood);
-            var cursor = new Date();
-            if (!loggedToday) cursor.setDate(cursor.getDate() - 1);
+            /*
+             * Only dates that contain a mood emoji count.
+             */
+            var moodDates = [];
 
-            var streak = 0;
-            var cursorEntry = entries[dateKey(cursor)];
-            while (cursorEntry && cursorEntry.mood) {
-                streak++;
-                cursor.setDate(cursor.getDate() - 1);
-                cursorEntry = entries[dateKey(cursor)];
+            for (var key in entries) {
+                var entry = entries[key];
+
+                if (
+                    entry &&
+                    normalizeMoodValue(entry.mood) &&
+                    moodById[normalizeMoodValue(entry.mood)]
+                ) {
+                    moodDates.push(key);
+                }
             }
 
-            numberEl.textContent = streak + (streak === 1 ? " day" : " days");
+            moodDates.sort();
 
-            if (streak === 0) {
-                subtextEl.textContent = "Check in today to start a streak";
-            } else if (loggedToday) {
-                subtextEl.textContent = "You checked in today - streak continues!";
+            if (moodDates.length === 0) {
+                numberEl.textContent = "0 days";
+                subtextEl.textContent =
+                    "Check in today to start a streak";
+                return;
+            }
+
+            /*
+             * Count backwards from the most recently logged mood.
+             * This means the badge does not incorrectly show zero while
+             * mood emojis are already present in the calendar.
+             */
+            var latestMoodDate =
+                moodDates[moodDates.length - 1];
+
+            var cursor =
+                new Date(
+                    latestMoodDate + "T00:00:00"
+                );
+
+            var streak = 0;
+
+            while (true) {
+                var cursorEntry =
+                    entries[dateKey(cursor)];
+
+                if (
+                    !cursorEntry ||
+                    !moodById[
+                        normalizeMoodValue(
+                            cursorEntry.mood
+                        )
+                    ]
+                ) {
+                    break;
+                }
+
+                streak++;
+                cursor.setDate(
+                    cursor.getDate() - 1
+                );
+            }
+
+            numberEl.textContent =
+                streak +
+                (streak === 1
+                    ? " day"
+                    : " days");
+
+            var today = todayKey();
+
+            var yesterday = new Date();
+            yesterday.setDate(
+                yesterday.getDate() - 1
+            );
+
+            var yesterdayKey =
+                dateKey(yesterday);
+
+            if (latestMoodDate === today) {
+                subtextEl.textContent =
+                    "You checked in today - streak continues!";
+            } else if (
+                latestMoodDate === yesterdayKey
+            ) {
+                subtextEl.textContent =
+                    "Check in today to keep your streak alive";
             } else {
-                subtextEl.textContent = "Check in today to keep your streak alive";
+                var latestDateObject =
+                    new Date(
+                        latestMoodDate + "T00:00:00"
+                    );
+
+                subtextEl.textContent =
+                    "Latest streak ended " +
+                    latestDateObject.toLocaleDateString(
+                        undefined,
+                        {
+                            month: "short",
+                            day: "numeric"
+                        }
+                    ) +
+                    " - check in today to begin again";
             }
         }
 
@@ -588,6 +1040,7 @@
         });
 
         updateLoginDisplay();
+        seedDemoMoodHistory();
         renderAll();
     </script>
 </body>
