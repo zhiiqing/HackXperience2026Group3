@@ -82,6 +82,11 @@
             <a href="login.html" class="font-bold underline text-amber-700 hover:text-amber-900">Login here</a>
         </div>
 
+        <!-- Age Restriction Error Banner -->
+        <div id="ageErrorPrompt" class="hidden mb-6 p-4 bg-rose-50 border border-rose-200 text-rose-800 text-sm rounded-xl shadow-sm">
+            <span>You are not allowed to sign up as the age limit is 16 and above.</span>
+        </div>
+
         <form id="signupForm">
 
             <!-- Full Name -->
@@ -119,6 +124,7 @@
 
                 <input
                     type="date"
+                    id="dobInput"
                     required
                     class="w-full border rounded-xl px-4 py-3 focus:ring-2 focus:ring-blue-500 outline-none bg-white">
                 <span class="text-xs text-gray-500 mt-1 block">You must be at least 16 years old to register.</span>
@@ -205,25 +211,53 @@
 
     <script>
         const emailInput = document.getElementById('emailInput');
+        const dobInput = document.getElementById('dobInput');
         const topExistingPrompt = document.getElementById('topExistingPrompt');
         const createdPrompt = document.getElementById('createdAccountPrompt');
+        const ageErrorPrompt = document.getElementById('ageErrorPrompt');
         const signupForm = document.getElementById('signupForm');
 
         emailInput.addEventListener('input', () => {
             topExistingPrompt.classList.add('hidden');
             createdPrompt.classList.add('hidden');
+            ageErrorPrompt.classList.add('hidden');
+        });
+
+        dobInput.addEventListener('change', () => {
+            ageErrorPrompt.classList.add('hidden');
         });
 
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
             const emailVal = emailInput.value.trim().toLowerCase();
+            const dobVal = new Date(dobInput.value);
             
+            // Calculate age precisely
+            const today = new Date();
+            let age = today.getFullYear() - dobVal.getFullYear();
+            const monthDiff = today.getMonth() - dobVal.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dobVal.getDate())) {
+                age--;
+            }
+
+            // Check age constraint (< 16)
+            if (age < 16) {
+                ageErrorPrompt.classList.remove('hidden');
+                topExistingPrompt.classList.add('hidden');
+                createdPrompt.classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            // Check email constraints
             if (emailVal === 'test@gmail.com') {
                 topExistingPrompt.classList.remove('hidden');
                 createdPrompt.classList.add('hidden');
+                ageErrorPrompt.classList.add('hidden');
             } else {
                 createdPrompt.classList.remove('hidden');
                 topExistingPrompt.classList.add('hidden');
+                ageErrorPrompt.classList.add('hidden');
             }
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
