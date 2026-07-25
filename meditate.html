@@ -2,155 +2,420 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TrueSelf - Meditation Clock</title>
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>TrueSelf - Meditation Session</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
+
     <style>
         body {
-            background: linear-gradient(135deg, #eef2ff, #dbeafe, #f5f3ff);
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #dbeafe,
+                    #f5f3ff
+                );
+
             min-height: 100vh;
         }
+
         .glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(15px);
+            background:
+                rgba(255, 255, 255, 0.85);
+
+            backdrop-filter:
+                blur(15px);
+        }
+
+        .breathing-circle {
+            animation:
+                breathe 6s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.85;
+            }
+
+            50% {
+                transform: scale(1.12);
+                opacity: 1;
+            }
         }
     </style>
 </head>
+
 <body class="flex flex-col min-h-screen">
 
     <!-- Top Navigation Bar -->
-    <header class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-            <a href="dashboard.html" class="px-4 py-2 rounded-full bg-blue-50 text-blue-600 font-medium transition flex items-center gap-2">
+    <header
+        class="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50"
+    >
+        <div
+            class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+        >
+            <a
+                href="dashboard.html"
+                class="px-4 py-2 rounded-full bg-blue-50 text-blue-600 font-medium transition flex items-center gap-2 hover:bg-blue-100"
+            >
                 &larr; Back to Dashboard
             </a>
-            <div class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+
+            <div
+                class="text-xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+            >
                 Meditation Session
             </div>
+
             <div class="w-24"></div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="flex-1 max-w-4xl w-full mx-auto px-6 py-10 flex flex-col items-center justify-center">
+    <main
+        class="flex-1 max-w-4xl w-full mx-auto px-6 py-10 flex flex-col items-center justify-center"
+    >
+        <div
+            class="glass w-full rounded-3xl shadow-xl p-8 border border-white/80 text-center"
+        >
+            <h1
+                class="text-3xl font-bold text-gray-800 mb-2"
+            >
+                Daily Mindfulness Meditation
+            </h1>
 
-        <div class="glass w-full rounded-3xl shadow-xl p-8 border border-white/80 text-center">
-            
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">Daily Mindfulness Meditation</h1>
-            <p class="text-gray-500 text-sm mb-6">Settle in, focus your breathing, and let your mind find stillness.</p>
+            <p
+                class="text-gray-500 text-sm mb-6"
+            >
+                Settle in, focus on your breathing and allow your mind to become still.
+            </p>
 
-            <!-- Embedded YouTube Video Container -->
-            <div class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg mb-6 bg-black">
-                <iframe 
-                    id="youtubePlayer"
-                    class="w-full h-full"
-                    src="https://www.youtube.com/embed/ZToicYcHIOU?enablejsapi=1&origin=" 
-                    title="Daily Calm | 10 Minute Mindfulness Meditation" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                </iframe>
+            <!-- Meditation Screenshot -->
+            <div
+                class="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg mb-6 bg-gray-900"
+            >
+                <img
+                    id="meditationImage"
+                    src="https://img.youtube.com/vi/ZToicYcHIOU/maxresdefault.jpg"
+                    alt="Calm mindfulness meditation session preview"
+                    class="w-full h-full object-cover"
+                    onerror="this.src='https://img.youtube.com/vi/ZToicYcHIOU/hqdefault.jpg'"
+                >
+
+                <!-- Dark Overlay -->
+                <div
+                    class="absolute inset-0 bg-black/30 flex flex-col items-center justify-center"
+                >
+                    <div
+                        class="breathing-circle w-24 h-24 rounded-full bg-white/90 flex items-center justify-center shadow-2xl"
+                    >
+                        <span class="text-4xl">
+                            🧘
+                        </span>
+                    </div>
+
+                    <p
+                        class="mt-5 text-white text-lg font-bold drop-shadow"
+                    >
+                        Breathe in slowly
+                    </p>
+
+                    <p
+                        class="mt-1 text-white/90 text-sm drop-shadow"
+                    >
+                        Let your shoulders relax
+                    </p>
+                </div>
             </div>
 
-            <!-- Start & Stop Control Buttons -->
-            <div class="flex items-center justify-center gap-4 mb-8">
-                <button id="startBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2">
-                    ▶ Start Video
-                </button>
-                <button id="stopBtn" class="bg-rose-600 hover:bg-rose-700 text-white font-semibold px-8 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2">
-                    ⏸ Pause Video
-                </button>
-            </div>
+            <!-- Optional Guided Session Link -->
+            <a
+                href="https://www.youtube.com/watch?v=ZToicYcHIOU"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 text-blue-600 hover:text-purple-600 font-semibold text-sm mb-7"
+            >
+                ▶ Open the guided meditation
+            </a>
 
             <!-- Timer Section -->
-            <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 flex flex-col items-center">
-                <span class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2">Meditation Timer</span>
-                <div id="timerDisplay" class="text-6xl font-black text-gray-800 tracking-wider mb-2">10:00</div>
-                <p id="timerStatus" class="text-sm text-gray-500">Timer will auto-start when the video reaches 0:30 (or when you click Start)</p>
+            <div
+                class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-6 border border-blue-100 flex flex-col items-center"
+            >
+                <span
+                    class="text-xs font-bold text-blue-600 uppercase tracking-widest mb-2"
+                >
+                    Meditation Timer
+                </span>
+
+                <div
+                    id="timerDisplay"
+                    class="text-6xl font-black text-gray-800 tracking-wider mb-3"
+                >
+                    10:00
+                </div>
+
+                <p
+                    id="timerStatus"
+                    class="text-sm text-gray-500"
+                >
+                    Press start when you are ready.
+                </p>
+
+                <!-- Timer Buttons -->
+                <div
+                    class="flex flex-wrap justify-center gap-3 mt-6"
+                >
+                    <button
+                        id="startBtn"
+                        type="button"
+                        class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-7 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2"
+                    >
+                        ▶ Start Session
+                    </button>
+
+                    <button
+                        id="pauseBtn"
+                        type="button"
+                        class="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-7 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2"
+                    >
+                        ⏸ Pause
+                    </button>
+
+                    <button
+                        id="resetBtn"
+                        type="button"
+                        class="bg-gray-600 hover:bg-gray-700 text-white font-semibold px-7 py-3 rounded-full shadow-lg transition transform hover:scale-105 flex items-center gap-2"
+                    >
+                        ↻ Reset
+                    </button>
+                </div>
             </div>
 
+            <!-- Breathing Reminder -->
+            <div
+                class="mt-6 border border-purple-100 bg-purple-50 rounded-2xl p-5"
+            >
+                <p
+                    id="breathingText"
+                    class="text-sm text-purple-800 leading-6"
+                >
+                    Sit comfortably. Breathe in through your nose, pause gently and breathe out slowly.
+                </p>
+            </div>
         </div>
-
     </main>
 
-    <!-- YouTube IFrame Player API & Custom Timer Logic -->
     <script>
-        let player;
+        const timerDisplay =
+            document.getElementById("timerDisplay");
+
+        const timerStatus =
+            document.getElementById("timerStatus");
+
+        const breathingText =
+            document.getElementById("breathingText");
+
+        const startBtn =
+            document.getElementById("startBtn");
+
+        const pauseBtn =
+            document.getElementById("pauseBtn");
+
+        const resetBtn =
+            document.getElementById("resetBtn");
+
         let timerInterval = null;
-        let timeLeft = 600; // 10 minutes in seconds
-        let timerStarted = false;
 
-        // Load YouTube IFrame API script dynamically
-        const tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        const firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        let timeLeft =
+            10 * 60;
 
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('youtubePlayer', {
-                events: {
-                    'onStateChange': onPlayerStateChange
-                }
-            });
+        let timerRunning =
+            false;
+
+        const breathingMessages = [
+            "Breathe in slowly through your nose.",
+            "Hold your breath gently for a moment.",
+            "Breathe out slowly and release any tension.",
+            "Let your shoulders relax.",
+            "Notice your breathing without trying to change it.",
+            "Bring your attention back whenever your mind wanders."
+        ];
+
+        let breathingMessageIndex = 0;
+        let breathingInterval = null;
+
+        function updateTimerDisplay() {
+            const minutes =
+                Math.floor(timeLeft / 60);
+
+            const seconds =
+                timeLeft % 60;
+
+            timerDisplay.textContent =
+                String(minutes).padStart(2, "0") +
+                ":" +
+                String(seconds).padStart(2, "0");
         }
 
-        // Button Event Listeners
-        document.getElementById('startBtn').addEventListener('click', () => {
-            if (player && typeof player.playVideo === 'function') {
-                player.playVideo();
+        function startBreathingMessages() {
+            if (breathingInterval) {
+                clearInterval(
+                    breathingInterval
+                );
             }
-        });
 
-        document.getElementById('stopBtn').addEventListener('click', () => {
-            if (player && typeof player.pauseVideo === 'function') {
-                player.pauseVideo();
-            }
-        });
+            breathingInterval =
+                setInterval(
+                    function () {
+                        breathingMessageIndex =
+                            (
+                                breathingMessageIndex + 1
+                            ) %
+                            breathingMessages.length;
 
-        function onPlayerStateChange(event) {
-            if (event.data === YT.PlayerState.PLAYING) {
-                checkVideoTime();
-            } else {
-                if (window.timeChecker) clearInterval(window.timeChecker);
-            }
+                        breathingText.textContent =
+                            breathingMessages[
+                                breathingMessageIndex
+                            ];
+                    },
+                    6000
+                );
         }
 
-        function checkVideoTime() {
-            if (window.timeChecker) clearInterval(window.timeChecker);
+        function stopBreathingMessages() {
+            if (breathingInterval) {
+                clearInterval(
+                    breathingInterval
+                );
 
-            window.timeChecker = setInterval(() => {
-                if (player && typeof player.getCurrentTime === 'function') {
-                    const currentTime = player.getCurrentTime();
-                    
-                    // Auto-start timer when video hits 0:30 (30 seconds)
-                    if (currentTime >= 30 && !timerStarted) {
-                        startTimer();
-                        clearInterval(window.timeChecker);
-                    }
-                }
-            }, 500);
+                breathingInterval = null;
+            }
         }
 
         function startTimer() {
-            if (timerStarted) return;
-            timerStarted = true;
-            document.getElementById('timerStatus').textContent = "Meditation session in progress...";
-            document.getElementById('timerStatusclassName = "text-sm text-blue-600 font-semibold animate-pulse";
+            if (
+                timerRunning ||
+                timeLeft <= 0
+            ) {
+                return;
+            }
 
-            timerInterval = setInterval(() => {
-                if (timeLeft > 0) {
-                    timeLeft--;
-                    let minutes = Math.floor(timeLeft / 60);
-                    let seconds = timeLeft % 60;
-                    document.getElementById('timerDisplay').textContent = 
-                        String(minutes).padStart(2, '0') + ":" + String(seconds).padStart(2, '0');
-                } else {
-                    clearInterval(timerInterval);
-                    document.getElementById('timerStatus').textContent = "Session complete! Great job taking time for yourself.";
-                    document.getElementById('timerStatus').className = "text-sm text-purple-600 font-bold";
-                }
-            }, 1000);
+            timerRunning = true;
+
+            timerStatus.textContent =
+                "Meditation session in progress...";
+
+            timerStatus.className =
+                "text-sm text-blue-600 font-semibold animate-pulse";
+
+            startBreathingMessages();
+
+            timerInterval =
+                setInterval(
+                    function () {
+                        if (timeLeft > 0) {
+                            timeLeft--;
+
+                            updateTimerDisplay();
+                        }
+
+                        if (timeLeft <= 0) {
+                            clearInterval(
+                                timerInterval
+                            );
+
+                            timerInterval = null;
+                            timerRunning = false;
+
+                            stopBreathingMessages();
+
+                            timerStatus.textContent =
+                                "Session complete! Great job taking time for yourself.";
+
+                            timerStatus.className =
+                                "text-sm text-purple-600 font-bold";
+
+                            breathingText.textContent =
+                                "Take one final slow breath before continuing with your day.";
+                        }
+                    },
+                    1000
+                );
         }
+
+        function pauseTimer() {
+            if (!timerRunning) {
+                return;
+            }
+
+            clearInterval(
+                timerInterval
+            );
+
+            timerInterval = null;
+            timerRunning = false;
+
+            stopBreathingMessages();
+
+            timerStatus.textContent =
+                "Session paused. Continue whenever you feel ready.";
+
+            timerStatus.className =
+                "text-sm text-amber-600 font-semibold";
+        }
+
+        function resetTimer() {
+            clearInterval(
+                timerInterval
+            );
+
+            timerInterval = null;
+            timerRunning = false;
+
+            stopBreathingMessages();
+
+            timeLeft =
+                10 * 60;
+
+            breathingMessageIndex = 0;
+
+            updateTimerDisplay();
+
+            timerStatus.textContent =
+                "Press start when you are ready.";
+
+            timerStatus.className =
+                "text-sm text-gray-500";
+
+            breathingText.textContent =
+                "Sit comfortably. Breathe in through your nose, pause gently and breathe out slowly.";
+        }
+
+        startBtn.addEventListener(
+            "click",
+            startTimer
+        );
+
+        pauseBtn.addEventListener(
+            "click",
+            pauseTimer
+        );
+
+        resetBtn.addEventListener(
+            "click",
+            resetTimer
+        );
+
+        updateTimerDisplay();
     </script>
 
 </body>
