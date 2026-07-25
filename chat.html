@@ -275,26 +275,6 @@
     </div>
 
     <script>
-        /*
-            LOGIN CHECK
-
-            If the user is not logged in, remember that they wanted
-            to open chat.html and send them to login.html.
-        */
-        const loggedIn =
-            localStorage.getItem("loggedIn");
-
-        if (loggedIn !== "true") {
-            localStorage.setItem(
-                "redirectAfterLogin",
-                "chat.html"
-            );
-
-            window.location.replace(
-                "login.html"
-            );
-        }
-
         const chatForm =
             document.getElementById("chat-form");
 
