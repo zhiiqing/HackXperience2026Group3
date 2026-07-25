@@ -103,6 +103,12 @@
                     <span>You have an existing account.</span>
                     <a href="login.html" class="font-bold underline text-blue-600 hover:text-blue-800">Login here</a>
                 </div>
+
+                <!-- Account Created Successfully Prompt Container -->
+                <div id="createdAccountPrompt" class="hidden mt-2 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl flex items-center justify-between">
+                    <span>Account created successfully!</span>
+                    <a href="login.html" class="font-bold underline text-emerald-700 hover:text-emerald-900">Login here</a>
+                </div>
             </div>
 
             <!-- Date of Birth -->
@@ -173,9 +179,9 @@
             <!-- Button -->
             <button
                 type="submit"
-                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:scale-105 transition">
+                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-3 rounded-xl font-semibold hover:scale-105 transition flex items-center justify-center gap-2">
 
-                Create Account
+                💬 Create Account
 
             </button>
 
@@ -199,13 +205,33 @@
 
     <script>
         const emailInput = document.getElementById('emailInput');
-        const promptBox = document.getElementById('existingAccountPrompt');
+        const existingPrompt = document.getElementById('existingAccountPrompt');
+        const createdPrompt = document.getElementById('createdAccountPrompt');
+        const signupForm = document.getElementById('signupForm');
 
         emailInput.addEventListener('input', () => {
-            if (emailInput.value.trim().toLowerCase() === 'test@gmail.com') {
-                promptBox.classList.remove('hidden');
+            const emailVal = emailInput.value.trim().toLowerCase();
+            if (emailVal === 'test@gmail.com') {
+                existingPrompt.classList.remove('hidden');
+                createdPrompt.classList.add('hidden');
+            } else if (emailVal === 'create@gmail.com') {
+                createdPrompt.classList.remove('hidden');
+                existingPrompt.classList.add('hidden');
             } else {
-                promptBox.classList.add('hidden');
+                existingPrompt.classList.add('hidden');
+                createdPrompt.classList.add('hidden');
+            }
+        });
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const emailVal = emailInput.value.trim().toLowerCase();
+            if (emailVal === 'create@gmail.com') {
+                createdPrompt.classList.remove('hidden');
+                existingPrompt.classList.add('hidden');
+            } else if (emailVal === 'test@gmail.com') {
+                existingPrompt.classList.remove('hidden');
+                createdPrompt.classList.add('hidden');
             }
         });
     </script>
