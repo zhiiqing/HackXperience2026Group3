@@ -109,6 +109,12 @@
             </a>
         </div>
 
+        <!-- No Such Account Top Banner Prompt Container -->
+        <div id="noAccountPrompt" class="hidden mb-6 p-4 bg-amber-50 border border-amber-200 text-amber-800 text-sm rounded-xl flex items-center justify-between shadow-sm">
+            <span>No such account. Please sign up.</span>
+            <a href="signup.html" class="font-bold underline text-amber-700 hover:text-amber-900">Sign up</a>
+        </div>
+
         <form id="login-form">
 
             <!-- Email -->
@@ -179,7 +185,7 @@
 
             </div>
 
-            <!-- Error message -->
+            <!-- Error message for empty/short fields -->
             <p
                 id="login-message"
                 class="hidden text-red-600 text-sm mb-4"
@@ -250,14 +256,23 @@
         const loginMessage =
             document.getElementById("login-message");
 
+        const noAccountPrompt =
+            document.getElementById("noAccountPrompt");
+
+        const emailInput =
+            document.getElementById("email");
+
+        emailInput.addEventListener("input", () => {
+            noAccountPrompt.classList.add("hidden");
+        });
+
         loginForm.addEventListener(
             "submit",
             function (event) {
                 event.preventDefault();
 
                 const email =
-                    document
-                        .getElementById("email")
+                    emailInput
                         .value
                         .trim()
                         .toLowerCase();
@@ -277,6 +292,7 @@
                     loginMessage.classList.remove(
                         "hidden"
                     );
+                    noAccountPrompt.classList.add("hidden");
 
                     return;
                 }
@@ -288,21 +304,23 @@
                     loginMessage.classList.remove(
                         "hidden"
                     );
+                    noAccountPrompt.classList.add("hidden");
 
                     return;
                 }
 
                 // Check specific emails (allowing both test@gmail.com and create@gmail.com)
                 if (email !== "test@gmail.com" && email !== "create@gmail.com") {
-                    loginMessage.textContent =
-                        "No such account. Please sign up.";
-                    loginMessage.classList.remove("hidden");
+                    loginMessage.classList.add("hidden");
+                    noAccountPrompt.classList.remove("hidden");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
                     return;
                 }
 
                 loginMessage.classList.add(
                     "hidden"
                 );
+                noAccountPrompt.classList.add("hidden");
 
                 /*
                     Grant login access and redirect to dashboard.html
