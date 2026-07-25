@@ -70,7 +70,7 @@
             </a>
         </div>
 
-        <!-- Account Created Successfully Prompt Container (Now at the top of the form) -->
+        <!-- Account Created Successfully Prompt Container -->
         <div id="createdAccountPrompt" class="hidden mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm rounded-xl flex items-center justify-between shadow-sm">
             <span>Account created successfully!</span>
             <a href="login.html" class="font-bold underline text-emerald-700 hover:text-emerald-900">Login here</a>
@@ -216,7 +216,6 @@
             } else {
                 existingPrompt.classList.add('hidden');
             }
-            // Hide created prompt on typing so it only shows after clicking submit
             createdPrompt.classList.add('hidden');
         });
 
@@ -230,10 +229,12 @@
                 existingPrompt.classList.remove('hidden');
                 createdPrompt.classList.add('hidden');
             } else {
-                // Default successful creation for other inputs if needed, or handle accordingly
                 createdPrompt.classList.remove('hidden');
                 existingPrompt.classList.add('hidden');
             }
+            
+            // Scroll to the top of the page smoothly to show the message
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     </script>
 
