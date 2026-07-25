@@ -70,6 +70,12 @@
             </a>
         </div>
 
+        <!-- Account Created Successfully Prompt Container (Now at the top of the form) -->
+        <div id="createdAccountPrompt" class="hidden mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm rounded-xl flex items-center justify-between shadow-sm">
+            <span>Account created successfully!</span>
+            <a href="login.html" class="font-bold underline text-emerald-700 hover:text-emerald-900">Login here</a>
+        </div>
+
         <form id="signupForm">
 
             <!-- Full Name -->
@@ -102,12 +108,6 @@
                 <div id="existingAccountPrompt" class="hidden mt-2 p-3 bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-xl flex items-center justify-between">
                     <span>You have an existing account.</span>
                     <a href="login.html" class="font-bold underline text-blue-600 hover:text-blue-800">Login here</a>
-                </div>
-
-                <!-- Account Created Successfully Prompt Container -->
-                <div id="createdAccountPrompt" class="hidden mt-2 p-3 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs rounded-xl flex items-center justify-between">
-                    <span>Account created successfully!</span>
-                    <a href="login.html" class="font-bold underline text-emerald-700 hover:text-emerald-900">Login here</a>
                 </div>
             </div>
 
@@ -213,14 +213,11 @@
             const emailVal = emailInput.value.trim().toLowerCase();
             if (emailVal === 'test@gmail.com') {
                 existingPrompt.classList.remove('hidden');
-                createdPrompt.classList.add('hidden');
-            } else if (emailVal === 'create@gmail.com') {
-                createdPrompt.classList.remove('hidden');
-                existingPrompt.classList.add('hidden');
             } else {
                 existingPrompt.classList.add('hidden');
-                createdPrompt.classList.add('hidden');
             }
+            // Hide created prompt on typing so it only shows after clicking submit
+            createdPrompt.classList.add('hidden');
         });
 
         signupForm.addEventListener('submit', (e) => {
@@ -232,6 +229,10 @@
             } else if (emailVal === 'test@gmail.com') {
                 existingPrompt.classList.remove('hidden');
                 createdPrompt.classList.add('hidden');
+            } else {
+                // Default successful creation for other inputs if needed, or handle accordingly
+                createdPrompt.classList.remove('hidden');
+                existingPrompt.classList.add('hidden');
             }
         });
     </script>
